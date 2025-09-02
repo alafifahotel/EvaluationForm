@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { X, AlertTriangle, Trash2, Check, XCircle } from 'lucide-react'
+import { X, AlertTriangle, Trash2, Check, XCircle, Lock } from 'lucide-react'
 
 function ConfirmModal({ 
   isOpen, 
@@ -11,14 +11,21 @@ function ConfirmModal({
   cancelText = 'Annuler',
   variant = 'danger', // 'danger', 'warning', 'info'
   isLoading = false,
-  error = null
+  error = null,
+  requirePassword = false,
+  correctPassword = 'MANAGEMENT'
 }) {
   const [isClosing, setIsClosing] = useState(false)
   const [internalLoading, setInternalLoading] = useState(false)
+  const [password, setPassword] = useState('')
+  const [passwordError, setPasswordError] = useState('')
 
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden'
+      // Reset password when modal opens
+      setPassword('')
+      setPasswordError('')
     } else {
       document.body.style.overflow = 'unset'
     }
@@ -37,6 +44,19 @@ function ConfirmModal({
   }
 
   const handleConfirm = async () => {
+    // Check password if required
+    if (requirePassword) {
+      if (!password) {
+        setPasswordError('Le mot de passe est requis')
+        return
+      }
+      if (password !== correctPassword) {
+        setPasswordError('Mot de passe incorrect')
+        setPassword('')
+        return
+      }
+    }
+    
     // Always call onConfirm
     // Loading state is managed externally if isLoading prop is passed
     onConfirm()
@@ -121,6 +141,41 @@ function ConfirmModal({
                 <p className="text-sm text-gray-500">
                   {message}
                 </p>
+                
+                {requirePassword && (
+                  <div className="mt-4">
+                    <label htmlFor="confirm-password" className="block text-sm font-medium text-gray-700 mb-1">
+                      <Lock className="inline w-4 h-4 mr-1" />
+                      Mot de passe requis
+                    </label>
+                    <input
+                      type="password"
+                      id="confirm-password"
+                      value={password}
+                      onChange={(e) => {
+                        setPassword(e.target.value)
+                        setPasswordError('')
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' && !loading) {
+                          handleConfirm()
+                        }
+                      }}
+                      className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-hotel-gold ${
+                        passwordError ? 'border-red-500' : 'border-gray-300'
+                      }`}
+                      placeholder="Entrez le mot de passe"
+                      disabled={loading}
+                      autoFocus
+                    />
+                    {passwordError && (
+                      <p className="mt-1 text-sm text-red-600">
+                        {passwordError}
+                      </p>
+                    )}
+                  </div>
+                )}
+                
                 {error && (
                   <div className="mt-3 p-3 bg-red-50 border border-red-200 rounded-lg">
                     <p className="text-red-700 text-sm flex items-center">

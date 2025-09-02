@@ -495,6 +495,8 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
         variant="danger"
         isLoading={deleteModal.isLoading}
         error={deleteModal.error}
+        requirePassword={true}
+        correctPassword="MANAGEMENT"
       />
       
       <ViewModal
