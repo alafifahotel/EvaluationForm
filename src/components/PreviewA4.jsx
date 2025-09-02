@@ -78,8 +78,8 @@ function PreviewA4({ formData, position, isViewMode = false }) {
   const renderScoreBar = (score, maxScore = 5) => {
     const percentage = (score / maxScore) * 100
     return (
-      <div className="flex items-center gap-2">
-        <div className="flex-1 bg-gray-200 rounded-full h-2 overflow-hidden">
+      <div className="flex items-center gap-1">
+        <div className="flex-1 bg-gray-200 rounded-full h-1.5 overflow-hidden">
           <div 
             className={`h-full transition-all ${
               percentage >= 80 ? 'bg-green-500' :
@@ -90,7 +90,7 @@ function PreviewA4({ formData, position, isViewMode = false }) {
             style={{ width: `${percentage}%` }}
           />
         </div>
-        <span className={`font-semibold ${getScoreColor(score)}`}>
+        <span className={`font-semibold text-xs ${getScoreColor(score)}`}>
           {score || '0'}/5
         </span>
       </div>
@@ -99,75 +99,70 @@ function PreviewA4({ formData, position, isViewMode = false }) {
 
   return (
     <div>
-      <div ref={previewRef} className="bg-white" style={{ width: '210mm', minHeight: '297mm', padding: '15mm', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+      <div ref={previewRef} className="bg-white" style={{ width: '210mm', minHeight: '297mm', maxHeight: '297mm', padding: '10mm', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
         {/* Professional Header */}
-        <div className="border-b-4 border-hotel-gold pb-6 mb-6">
+        <div className="border-b-3 border-hotel-gold pb-3 mb-3">
           <div className="flex justify-between items-start">
-            <div className="flex items-center gap-4">
-              <img 
-                src={hotelLogo} 
-                alt="Al Afifa Hotel" 
-                className="h-16 w-auto object-contain"
-              />
-              <div>
-                <p className="text-gray-600 text-sm">Excellence in Hospitality</p>
-              </div>
-            </div>
+            <img 
+              src={hotelLogo} 
+              alt="Al Afifa Hotel" 
+              className="h-12 w-auto object-contain"
+            />
             <div className="text-right">
-              <div className="bg-hotel-gold text-white px-4 py-2 rounded">
-                <p className="font-bold text-lg">ÉVALUATION</p>
-                <p className="text-sm">{format(new Date(), 'yyyy')}</p>
+              <div className="bg-hotel-gold text-white px-3 py-1 rounded">
+                <p className="font-bold text-sm">ÉVALUATION</p>
+                <p className="text-xs">{format(new Date(), 'yyyy')}</p>
               </div>
             </div>
           </div>
-          <h2 className="text-xl font-semibold text-center mt-6 text-gray-700">
+          <h2 className="text-base font-semibold text-center mt-2 text-gray-700">
             FICHE D'ÉVALUATION DU PERSONNEL
           </h2>
         </div>
 
         {/* Employee Information Section */}
-        <div className="bg-gray-50 rounded-lg p-4 mb-6">
-          <h3 className="text-lg font-bold text-hotel-dark mb-3 flex items-center">
-            <span className="bg-hotel-gold text-white w-8 h-8 rounded-full flex items-center justify-center mr-2 text-sm">1</span>
+        <div className="bg-gray-50 rounded p-2 mb-3">
+          <h3 className="text-sm font-bold text-hotel-dark mb-2 flex items-center">
+            <span className="bg-hotel-gold text-white w-6 h-6 rounded-full flex items-center justify-center mr-2 text-xs">1</span>
             INFORMATIONS DE L'EMPLOYÉ
           </h3>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-3">
+          <div className="grid grid-cols-2 gap-2 text-xs">
+            <div className="space-y-1">
               <div>
-                <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider">Nom & Prénom</label>
-                <div className="py-1 font-medium text-gray-900">
+                <label className="font-semibold text-gray-600 uppercase tracking-wider" style={{ fontSize: '10px' }}>Nom & Prénom</label>
+                <div className="font-medium text-gray-900">
                   {formData.nom || '________________________________'}
                 </div>
               </div>
               <div>
-                <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider">Service</label>
-                <div className="py-1 font-medium text-gray-900">
+                <label className="font-semibold text-gray-600 uppercase tracking-wider" style={{ fontSize: '10px' }}>Service</label>
+                <div className="font-medium text-gray-900">
                   {positionLabel || '________________________________'}
                 </div>
               </div>
               <div>
-                <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider">Supérieur Hiérarchique</label>
-                <div className="py-1 font-medium text-gray-900">
+                <label className="font-semibold text-gray-600 uppercase tracking-wider" style={{ fontSize: '10px' }}>Supérieur Hiérarchique</label>
+                <div className="font-medium text-gray-900">
                   {formData.superieur || '________________________________'}
                 </div>
               </div>
             </div>
-            <div className="space-y-3">
+            <div className="space-y-1">
               <div>
-                <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider">Matricule</label>
-                <div className="py-1 font-medium text-gray-900">
+                <label className="font-semibold text-gray-600 uppercase tracking-wider" style={{ fontSize: '10px' }}>Matricule</label>
+                <div className="font-medium text-gray-900">
                   {formData.matricule || '________________________________'}
                 </div>
               </div>
               <div>
-                <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider">Poste</label>
-                <div className="py-1 font-medium text-gray-900">
+                <label className="font-semibold text-gray-600 uppercase tracking-wider" style={{ fontSize: '10px' }}>Poste</label>
+                <div className="font-medium text-gray-900">
                   {positionLabel || '________________________________'}
                 </div>
               </div>
               <div>
-                <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider">Période d'Évaluation</label>
-                <div className="py-1 font-medium text-gray-900">
+                <label className="font-semibold text-gray-600 uppercase tracking-wider" style={{ fontSize: '10px' }}>Période d'Évaluation</label>
+                <div className="font-medium text-gray-900">
                   Du {formatDate(formData.dateDebut)} au {formatDate(formData.dateFin)}
                 </div>
               </div>
@@ -175,33 +170,32 @@ function PreviewA4({ formData, position, isViewMode = false }) {
           </div>
         </div>
 
-
         {/* Common Criteria Section */}
-        <div className="mb-6">
-          <h3 className="text-lg font-bold text-hotel-dark mb-3 flex items-center">
-            <span className="bg-hotel-gold text-white w-8 h-8 rounded-full flex items-center justify-center mr-2 text-sm">2</span>
+        <div className="mb-3">
+          <h3 className="text-sm font-bold text-hotel-dark mb-2 flex items-center">
+            <span className="bg-hotel-gold text-white w-6 h-6 rounded-full flex items-center justify-center mr-2 text-xs">2</span>
             CRITÈRES COMMUNS
-            <span className="ml-auto text-sm font-normal text-gray-600">Total: {commonTotal}/{maxCommon}</span>
+            <span className="ml-auto text-xs font-normal text-gray-600">Total: {commonTotal}/{maxCommon}</span>
           </h3>
-          <div className="border border-gray-300 rounded-lg overflow-hidden">
-            <table className="w-full">
+          <div className="border border-gray-300 rounded overflow-hidden">
+            <table className="w-full text-xs">
               <thead className="bg-gray-100">
                 <tr>
-                  <th className="text-left p-3 text-sm font-semibold text-gray-700 w-2/5">Critère</th>
-                  <th className="text-left p-3 text-sm font-semibold text-gray-700 w-2/5">Description</th>
-                  <th className="text-center p-3 text-sm font-semibold text-gray-700 w-1/5">Évaluation</th>
+                  <th className="text-left p-1 font-semibold text-gray-700" style={{ width: '30%' }}>Critère</th>
+                  <th className="text-left p-1 font-semibold text-gray-700" style={{ width: '45%' }}>Description</th>
+                  <th className="text-center p-1 font-semibold text-gray-700" style={{ width: '25%' }}>Évaluation</th>
                 </tr>
               </thead>
               <tbody>
                 {commonCriteria.map((criteria, index) => (
                   <tr key={criteria.id} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                    <td className="p-3">
-                      <p className="font-medium text-sm">{criteria.label}</p>
+                    <td className="p-1">
+                      <p className="font-medium" style={{ fontSize: '10px' }}>{criteria.label}</p>
                     </td>
-                    <td className="p-3">
-                      <p className="text-xs text-gray-600">{criteria.description}</p>
+                    <td className="p-1">
+                      <p className="text-gray-600 leading-tight" style={{ fontSize: '9px' }}>{criteria.description}</p>
                     </td>
-                    <td className="p-3">
+                    <td className="p-1">
                       {renderScoreBar(formData.commonScores?.[criteria.id])}
                     </td>
                   </tr>
@@ -213,31 +207,31 @@ function PreviewA4({ formData, position, isViewMode = false }) {
 
         {/* Specific Criteria Section */}
         {positionCriteria.length > 0 && (
-          <div className="mb-6">
-            <h3 className="text-lg font-bold text-hotel-dark mb-3 flex items-center">
-              <span className="bg-hotel-gold text-white w-8 h-8 rounded-full flex items-center justify-center mr-2 text-sm">3</span>
+          <div className="mb-3">
+            <h3 className="text-sm font-bold text-hotel-dark mb-2 flex items-center">
+              <span className="bg-hotel-gold text-white w-6 h-6 rounded-full flex items-center justify-center mr-2 text-xs">3</span>
               CRITÈRES SPÉCIFIQUES - {positionLabel.toUpperCase()}
-              <span className="ml-auto text-sm font-normal text-gray-600">Total: {specificTotal}/{maxSpecific}</span>
+              <span className="ml-auto text-xs font-normal text-gray-600">Total: {specificTotal}/{maxSpecific}</span>
             </h3>
-            <div className="border border-gray-300 rounded-lg overflow-hidden">
-              <table className="w-full">
+            <div className="border border-gray-300 rounded overflow-hidden">
+              <table className="w-full text-xs">
                 <thead className="bg-gray-100">
                   <tr>
-                    <th className="text-left p-3 text-sm font-semibold text-gray-700 w-2/5">Critère</th>
-                    <th className="text-left p-3 text-sm font-semibold text-gray-700 w-2/5">Description</th>
-                    <th className="text-center p-3 text-sm font-semibold text-gray-700 w-1/5">Évaluation</th>
+                    <th className="text-left p-1 font-semibold text-gray-700" style={{ width: '30%' }}>Critère</th>
+                    <th className="text-left p-1 font-semibold text-gray-700" style={{ width: '45%' }}>Description</th>
+                    <th className="text-center p-1 font-semibold text-gray-700" style={{ width: '25%' }}>Évaluation</th>
                   </tr>
                 </thead>
                 <tbody>
                   {positionCriteria.map((criteria, index) => (
                     <tr key={criteria.id} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                      <td className="p-3">
-                        <p className="font-medium text-sm">{criteria.label}</p>
+                      <td className="p-1">
+                        <p className="font-medium" style={{ fontSize: '10px' }}>{criteria.label}</p>
                       </td>
-                      <td className="p-3">
-                        <p className="text-xs text-gray-600">{criteria.description}</p>
+                      <td className="p-1">
+                        <p className="text-gray-600 leading-tight" style={{ fontSize: '9px' }}>{criteria.description}</p>
                       </td>
-                      <td className="p-3">
+                      <td className="p-1">
                         {renderScoreBar(formData.specificScores?.[criteria.id])}
                       </td>
                     </tr>
@@ -249,31 +243,31 @@ function PreviewA4({ formData, position, isViewMode = false }) {
         )}
 
         {/* Performance Summary */}
-        <div className="relative overflow-hidden rounded-xl mb-6">
+        <div className="relative overflow-hidden rounded-lg mb-3">
           <div className="absolute inset-0 bg-gradient-to-br from-hotel-gold via-yellow-500 to-yellow-600 opacity-90"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-          <div className="relative p-6 text-white">
-            <h3 className="text-lg font-bold mb-4 flex items-center">
-              <span className="bg-white/20 backdrop-blur-sm text-white w-8 h-8 rounded-full flex items-center justify-center mr-2 text-sm border border-white/30">4</span>
+          <div className="relative p-3 text-white">
+            <h3 className="text-sm font-bold mb-2 flex items-center">
+              <span className="bg-white/20 backdrop-blur-sm text-white w-6 h-6 rounded-full flex items-center justify-center mr-2 text-xs border border-white/30">4</span>
               RÉSULTAT DE L'ÉVALUATION
             </h3>
-            <div className="grid grid-cols-3 gap-6">
+            <div className="grid grid-cols-3 gap-3">
               <div className="text-center">
-                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 border border-white/20">
-                  <p className="text-3xl font-bold mb-1">{total}/{max}</p>
-                  <p className="text-xs uppercase tracking-wider opacity-90">Points Obtenus</p>
+                <div className="bg-white/10 backdrop-blur-sm rounded p-2 border border-white/20">
+                  <p className="text-lg font-bold">{total}/{max}</p>
+                  <p style={{ fontSize: '9px' }} className="uppercase tracking-wider opacity-90">Points Obtenus</p>
                 </div>
               </div>
               <div className="text-center">
-                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 border border-white/20">
-                  <p className="text-3xl font-bold mb-1">{percentage}%</p>
-                  <p className="text-xs uppercase tracking-wider opacity-90">Pourcentage</p>
+                <div className="bg-white/10 backdrop-blur-sm rounded p-2 border border-white/20">
+                  <p className="text-lg font-bold">{percentage}%</p>
+                  <p style={{ fontSize: '9px' }} className="uppercase tracking-wider opacity-90">Pourcentage</p>
                 </div>
               </div>
               <div className="text-center">
-                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 border border-white/20">
-                  <p className="text-xl font-bold mb-1">{appreciation.label}</p>
-                  <p className="text-xs uppercase tracking-wider opacity-90">Appréciation</p>
+                <div className="bg-white/10 backdrop-blur-sm rounded p-2 border border-white/20">
+                  <p className="text-base font-bold">{appreciation.label}</p>
+                  <p style={{ fontSize: '9px' }} className="uppercase tracking-wider opacity-90">Appréciation</p>
                 </div>
               </div>
             </div>
@@ -281,25 +275,25 @@ function PreviewA4({ formData, position, isViewMode = false }) {
         </div>
 
         {/* Decisions and Recommendations */}
-        <div className="mb-6">
-          <h3 className="text-lg font-bold text-hotel-dark mb-3 flex items-center">
-            <span className="bg-hotel-gold text-white w-8 h-8 rounded-full flex items-center justify-center mr-2 text-sm">5</span>
+        <div className="mb-3">
+          <h3 className="text-sm font-bold text-hotel-dark mb-2 flex items-center">
+            <span className="bg-hotel-gold text-white w-6 h-6 rounded-full flex items-center justify-center mr-2 text-xs">5</span>
             DÉCISIONS & RECOMMANDATIONS
           </h3>
-          <div className="border border-gray-300 rounded-lg p-4">
-            <div className="grid grid-cols-2 gap-4">
+          <div className="border border-gray-300 rounded p-2">
+            <div className="grid grid-cols-2 gap-2">
               {decisions.map(decision => (
-                <div key={decision.id} className="flex items-center gap-2">
-                  <div className={`w-5 h-5 rounded border-2 flex items-center justify-center ${
+                <div key={decision.id} className="flex items-center gap-1">
+                  <div className={`w-4 h-4 rounded border flex items-center justify-center ${
                     formData.decisions?.includes(decision.id) 
                       ? 'bg-hotel-gold border-hotel-gold' 
                       : 'border-gray-400'
                   }`}>
                     {formData.decisions?.includes(decision.id) && (
-                      <span className="text-white text-xs">✓</span>
+                      <span className="text-white" style={{ fontSize: '10px' }}>✓</span>
                     )}
                   </div>
-                  <span className="text-sm">{decision.label}</span>
+                  <span style={{ fontSize: '10px' }}>{decision.label}</span>
                 </div>
               ))}
             </div>
@@ -307,37 +301,37 @@ function PreviewA4({ formData, position, isViewMode = false }) {
         </div>
 
         {/* Signatures Section */}
-        <div className="border-t-2 border-gray-300 pt-4">
-          <h3 className="text-lg font-bold text-hotel-dark mb-3 flex items-center">
-            <span className="bg-hotel-gold text-white w-8 h-8 rounded-full flex items-center justify-center mr-2 text-sm">6</span>
+        <div className="border-t-2 border-gray-300 pt-2">
+          <h3 className="text-sm font-bold text-hotel-dark mb-2 flex items-center">
+            <span className="bg-hotel-gold text-white w-6 h-6 rounded-full flex items-center justify-center mr-2 text-xs">6</span>
             VALIDATION
           </h3>
-          <div className="grid grid-cols-2 gap-8">
+          <div className="grid grid-cols-2 gap-4">
             <div>
-              <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">Évalué(e)</p>
-              <div className="pb-1 mb-3 font-medium text-gray-900">
+              <p className="font-semibold text-gray-600 uppercase tracking-wider mb-1" style={{ fontSize: '10px' }}>Évalué(e)</p>
+              <div className="pb-1 mb-2 font-medium text-gray-900 text-xs">
                 {formData.nom || '________________________________'}
               </div>
-              <p className="text-xs text-gray-500 mb-3">Signature: ________________________</p>
-              <p className="text-xs text-gray-500">Date: {formatDate()}</p>
+              <p className="text-gray-500 mb-2" style={{ fontSize: '10px' }}>Signature: ________________________</p>
+              <p className="text-gray-500" style={{ fontSize: '10px' }}>Date: {formatDate()}</p>
             </div>
             <div>
-              <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">Évaluateur</p>
-              <div className="pb-1 mb-3 font-medium text-gray-900">
+              <p className="font-semibold text-gray-600 uppercase tracking-wider mb-1" style={{ fontSize: '10px' }}>Évaluateur</p>
+              <div className="pb-1 mb-2 font-medium text-gray-900 text-xs">
                 {formData.evaluateurNom || '________________________________'}
               </div>
-              <p className="text-xs text-gray-500 mb-3">Signature: ________________________</p>
-              <p className="text-xs text-gray-500">Date: {formatDate(formData.dateEvaluation)}</p>
+              <p className="text-gray-500 mb-2" style={{ fontSize: '10px' }}>Signature: ________________________</p>
+              <p className="text-gray-500" style={{ fontSize: '10px' }}>Date: {formatDate(formData.dateEvaluation)}</p>
             </div>
           </div>
         </div>
 
         {/* Footer */}
-        <div className="mt-8 pt-4 border-t border-gray-200 text-center">
-          <p className="text-xs text-gray-400">
+        <div className="mt-3 pt-2 border-t border-gray-200 text-center">
+          <p style={{ fontSize: '9px' }} className="text-gray-400">
             Al Afifa Hotel - Document Confidentiel - Généré le {format(new Date(), 'dd/MM/yyyy à HH:mm', { locale: fr })}
           </p>
-          <p className="text-xs text-gray-400 mt-1">
+          <p style={{ fontSize: '9px' }} className="text-gray-400 mt-1">
             Ce document est strictement confidentiel et réservé à l'usage interne
           </p>
         </div>
