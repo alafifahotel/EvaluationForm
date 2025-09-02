@@ -1,0 +1,33 @@
+{
+  "nom": "Wissam Yahfoufi",
+  "matricule": "3536436",
+  "service": "Réception",
+  "poste": "Réception",
+  "superieur": "Self",
+  "dateDebut": "2025-08-01",
+  "dateFin": "2025-12-31",
+  "commonScores": {
+    "ponctualite": 5,
+    "presentation": 5,
+    "discipline": 5,
+    "esprit_equipe": 5,
+    "attitude_client": 5
+  },
+  "specificScores": {
+    "pms": 5,
+    "vip": 5,
+    "facturation": 5,
+    "plaintes": 5
+  },
+  "decisions": [
+    "prime",
+    "promotion"
+  ],
+  "evaluateurNom": "Self",
+  "dateEvaluation": "2025-09-03",
+  "totalScore": 45,
+  "maxScore": 45,
+  "percentage": "100.0",
+  "appreciation": "Excellent",
+  "timestamp": "2025-09-02T23:35:57.011Z"
+}
