@@ -21,7 +21,7 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
     minScore: ''
   })
   const [loading, setLoading] = useState(false)
-  const [deleteModal, setDeleteModal] = useState({ isOpen: false, evaluation: null })
+  const [deleteModal, setDeleteModal] = useState({ isOpen: false, evaluation: null, isLoading: false, error: null })
   const [viewModal, setViewModal] = useState({ isOpen: false, evaluation: null })
   const [actionLoading, setActionLoading] = useState(null)
   const hasLoadedRef = useRef(false)
@@ -96,6 +96,9 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
     const evaluation = deleteModal.evaluation
     if (!evaluation) return
 
+    // Set loading state
+    setDeleteModal(prev => ({ ...prev, isLoading: true, error: null }))
+
     try {
       // If evaluation has a GitHub path, delete from GitHub
       if (evaluation.githubPath && githubToken) {
@@ -109,11 +112,17 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
       ))
       
       toast.success(`🗑️ Évaluation de ${evaluation.nom} supprimée avec succès`)
-      setDeleteModal({ isOpen: false, evaluation: null })
+      // Close modal after successful deletion
+      setDeleteModal({ isOpen: false, evaluation: null, isLoading: false, error: null })
     } catch (error) {
       console.error('Erreur lors de la suppression:', error)
-      toast.error('❌ Erreur lors de la suppression de l\'évaluation')
-      throw error
+      // Show error in modal instead of toast
+      const errorMessage = error.message || 'Une erreur est survenue lors de la suppression'
+      setDeleteModal(prev => ({ 
+        ...prev, 
+        isLoading: false, 
+        error: `Impossible de supprimer l'évaluation. ${errorMessage}` 
+      }))
     }
   }
 
@@ -303,7 +312,7 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
                         )}
                       </button>
                       <button
-                        onClick={() => setDeleteModal({ isOpen: true, evaluation })}
+                        onClick={() => setDeleteModal({ isOpen: true, evaluation, isLoading: false, error: null })}
                         className="p-2 text-red-600 hover:text-red-800 hover:bg-red-50 rounded-lg transition-colors"
                         title="Supprimer"
                       >
@@ -339,13 +348,15 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
 
       <ConfirmModal
         isOpen={deleteModal.isOpen}
-        onClose={() => setDeleteModal({ isOpen: false, evaluation: null })}
+        onClose={() => setDeleteModal({ isOpen: false, evaluation: null, isLoading: false, error: null })}
         onConfirm={handleDelete}
         title="Supprimer l'évaluation"
         message={`Êtes-vous sûr de vouloir supprimer l'évaluation de ${deleteModal.evaluation?.nom} ? Cette action est irréversible.`}
         confirmText="Supprimer"
         cancelText="Annuler"
         variant="danger"
+        isLoading={deleteModal.isLoading}
+        error={deleteModal.error}
       />
       
       <ViewModal

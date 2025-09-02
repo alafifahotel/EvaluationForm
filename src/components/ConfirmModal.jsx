@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { X, AlertTriangle, Trash2, Check } from 'lucide-react'
+import { X, AlertTriangle, Trash2, Check, XCircle } from 'lucide-react'
 
 function ConfirmModal({ 
   isOpen, 
@@ -9,10 +9,12 @@ function ConfirmModal({
   message = 'Êtes-vous sûr de vouloir continuer ?',
   confirmText = 'Confirmer',
   cancelText = 'Annuler',
-  variant = 'danger' // 'danger', 'warning', 'info'
+  variant = 'danger', // 'danger', 'warning', 'info'
+  isLoading = false,
+  error = null
 }) {
-  const [isLoading, setIsLoading] = useState(false)
   const [isClosing, setIsClosing] = useState(false)
+  const [internalLoading, setInternalLoading] = useState(false)
 
   useEffect(() => {
     if (isOpen) {
@@ -35,16 +37,12 @@ function ConfirmModal({
   }
 
   const handleConfirm = async () => {
-    setIsLoading(true)
-    try {
-      await onConfirm()
-      handleClose()
-    } catch (error) {
-      console.error('Error in confirmation:', error)
-    } finally {
-      setIsLoading(false)
-    }
+    // Always call onConfirm
+    // Loading state is managed externally if isLoading prop is passed
+    onConfirm()
   }
+
+  const loading = isLoading || internalLoading
 
   if (!isOpen && !isClosing) return null
 
@@ -88,7 +86,7 @@ function ConfirmModal({
             isClosing ? 'opacity-0' : 'opacity-100'
           }`}
           aria-hidden="true"
-          onClick={!isLoading ? handleClose : undefined}
+          onClick={!loading ? handleClose : undefined}
         ></div>
 
         {/* Center modal */}
@@ -102,8 +100,8 @@ function ConfirmModal({
             <button
               type="button"
               className="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-hotel-gold transition-colors duration-200"
-              onClick={!isLoading ? handleClose : undefined}
-              disabled={isLoading}
+              onClick={!loading ? handleClose : undefined}
+              disabled={loading}
             >
               <span className="sr-only">Fermer</span>
               <X className="h-6 w-6" />
@@ -123,6 +121,14 @@ function ConfirmModal({
                 <p className="text-sm text-gray-500">
                   {message}
                 </p>
+                {error && (
+                  <div className="mt-3 p-3 bg-red-50 border border-red-200 rounded-lg">
+                    <p className="text-red-700 text-sm flex items-center">
+                      <XCircle className="w-4 h-4 mr-2 flex-shrink-0" />
+                      {error}
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -132,17 +138,17 @@ function ConfirmModal({
               type="button"
               className={`inline-flex justify-center items-center w-full sm:w-auto px-4 py-2 text-base font-medium text-white rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 sm:text-sm transition-all duration-200 ${
                 styles.confirmBtn
-              } ${isLoading ? 'opacity-75 cursor-not-allowed' : ''}`}
+              } ${loading ? 'opacity-75 cursor-not-allowed' : ''}`}
               onClick={handleConfirm}
-              disabled={isLoading}
+              disabled={loading}
             >
-              {isLoading ? (
+              {loading ? (
                 <>
                   <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
-                  Traitement...
+                  {variant === 'danger' ? 'Suppression...' : 'Traitement...'}
                 </>
               ) : (
                 confirmText
@@ -152,10 +158,10 @@ function ConfirmModal({
             <button
               type="button"
               className={`mt-3 sm:mt-0 inline-flex justify-center items-center w-full sm:w-auto px-4 py-2 bg-white text-base font-medium text-gray-700 rounded-md border border-gray-300 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-hotel-gold sm:text-sm transition-all duration-200 ${
-                isLoading ? 'opacity-50 cursor-not-allowed' : ''
+                loading ? 'opacity-50 cursor-not-allowed' : ''
               }`}
-              onClick={!isLoading ? handleClose : undefined}
-              disabled={isLoading}
+              onClick={!loading ? handleClose : undefined}
+              disabled={loading}
             >
               {cancelText}
             </button>
