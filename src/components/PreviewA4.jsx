@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useEffect } from 'react'
 import { commonCriteria, specificCriteria, positions, appreciationScale, decisions } from '../data/criteriaConfig'
 import { format } from 'date-fns'
 import { fr } from 'date-fns/locale'
@@ -6,6 +6,89 @@ import hotelLogo from '../assets/imgs/logo-hotel-al-afifa.png'
 
 function PreviewA4({ formData, position, isViewMode = false }) {
   const previewRef = useRef(null)
+  
+  useEffect(() => {
+    const calculateScale = () => {
+      if (!previewRef.current) return
+      
+      const container = previewRef.current.parentElement
+      if (!container) return
+      
+      const containerWidth = container.clientWidth
+      const a4WidthMm = 210
+      const mmToPx = 3.7795275591 // 1mm = 3.7795275591px at 96dpi
+      const a4WidthPx = a4WidthMm * mmToPx
+      
+      if (containerWidth < a4WidthPx) {
+        const scale = containerWidth / a4WidthPx
+        previewRef.current.style.transform = `scale(${scale})`
+        previewRef.current.style.transformOrigin = 'top left'
+        // Adjust container height to prevent excess whitespace
+        const a4HeightMm = 297
+        const a4HeightPx = a4HeightMm * mmToPx
+        const scaledHeight = a4HeightPx * scale
+        previewRef.current.style.marginBottom = `${scaledHeight - a4HeightPx}px`
+      } else {
+        previewRef.current.style.transform = ''
+        previewRef.current.style.marginBottom = ''
+      }
+    }
+    
+    calculateScale()
+    window.addEventListener('resize', calculateScale)
+    
+    // Recalculate on orientation change
+    window.addEventListener('orientationchange', () => {
+      setTimeout(calculateScale, 100)
+    })
+    
+    // Add print styles
+    const style = document.createElement('style')
+    style.textContent = `
+      @media print {
+        html, body, #root {
+          margin: 0 !important;
+          padding: 0 !important;
+          width: 100% !important;
+          height: auto !important;
+          overflow: visible !important;
+          min-height: 0 !important;
+        }
+        * {
+          page-break-before: avoid !important;
+        }
+        .print-content {
+          margin: 0 auto !important;
+          padding: 10mm !important;
+          width: 210mm !important;
+          height: 297mm !important;
+          max-width: 210mm !important;
+          box-sizing: border-box !important;
+          position: fixed !important;
+          left: 0 !important;
+          right: 0 !important;
+          top: 0 !important;
+          transform: none !important;
+          page-break-before: avoid !important;
+          page-break-inside: avoid !important;
+        }
+        .no-print, .print\\:hidden {
+          display: none !important;
+        }
+      }
+      @page {
+        size: A4 portrait;
+        margin: 0;
+      }
+    `
+    document.head.appendChild(style)
+    
+    return () => {
+      window.removeEventListener('resize', calculateScale)
+      window.removeEventListener('orientationchange', calculateScale)
+      document.head.removeChild(style)
+    }
+  }, [])
   
   const positionLabel = positions.find(p => p.value === position)?.label || ''
   const positionCriteria = specificCriteria[position] || []
@@ -77,7 +160,19 @@ function PreviewA4({ formData, position, isViewMode = false }) {
 
   return (
     <>
-      <div ref={previewRef} className="bg-white print-content printable-area" style={{ width: '210mm', minHeight: '297mm', padding: '10mm', fontFamily: 'system-ui, -apple-system, sans-serif', pageBreakInside: 'avoid', pageBreakAfter: 'auto', boxSizing: 'border-box' }}>
+      <div 
+        ref={previewRef} 
+        className="bg-white print-content printable-area" 
+        style={{ 
+          width: '210mm', 
+          minHeight: '297mm', 
+          padding: '10mm', 
+          fontFamily: 'system-ui, -apple-system, sans-serif', 
+          pageBreakInside: 'avoid', 
+          pageBreakAfter: 'auto', 
+          boxSizing: 'border-box',
+          margin: '0 auto'
+        }}>
         {/* Professional Header */}
         <div className="border-b-3 border-hotel-gold pb-3 mb-4" style={{ borderColor: '#daa520', borderBottomWidth: '3px' }}>
           <div className="flex justify-between items-start">
