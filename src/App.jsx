@@ -179,7 +179,7 @@ function AppContent() {
                     <h3 className="text-lg font-semibold mb-4">
                       Aperçu du document
                     </h3>
-                    <div className="border-2 border-gray-300 rounded-lg overflow-auto max-h-[calc(100vh-200px)] shadow-xl">
+                    <div className="border-2 border-gray-300 rounded-lg overflow-auto max-h-100vh shadow-xl">
                       <PreviewA4 
                         formData={formData} 
                         position={selectedPosition || positions.find(p => p.label === editingEvaluation?.service)?.value || ''}

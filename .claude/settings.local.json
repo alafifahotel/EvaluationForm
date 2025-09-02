@@ -11,6 +11,10 @@
       "Bash(git commit:*)",
       "Bash(git pull:*)",
       "Read(C:\\Users\\wissa\\Pictures\\Screenshots/**)",
+      "Read(C:\\Users\\wissa\\Pictures\\Screenshots/**)",
+      "Read(C:\\Users\\wissa\\Pictures\\Screenshots/**)",
+      "Bash(npm uninstall:*)",
+      "Read(C:\\Users\\wissa\\Pictures\\Screenshots/**)",
       "Read(C:\\Users\\wissa\\Pictures\\Screenshots/**)"
     ],
     "deny": [],

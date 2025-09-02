@@ -8,9 +8,8 @@ import EmptyState from './EmptyState'
 import LoadingSpinner from './LoadingSpinner'
 import LoadingButton from './LoadingButton'
 import ViewModal from './ViewModal'
-import { Edit, Trash2, Eye, Download, Search, Filter, RefreshCw } from 'lucide-react'
+import { Edit, Trash2, Eye, Search, Filter, RefreshCw } from 'lucide-react'
 import { useToast } from '../contexts/ToastContext'
-import { generatePDF } from '../utils/pdfGenerator'
 
 function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluation }) {
   const [evaluations, setEvaluations] = useState(localEvaluations || [])
@@ -126,19 +125,6 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
     }
   }
 
-  const handleDownload = async (evaluation, index) => {
-    setActionLoading(`download-${index}`)
-    try {
-      const positionLabel = evaluation.service || evaluation.poste || ''
-      const fileName = await generatePDF(evaluation, positionLabel)
-      toast.success(`✅ PDF téléchargé: ${fileName}`)
-    } catch (error) {
-      console.error('Erreur lors de la génération du PDF:', error)
-      toast.error('❌ Erreur lors de la génération du PDF')
-    } finally {
-      setActionLoading(null)
-    }
-  }
 
   const handleView = (evaluation) => {
     setViewModal({ isOpen: true, evaluation })
@@ -324,18 +310,6 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
                         title="Voir"
                       >
                         <Eye className="h-4 w-4" />
-                      </button>
-                      <button
-                        onClick={() => handleDownload(evaluation, index)}
-                        className="p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-lg transition-colors"
-                        title="Télécharger PDF"
-                        disabled={actionLoading === `download-${index}`}
-                      >
-                        {actionLoading === `download-${index}` ? (
-                          <div className="animate-spin h-4 w-4 border-2 border-blue-600 border-t-transparent rounded-full" />
-                        ) : (
-                          <Download className="h-4 w-4" />
-                        )}
                       </button>
                     </div>
                   </td>
