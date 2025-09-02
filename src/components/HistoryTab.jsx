@@ -21,16 +21,21 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
   const [loading, setLoading] = useState(false)
   const [deleteModal, setDeleteModal] = useState({ isOpen: false, evaluation: null })
   const [actionLoading, setActionLoading] = useState(null)
+  const [hasLoadedFromGitHub, setHasLoadedFromGitHub] = useState(false)
   const toast = useToast()
 
   useEffect(() => {
-    loadEvaluationsFromGitHub()
-  }, [githubToken])
+    if (!hasLoadedFromGitHub) {
+      loadEvaluationsFromGitHub()
+    }
+  }, [githubToken, hasLoadedFromGitHub])
 
   const loadEvaluationsFromGitHub = async () => {
-    if (!githubToken) return
+    if (!githubToken || hasLoadedFromGitHub) return
     
     setLoading(true)
+    setHasLoadedFromGitHub(true)
+    
     try {
       const githubService = new GitHubService(githubToken)
       const githubEvaluations = await githubService.loadEvaluations()
@@ -119,6 +124,7 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
   }
 
   const handleRefresh = () => {
+    setHasLoadedFromGitHub(false)
     loadEvaluationsFromGitHub()
   }
 
