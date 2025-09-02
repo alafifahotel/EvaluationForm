@@ -1,23 +1,23 @@
 {
   "nom": "Aly Bachir",
   "matricule": "9282757",
-  "service": "RÈception",
-  "poste": "RÈception",
+  "service": "R√©ception",
+  "poste": "R√©ception",
   "superieur": "Ntek",
   "dateDebut": "2025-08-01",
   "dateFin": "2025-09-02",
   "commonScores": {
-    "ponctualite": 2,
-    "presentation": 2,
-    "discipline": 2,
-    "esprit_equipe": 2,
-    "attitude_client": 2
+    "ponctualite": 4,
+    "presentation": 4,
+    "discipline": 4,
+    "esprit_equipe": 4,
+    "attitude_client": 4
   },
   "specificScores": {
-    "pms": 2,
-    "vip": 2,
-    "facturation": 2,
-    "plaintes": 2
+    "pms": 4,
+    "vip": 4,
+    "facturation": 4,
+    "plaintes": 4
   },
   "decisions": [
     "prime",
@@ -27,9 +27,10 @@
   ],
   "evaluateurNom": "Nayik Dakar",
   "dateEvaluation": "2025-09-02",
-  "totalScore": 18,
+  "totalScore": 36,
   "maxScore": 45,
-  "percentage": "40.0",
-  "appreciation": "Insuffisant",
-  "timestamp": "2025-09-02T12:07:10.356Z"
+  "percentage": "80.0",
+  "appreciation": "Tr√®s Bon",
+  "timestamp": "2025-09-02T12:07:10.356Z",
+  "githubPath": "evaluations/2025/09/eval_Aly_Bachir_1756814830357.json"
 }
