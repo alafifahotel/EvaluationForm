@@ -7,8 +7,10 @@ import ConfirmModal from './ConfirmModal'
 import EmptyState from './EmptyState'
 import LoadingSpinner from './LoadingSpinner'
 import LoadingButton from './LoadingButton'
+import ViewModal from './ViewModal'
 import { Edit, Trash2, Eye, Download, Search, Filter, RefreshCw } from 'lucide-react'
 import { useToast } from '../contexts/ToastContext'
+import { generatePDF } from '../utils/pdfGenerator'
 
 function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluation }) {
   const [evaluations, setEvaluations] = useState(localEvaluations || [])
@@ -20,6 +22,7 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
   })
   const [loading, setLoading] = useState(false)
   const [deleteModal, setDeleteModal] = useState({ isOpen: false, evaluation: null })
+  const [viewModal, setViewModal] = useState({ isOpen: false, evaluation: null })
   const [actionLoading, setActionLoading] = useState(null)
   const hasLoadedRef = useRef(false)
   const toast = useToast()
@@ -114,15 +117,22 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
     }
   }
 
-  const handleDownload = (evaluation) => {
-    // Generate and download PDF for this evaluation
-    const fileName = `EVAL_${evaluation.service}_${evaluation.nom}_${format(new Date(evaluation.dateEvaluation), 'yyyy-MM-dd')}.pdf`
-    toast.info(`📥 Téléchargement de: ${fileName}`)
+  const handleDownload = async (evaluation, index) => {
+    setActionLoading(`download-${index}`)
+    try {
+      const positionLabel = evaluation.service || evaluation.poste || ''
+      const fileName = await generatePDF(evaluation, positionLabel)
+      toast.success(`✅ PDF téléchargé: ${fileName}`)
+    } catch (error) {
+      console.error('Erreur lors de la génération du PDF:', error)
+      toast.error('❌ Erreur lors de la génération du PDF')
+    } finally {
+      setActionLoading(null)
+    }
   }
 
   const handleView = (evaluation) => {
-    // Open evaluation in preview mode
-    console.log('Viewing evaluation:', evaluation)
+    setViewModal({ isOpen: true, evaluation })
   }
 
   const handleRefresh = () => {
@@ -307,11 +317,16 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
                         <Eye className="h-4 w-4" />
                       </button>
                       <button
-                        onClick={() => handleDownload(evaluation)}
+                        onClick={() => handleDownload(evaluation, index)}
                         className="p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-lg transition-colors"
                         title="Télécharger PDF"
+                        disabled={actionLoading === `download-${index}`}
                       >
-                        <Download className="h-4 w-4" />
+                        {actionLoading === `download-${index}` ? (
+                          <div className="animate-spin h-4 w-4 border-2 border-blue-600 border-t-transparent rounded-full" />
+                        ) : (
+                          <Download className="h-4 w-4" />
+                        )}
                       </button>
                     </div>
                   </td>
@@ -331,6 +346,12 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
         confirmText="Supprimer"
         cancelText="Annuler"
         variant="danger"
+      />
+      
+      <ViewModal
+        isOpen={viewModal.isOpen}
+        onClose={() => setViewModal({ isOpen: false, evaluation: null })}
+        evaluation={viewModal.evaluation}
       />
     </div>
   )
