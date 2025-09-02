@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { format } from 'date-fns'
 import { fr } from 'date-fns/locale'
 import { positions } from '../data/criteriaConfig'
@@ -21,20 +21,22 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
   const [loading, setLoading] = useState(false)
   const [deleteModal, setDeleteModal] = useState({ isOpen: false, evaluation: null })
   const [actionLoading, setActionLoading] = useState(null)
-  const [hasLoadedFromGitHub, setHasLoadedFromGitHub] = useState(false)
+  const hasLoadedRef = useRef(false)
   const toast = useToast()
 
   useEffect(() => {
-    if (!hasLoadedFromGitHub) {
+    // Only load if we haven't loaded yet in this component instance
+    if (githubToken && !hasLoadedRef.current) {
       loadEvaluationsFromGitHub()
     }
-  }, [githubToken, hasLoadedFromGitHub])
+  }, [githubToken])
 
   const loadEvaluationsFromGitHub = async () => {
-    if (!githubToken || hasLoadedFromGitHub) return
+    if (!githubToken || hasLoadedRef.current) return
     
+    // Set the ref immediately to prevent double execution
+    hasLoadedRef.current = true
     setLoading(true)
-    setHasLoadedFromGitHub(true)
     
     try {
       const githubService = new GitHubService(githubToken)
@@ -124,7 +126,7 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
   }
 
   const handleRefresh = () => {
-    setHasLoadedFromGitHub(false)
+    hasLoadedRef.current = false
     loadEvaluationsFromGitHub()
   }
 
