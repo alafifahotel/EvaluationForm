@@ -1,0 +1,33 @@
+{
+  "nom": "Yahfoufi Wissam",
+  "matricule": "058358",
+  "service": "Réception",
+  "poste": "Réception",
+  "superieur": "Self Employed",
+  "dateDebut": "2025-09-01",
+  "dateFin": "2025-09-02",
+  "commonScores": {
+    "ponctualite": 4,
+    "presentation": 4,
+    "discipline": 4,
+    "esprit_equipe": 4,
+    "attitude_client": 4
+  },
+  "specificScores": {
+    "pms": 4,
+    "vip": 4,
+    "facturation": 4,
+    "plaintes": 4
+  },
+  "decisions": [
+    "prime",
+    "promotion"
+  ],
+  "evaluateurNom": "Rea Moi",
+  "dateEvaluation": "2025-09-02",
+  "totalScore": 36,
+  "maxScore": 45,
+  "percentage": "80.0",
+  "appreciation": "Très Bon",
+  "timestamp": "2025-09-02T13:15:34.575Z"
+}
