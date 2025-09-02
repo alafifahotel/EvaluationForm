@@ -8,6 +8,7 @@ import EmptyState from './EmptyState'
 import LoadingSpinner from './LoadingSpinner'
 import LoadingButton from './LoadingButton'
 import { Edit, Trash2, Eye, Download, Search, Filter, RefreshCw } from 'lucide-react'
+import { useToast } from '../contexts/ToastContext'
 
 function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluation }) {
   const [evaluations, setEvaluations] = useState(localEvaluations || [])
@@ -20,6 +21,7 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
   const [loading, setLoading] = useState(false)
   const [deleteModal, setDeleteModal] = useState({ isOpen: false, evaluation: null })
   const [actionLoading, setActionLoading] = useState(null)
+  const toast = useToast()
 
   useEffect(() => {
     loadEvaluationsFromGitHub()
@@ -42,8 +44,13 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
       )
       
       setEvaluations(uniqueEvaluations)
+      // Only show toast if we actually loaded evaluations from GitHub
+      if (githubEvaluations.length > 0) {
+        toast.success(`📂 ${githubEvaluations.length} évaluation(s) chargée(s) depuis GitHub`)
+      }
     } catch (error) {
       console.error('Erreur lors du chargement des évaluations:', error)
+      toast.error('⚠️ Erreur lors du chargement des évaluations')
       // Fall back to local evaluations
       setEvaluations(localEvaluations || [])
     } finally {
@@ -91,9 +98,11 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
         e.timestamp !== evaluation.timestamp || e.nom !== evaluation.nom
       ))
       
+      toast.success(`🗑️ Évaluation de ${evaluation.nom} supprimée avec succès`)
       setDeleteModal({ isOpen: false, evaluation: null })
     } catch (error) {
       console.error('Erreur lors de la suppression:', error)
+      toast.error('❌ Erreur lors de la suppression de l\'évaluation')
       throw error
     }
   }
@@ -101,7 +110,7 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
   const handleDownload = (evaluation) => {
     // Generate and download PDF for this evaluation
     const fileName = `EVAL_${evaluation.service}_${evaluation.nom}_${format(new Date(evaluation.dateEvaluation), 'yyyy-MM-dd')}.pdf`
-    alert(`Téléchargement de: ${fileName}`)
+    toast.info(`📥 Téléchargement de: ${fileName}`)
   }
 
   const handleView = (evaluation) => {

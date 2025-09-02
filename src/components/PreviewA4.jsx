@@ -128,19 +128,19 @@ function PreviewA4({ formData, position }) {
             <div className="space-y-3">
               <div>
                 <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider">Nom & Prénom</label>
-                <div className="border-b-2 border-gray-300 py-1 font-medium">
+                <div className="py-1 font-medium text-gray-900">
                   {formData.nom || '________________________________'}
                 </div>
               </div>
               <div>
                 <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider">Service</label>
-                <div className="border-b-2 border-gray-300 py-1 font-medium">
+                <div className="py-1 font-medium text-gray-900">
                   {positionLabel || '________________________________'}
                 </div>
               </div>
               <div>
                 <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider">Supérieur Hiérarchique</label>
-                <div className="border-b-2 border-gray-300 py-1 font-medium">
+                <div className="py-1 font-medium text-gray-900">
                   {formData.superieur || '________________________________'}
                 </div>
               </div>
@@ -148,19 +148,19 @@ function PreviewA4({ formData, position }) {
             <div className="space-y-3">
               <div>
                 <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider">Matricule</label>
-                <div className="border-b-2 border-gray-300 py-1 font-medium">
+                <div className="py-1 font-medium text-gray-900">
                   {formData.matricule || '________________________________'}
                 </div>
               </div>
               <div>
                 <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider">Poste</label>
-                <div className="border-b-2 border-gray-300 py-1 font-medium">
+                <div className="py-1 font-medium text-gray-900">
                   {positionLabel || '________________________________'}
                 </div>
               </div>
               <div>
                 <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider">Période d'Évaluation</label>
-                <div className="border-b-2 border-gray-300 py-1 font-medium">
+                <div className="py-1 font-medium text-gray-900">
                   Du {formatDate(formData.dateDebut)} au {formatDate(formData.dateFin)}
                 </div>
               </div>
@@ -168,17 +168,6 @@ function PreviewA4({ formData, position }) {
           </div>
         </div>
 
-        {/* Scoring Scale Legend */}
-        <div className="bg-blue-50 rounded-lg p-3 mb-6">
-          <h4 className="text-sm font-bold text-blue-900 mb-2">ÉCHELLE DE NOTATION</h4>
-          <div className="flex justify-between text-xs">
-            <span className="flex items-center"><span className="w-3 h-3 bg-red-500 rounded-full mr-1"></span> 1 = Insuffisant</span>
-            <span className="flex items-center"><span className="w-3 h-3 bg-orange-500 rounded-full mr-1"></span> 2 = À améliorer</span>
-            <span className="flex items-center"><span className="w-3 h-3 bg-yellow-500 rounded-full mr-1"></span> 3 = Satisfaisant</span>
-            <span className="flex items-center"><span className="w-3 h-3 bg-blue-500 rounded-full mr-1"></span> 4 = Bon</span>
-            <span className="flex items-center"><span className="w-3 h-3 bg-green-500 rounded-full mr-1"></span> 5 = Excellent</span>
-          </div>
-        </div>
 
         {/* Common Criteria Section */}
         <div className="mb-6">
@@ -253,23 +242,33 @@ function PreviewA4({ formData, position }) {
         )}
 
         {/* Performance Summary */}
-        <div className="bg-gradient-to-r from-hotel-gold to-yellow-500 text-white rounded-lg p-4 mb-6">
-          <h3 className="text-lg font-bold mb-3 flex items-center">
-            <span className="bg-white text-hotel-gold w-8 h-8 rounded-full flex items-center justify-center mr-2 text-sm">4</span>
-            RÉSULTAT DE L'ÉVALUATION
-          </h3>
-          <div className="grid grid-cols-3 gap-4 text-center">
-            <div>
-              <p className="text-2xl font-bold">{total}/{max}</p>
-              <p className="text-xs uppercase tracking-wider opacity-90">Points Obtenus</p>
-            </div>
-            <div>
-              <p className="text-2xl font-bold">{percentage}%</p>
-              <p className="text-xs uppercase tracking-wider opacity-90">Pourcentage</p>
-            </div>
-            <div>
-              <p className="text-2xl font-bold">{appreciation.label}</p>
-              <p className="text-xs uppercase tracking-wider opacity-90">Appréciation</p>
+        <div className="relative overflow-hidden rounded-xl mb-6">
+          <div className="absolute inset-0 bg-gradient-to-br from-hotel-gold via-yellow-500 to-yellow-600 opacity-90"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+          <div className="relative p-6 text-white">
+            <h3 className="text-lg font-bold mb-4 flex items-center">
+              <span className="bg-white/20 backdrop-blur-sm text-white w-8 h-8 rounded-full flex items-center justify-center mr-2 text-sm border border-white/30">4</span>
+              RÉSULTAT DE L'ÉVALUATION
+            </h3>
+            <div className="grid grid-cols-3 gap-6">
+              <div className="text-center">
+                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 border border-white/20">
+                  <p className="text-3xl font-bold mb-1">{total}/{max}</p>
+                  <p className="text-xs uppercase tracking-wider opacity-90">Points Obtenus</p>
+                </div>
+              </div>
+              <div className="text-center">
+                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 border border-white/20">
+                  <p className="text-3xl font-bold mb-1">{percentage}%</p>
+                  <p className="text-xs uppercase tracking-wider opacity-90">Pourcentage</p>
+                </div>
+              </div>
+              <div className="text-center">
+                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 border border-white/20">
+                  <p className="text-xl font-bold mb-1">{appreciation.label}</p>
+                  <p className="text-xs uppercase tracking-wider opacity-90">Appréciation</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -308,20 +307,20 @@ function PreviewA4({ formData, position }) {
           </h3>
           <div className="grid grid-cols-2 gap-8">
             <div>
-              <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1">Évalué(e)</p>
-              <div className="border-b-2 border-gray-300 pb-1 mb-1">
+              <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">Évalué(e)</p>
+              <div className="pb-1 mb-3 font-medium text-gray-900">
                 {formData.nom || '________________________________'}
               </div>
-              <p className="text-xs text-gray-500">Signature: ________________________</p>
-              <p className="text-xs text-gray-500 mt-1">Date: {formatDate()}</p>
+              <p className="text-xs text-gray-500 mb-3">Signature: ________________________</p>
+              <p className="text-xs text-gray-500">Date: {formatDate()}</p>
             </div>
             <div>
-              <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1">Évaluateur</p>
-              <div className="border-b-2 border-gray-300 pb-1 mb-1">
+              <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">Évaluateur</p>
+              <div className="pb-1 mb-3 font-medium text-gray-900">
                 {formData.evaluateurNom || '________________________________'}
               </div>
-              <p className="text-xs text-gray-500">Signature: ________________________</p>
-              <p className="text-xs text-gray-500 mt-1">Date: {formatDate(formData.dateEvaluation)}</p>
+              <p className="text-xs text-gray-500 mb-3">Signature: ________________________</p>
+              <p className="text-xs text-gray-500">Date: {formatDate(formData.dateEvaluation)}</p>
             </div>
           </div>
         </div>

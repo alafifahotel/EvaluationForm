@@ -4,8 +4,10 @@ import PreviewA4 from './components/PreviewA4'
 import HistoryTab from './components/HistoryTab'
 import { positions } from './data/criteriaConfig'
 import { FileEdit, History, Edit } from 'lucide-react'
+import { ToastProvider, useToast } from './contexts/ToastContext'
 
-function App() {
+function AppContent() {
+  const toast = useToast()
   // Get initial tab from URL hash or default to 'evaluation'
   const getInitialTab = () => {
     const hash = window.location.hash.slice(1)
@@ -44,6 +46,9 @@ function App() {
       if (token) {
         localStorage.setItem('github_token', token)
         setGithubToken(token)
+        toast.success('🔐 Token GitHub enregistré avec succès')
+      } else {
+        toast.warning('⚠️ Aucun token GitHub fourni - fonctionnement en mode local')
       }
     }
   }, [])
@@ -194,6 +199,14 @@ function App() {
         )}
       </div>
     </div>
+  )
+}
+
+function App() {
+  return (
+    <ToastProvider>
+      <AppContent />
+    </ToastProvider>
   )
 }
 

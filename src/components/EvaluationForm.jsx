@@ -5,9 +5,11 @@ import { fr } from 'date-fns/locale'
 import GitHubService from '../services/githubService'
 import LoadingButton from './LoadingButton'
 import { Save, X, CheckCircle } from 'lucide-react'
+import { useToast } from '../contexts/ToastContext'
 
 function EvaluationForm({ position, positionLabel, onFormChange, onSave, githubToken, initialData, isEditing, onCancel }) {
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const toast = useToast()
   const [formData, setFormData] = useState(initialData || {
     nom: '',
     matricule: '',
@@ -120,7 +122,7 @@ function EvaluationForm({ position, positionLabel, onFormChange, onSave, githubT
       }
       
       onSave(evaluationData)
-      alert(isEditing ? 'Évaluation mise à jour avec succès!' : 'Évaluation enregistrée avec succès!')
+      toast.success(isEditing ? '✅ Évaluation mise à jour avec succès!' : '✅ Évaluation enregistrée avec succès!')
       
       // Reset form only if not editing
       if (!isEditing) {
@@ -141,7 +143,7 @@ function EvaluationForm({ position, positionLabel, onFormChange, onSave, githubT
       }
     } catch (error) {
       console.error('Erreur lors de la sauvegarde:', error)
-      alert('Erreur lors de la sauvegarde. Vérifiez votre token GitHub.')
+      toast.error('❌ Erreur lors de la sauvegarde. Vérifiez votre token GitHub.')
     } finally {
       setIsSubmitting(false)
     }

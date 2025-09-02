@@ -38,3 +38,13 @@
     @apply w-16 text-center rounded-md border-gray-300 shadow-sm focus:border-hotel-gold focus:ring focus:ring-hotel-gold focus:ring-opacity-50;
   }
 }
+
+/* Toast animation */
+@keyframes progress {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}
