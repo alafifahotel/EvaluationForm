@@ -26,7 +26,9 @@ class GitHubService {
       await this.ensureDirectoryExists(`evaluations/${year}`)
       await this.ensureDirectoryExists(`evaluations/${year}/${month}`)
       
-      const content = btoa(JSON.stringify(evaluationData, null, 2))
+      // Properly encode UTF-8 content
+      const jsonString = JSON.stringify(evaluationData, null, 2)
+      const content = btoa(unescape(encodeURIComponent(jsonString)))
       
       const response = await this.octokit.request('PUT /repos/{owner}/{repo}/contents/{path}', {
         owner: this.owner,
@@ -103,8 +105,10 @@ class GitHubService {
                           ref: this.branch
                         })
                         
-                        const content = atob(fileContent.data.content)
-                        const evaluation = JSON.parse(content)
+                        // Properly decode UTF-8 content
+                        const base64 = fileContent.data.content
+                        const decodedContent = decodeURIComponent(escape(atob(base64)))
+                        const evaluation = JSON.parse(decodedContent)
                         // Add the GitHub path to the evaluation
                         evaluation.githubPath = file.path
                         evaluations.push(evaluation)
@@ -135,7 +139,9 @@ class GitHubService {
         ref: this.branch
       })
       
-      const content = btoa(JSON.stringify(evaluationData, null, 2))
+      // Properly encode UTF-8 content
+      const jsonString = JSON.stringify(evaluationData, null, 2)
+      const content = btoa(unescape(encodeURIComponent(jsonString)))
       
       const response = await this.octokit.request('PUT /repos/{owner}/{repo}/contents/{path}', {
         owner: this.owner,
