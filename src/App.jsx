@@ -3,7 +3,7 @@ import EvaluationForm from './components/EvaluationForm'
 import PreviewA4 from './components/PreviewA4'
 import HistoryTab from './components/HistoryTab'
 import { positions } from './data/criteriaConfig'
-import { FileEdit, History } from 'lucide-react'
+import { FileEdit, History, Edit } from 'lucide-react'
 
 function App() {
   // Get initial tab from URL hash or default to 'evaluation'
@@ -125,6 +125,14 @@ function App() {
         {activeTab === 'evaluation' ? (
           <>
             <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+              {editingEvaluation && (
+                <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg flex items-center">
+                  <Edit className="h-5 w-5 text-blue-600 mr-2" />
+                  <span className="text-blue-800 font-medium">
+                    Mode édition : {editingEvaluation.nom} - {editingEvaluation.service}
+                  </span>
+                </div>
+              )}
               <div className="mb-6">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Sélectionner le poste à évaluer
@@ -133,6 +141,7 @@ function App() {
                   value={selectedPosition}
                   onChange={handlePositionChange}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hotel-gold focus:border-transparent"
+                  disabled={editingEvaluation}
                 >
                   <option value="">-- Choisir un poste --</option>
                   {positions.map((pos) => (
@@ -143,17 +152,22 @@ function App() {
                 </select>
               </div>
 
-              {selectedPosition && (
+              {(selectedPosition || editingEvaluation) && (
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                   <div>
                     <EvaluationForm
-                      position={selectedPosition}
-                      positionLabel={positions.find(p => p.value === selectedPosition)?.label || ''}
+                      position={selectedPosition || positions.find(p => p.label === editingEvaluation?.service)?.value || ''}
+                      positionLabel={positions.find(p => p.value === selectedPosition)?.label || editingEvaluation?.service || ''}
                       onFormChange={handleFormChange}
                       onSave={handleSaveEvaluation}
                       githubToken={githubToken}
                       initialData={editingEvaluation}
                       isEditing={!!editingEvaluation}
+                      onCancel={() => {
+                        setEditingEvaluation(null)
+                        setSelectedPosition('')
+                        setFormData({})
+                      }}
                     />
                   </div>
                   <div className="lg:sticky lg:top-6">
@@ -163,7 +177,7 @@ function App() {
                     <div className="border rounded-lg overflow-auto max-h-screen">
                       <PreviewA4 
                         formData={formData} 
-                        position={selectedPosition}
+                        position={selectedPosition || positions.find(p => p.label === editingEvaluation?.service)?.value || ''}
                       />
                     </div>
                   </div>

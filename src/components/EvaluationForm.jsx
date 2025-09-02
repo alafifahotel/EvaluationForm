@@ -3,8 +3,11 @@ import { commonCriteria, specificCriteria, appreciationScale, decisions } from '
 import { format } from 'date-fns'
 import { fr } from 'date-fns/locale'
 import GitHubService from '../services/githubService'
+import LoadingButton from './LoadingButton'
+import { Save, X, CheckCircle } from 'lucide-react'
 
-function EvaluationForm({ position, positionLabel, onFormChange, onSave, githubToken, initialData, isEditing }) {
+function EvaluationForm({ position, positionLabel, onFormChange, onSave, githubToken, initialData, isEditing, onCancel }) {
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [formData, setFormData] = useState(initialData || {
     nom: '',
     matricule: '',
@@ -86,21 +89,22 @@ function EvaluationForm({ position, positionLabel, onFormChange, onSave, githubT
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const { total, percentage } = calculateTotal()
-    const appreciation = getAppreciation(percentage)
-    const maxScore = (commonCriteria.length + (specificCriteria[position]?.length || 0)) * 5
+    setIsSubmitting(true)
     
-    const evaluationData = {
-      ...formData,
-      totalScore: total,
-      maxScore,
-      percentage,
-      appreciation: appreciation.label,
-      timestamp: isEditing ? formData.timestamp : new Date().toISOString(),
-      githubPath: formData.githubPath // Preserve GitHub path if editing
-    }
-
     try {
+      const { total, percentage } = calculateTotal()
+      const appreciation = getAppreciation(percentage)
+      const maxScore = (commonCriteria.length + (specificCriteria[position]?.length || 0)) * 5
+      
+      const evaluationData = {
+        ...formData,
+        totalScore: total,
+        maxScore,
+        percentage,
+        appreciation: appreciation.label,
+        timestamp: isEditing ? formData.timestamp : new Date().toISOString(),
+        githubPath: formData.githubPath // Preserve GitHub path if editing
+      }
       // Save to GitHub if token is available
       if (githubToken) {
         const githubService = new GitHubService(githubToken)
@@ -138,6 +142,8 @@ function EvaluationForm({ position, positionLabel, onFormChange, onSave, githubT
     } catch (error) {
       console.error('Erreur lors de la sauvegarde:', error)
       alert('Erreur lors de la sauvegarde. Vérifiez votre token GitHub.')
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -360,7 +366,7 @@ function EvaluationForm({ position, positionLabel, onFormChange, onSave, githubT
         {isEditing && (
           <LoadingButton
             type="button"
-            onClick={() => window.location.reload()}
+            onClick={onCancel || (() => window.location.reload())}
             icon={X}
             variant="secondary"
             size="lg"

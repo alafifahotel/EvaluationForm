@@ -28,7 +28,7 @@ function LoadingButton({
     lg: 'px-6 py-3 text-lg'
   }
   
-  const disabledStyles = (isLoading || disabled) ? 'opacity-50 cursor-not-allowed' : 'hover:scale-105 active:scale-95'
+  const disabledStyles = (isLoading || disabled) ? 'opacity-50 cursor-not-allowed' : 'active:scale-95'
   
   return (
     <button

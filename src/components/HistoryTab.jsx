@@ -258,45 +258,44 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
                     {evaluation.evaluateurNom}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <div className="flex items-center space-x-2">
-                      <LoadingButton
+                    <div className="flex items-center space-x-1">
+                      <button
                         onClick={() => {
                           setActionLoading(`edit-${index}`)
                           handleEdit(evaluation)
                           setActionLoading(null)
                         }}
-                        variant="outline"
-                        size="sm"
-                        icon={Edit}
-                        isLoading={actionLoading === `edit-${index}`}
+                        className="p-2 text-green-600 hover:text-green-800 hover:bg-green-50 rounded-lg transition-colors"
+                        title="Modifier"
+                        disabled={actionLoading === `edit-${index}`}
                       >
-                        Modifier
-                      </LoadingButton>
-                      <LoadingButton
+                        {actionLoading === `edit-${index}` ? (
+                          <div className="animate-spin h-4 w-4 border-2 border-green-600 border-t-transparent rounded-full" />
+                        ) : (
+                          <Edit className="h-4 w-4" />
+                        )}
+                      </button>
+                      <button
                         onClick={() => setDeleteModal({ isOpen: true, evaluation })}
-                        variant="outline"
-                        size="sm"
-                        icon={Trash2}
-                        className="text-red-600 hover:text-red-700 border-red-300 hover:border-red-400"
+                        className="p-2 text-red-600 hover:text-red-800 hover:bg-red-50 rounded-lg transition-colors"
+                        title="Supprimer"
                       >
-                        Supprimer
-                      </LoadingButton>
-                      <LoadingButton
+                        <Trash2 className="h-4 w-4" />
+                      </button>
+                      <button
                         onClick={() => handleView(evaluation)}
-                        variant="outline"
-                        size="sm"
-                        icon={Eye}
+                        className="p-2 text-hotel-gold hover:text-yellow-600 hover:bg-yellow-50 rounded-lg transition-colors"
+                        title="Voir"
                       >
-                        Voir
-                      </LoadingButton>
-                      <LoadingButton
+                        <Eye className="h-4 w-4" />
+                      </button>
+                      <button
                         onClick={() => handleDownload(evaluation)}
-                        variant="outline"
-                        size="sm"
-                        icon={Download}
+                        className="p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-lg transition-colors"
+                        title="Télécharger PDF"
                       >
-                        PDF
-                      </LoadingButton>
+                        <Download className="h-4 w-4" />
+                      </button>
                     </div>
                   </td>
                 </tr>
