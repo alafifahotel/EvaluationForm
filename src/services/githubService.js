@@ -21,6 +21,11 @@ class GitHubService {
       const fileName = `eval_${evaluationData.nom.replace(/\s+/g, '_')}_${timestamp}.json`
       const path = `evaluations/${year}/${month}/${fileName}`
       
+      // Ensure the directory structure exists
+      await this.ensureDirectoryExists(`evaluations`)
+      await this.ensureDirectoryExists(`evaluations/${year}`)
+      await this.ensureDirectoryExists(`evaluations/${year}/${month}`)
+      
       const content = btoa(JSON.stringify(evaluationData, null, 2))
       
       const response = await this.octokit.request('PUT /repos/{owner}/{repo}/contents/{path}', {
@@ -43,13 +48,23 @@ class GitHubService {
     try {
       const evaluations = []
       
-      // Get the evaluations directory
-      const response = await this.octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
-        owner: this.owner,
-        repo: this.repo,
-        path: 'evaluations',
-        ref: this.branch
-      })
+      // Check if evaluations directory exists
+      let response
+      try {
+        response = await this.octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
+          owner: this.owner,
+          repo: this.repo,
+          path: 'evaluations',
+          ref: this.branch
+        })
+      } catch (error) {
+        if (error.status === 404) {
+          // Directory doesn't exist yet, return empty array
+          console.log('No evaluations directory found yet')
+          return []
+        }
+        throw error
+      }
       
       // If evaluations directory exists, traverse year folders
       if (Array.isArray(response.data)) {
@@ -99,13 +114,8 @@ class GitHubService {
       
       return evaluations
     } catch (error) {
-      // If evaluations directory doesn't exist, return empty array
-      if (error.status === 404) {
-        console.log('Evaluations directory not found, returning empty array')
-        return []
-      }
       console.error('Error loading evaluations from GitHub:', error)
-      throw error
+      return []
     }
   }
 
@@ -135,29 +145,43 @@ class GitHubService {
     }
   }
 
-  async createDirectory(path) {
+  async ensureDirectoryExists(path) {
     try {
-      // Create a placeholder file in the directory
-      const placeholderPath = `${path}/.gitkeep`
-      const content = btoa('')
-      
-      const response = await this.octokit.request('PUT /repos/{owner}/{repo}/contents/{path}', {
+      // Check if directory exists
+      await this.octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
         owner: this.owner,
         repo: this.repo,
-        path: placeholderPath,
-        message: `Create directory ${path}`,
-        content: content,
-        branch: this.branch
+        path: path,
+        ref: this.branch
       })
-      
-      return response.data
+      // Directory exists
+      return true
     } catch (error) {
-      // If directory already exists, ignore the error
-      if (error.status === 422) {
-        console.log('Directory already exists')
-        return
+      if (error.status === 404) {
+        // Directory doesn't exist, create it
+        try {
+          const placeholderPath = `${path}/.gitkeep`
+          const content = btoa('')
+          
+          await this.octokit.request('PUT /repos/{owner}/{repo}/contents/{path}', {
+            owner: this.owner,
+            repo: this.repo,
+            path: placeholderPath,
+            message: `Create directory ${path}`,
+            content: content,
+            branch: this.branch
+          })
+          
+          console.log(`Created directory: ${path}`)
+          return true
+        } catch (createError) {
+          if (createError.status === 422) {
+            // File already exists, that's fine
+            return true
+          }
+          throw createError
+        }
       }
-      console.error('Error creating directory on GitHub:', error)
       throw error
     }
   }
