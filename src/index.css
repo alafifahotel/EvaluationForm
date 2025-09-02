@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-sans antialiased;
+  }
+}
+
+@layer components {
+  .print-page {
+    @apply bg-white;
+    width: 210mm;
+    min-height: 297mm;
+    padding: 20mm;
+    margin: 0 auto;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  @media print {
+    .print-page {
+      box-shadow: none;
+      margin: 0;
+      page-break-after: always;
+    }
+    
+    .no-print {
+      display: none !important;
+    }
+  }
+  
+  .form-input {
+    @apply mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-gold focus:ring focus:ring-hotel-gold focus:ring-opacity-50;
+  }
+  
+  .rating-input {
+    @apply w-16 text-center rounded-md border-gray-300 shadow-sm focus:border-hotel-gold focus:ring focus:ring-hotel-gold focus:ring-opacity-50;
+  }
+}

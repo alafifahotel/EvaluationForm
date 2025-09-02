@@ -1,0 +1,166 @@
+import { Octokit } from 'octokit'
+import { format } from 'date-fns'
+
+class GitHubService {
+  constructor(token) {
+    this.octokit = new Octokit({
+      auth: token
+    })
+    this.owner = 'wissamyah'
+    this.repo = 'EvaluationForm'
+    this.branch = 'main'
+  }
+
+  async saveEvaluation(evaluationData) {
+    try {
+      const date = new Date()
+      const year = format(date, 'yyyy')
+      const month = format(date, 'MM')
+      const timestamp = date.getTime()
+      
+      const fileName = `eval_${evaluationData.nom.replace(/\s+/g, '_')}_${timestamp}.json`
+      const path = `evaluations/${year}/${month}/${fileName}`
+      
+      const content = btoa(JSON.stringify(evaluationData, null, 2))
+      
+      const response = await this.octokit.request('PUT /repos/{owner}/{repo}/contents/{path}', {
+        owner: this.owner,
+        repo: this.repo,
+        path: path,
+        message: `Add evaluation for ${evaluationData.nom} - ${format(date, 'dd/MM/yyyy')}`,
+        content: content,
+        branch: this.branch
+      })
+      
+      return response.data
+    } catch (error) {
+      console.error('Error saving evaluation to GitHub:', error)
+      throw error
+    }
+  }
+
+  async loadEvaluations() {
+    try {
+      const evaluations = []
+      
+      // Get the evaluations directory
+      const response = await this.octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
+        owner: this.owner,
+        repo: this.repo,
+        path: 'evaluations',
+        ref: this.branch
+      })
+      
+      // If evaluations directory exists, traverse year folders
+      if (Array.isArray(response.data)) {
+        for (const yearFolder of response.data) {
+          if (yearFolder.type === 'dir') {
+            const yearResponse = await this.octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
+              owner: this.owner,
+              repo: this.repo,
+              path: yearFolder.path,
+              ref: this.branch
+            })
+            
+            // Traverse month folders
+            if (Array.isArray(yearResponse.data)) {
+              for (const monthFolder of yearResponse.data) {
+                if (monthFolder.type === 'dir') {
+                  const monthResponse = await this.octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
+                    owner: this.owner,
+                    repo: this.repo,
+                    path: monthFolder.path,
+                    ref: this.branch
+                  })
+                  
+                  // Load evaluation files
+                  if (Array.isArray(monthResponse.data)) {
+                    for (const file of monthResponse.data) {
+                      if (file.type === 'file' && file.name.endsWith('.json')) {
+                        const fileContent = await this.octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
+                          owner: this.owner,
+                          repo: this.repo,
+                          path: file.path,
+                          ref: this.branch
+                        })
+                        
+                        const content = atob(fileContent.data.content)
+                        const evaluation = JSON.parse(content)
+                        evaluations.push(evaluation)
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      
+      return evaluations
+    } catch (error) {
+      // If evaluations directory doesn't exist, return empty array
+      if (error.status === 404) {
+        console.log('Evaluations directory not found, returning empty array')
+        return []
+      }
+      console.error('Error loading evaluations from GitHub:', error)
+      throw error
+    }
+  }
+
+  async deleteEvaluation(path) {
+    try {
+      // First get the file to get its SHA
+      const fileResponse = await this.octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
+        owner: this.owner,
+        repo: this.repo,
+        path: path,
+        ref: this.branch
+      })
+      
+      const response = await this.octokit.request('DELETE /repos/{owner}/{repo}/contents/{path}', {
+        owner: this.owner,
+        repo: this.repo,
+        path: path,
+        message: `Delete evaluation at ${path}`,
+        sha: fileResponse.data.sha,
+        branch: this.branch
+      })
+      
+      return response.data
+    } catch (error) {
+      console.error('Error deleting evaluation from GitHub:', error)
+      throw error
+    }
+  }
+
+  async createDirectory(path) {
+    try {
+      // Create a placeholder file in the directory
+      const placeholderPath = `${path}/.gitkeep`
+      const content = btoa('')
+      
+      const response = await this.octokit.request('PUT /repos/{owner}/{repo}/contents/{path}', {
+        owner: this.owner,
+        repo: this.repo,
+        path: placeholderPath,
+        message: `Create directory ${path}`,
+        content: content,
+        branch: this.branch
+      })
+      
+      return response.data
+    } catch (error) {
+      // If directory already exists, ignore the error
+      if (error.status === 422) {
+        console.log('Directory already exists')
+        return
+      }
+      console.error('Error creating directory on GitHub:', error)
+      throw error
+    }
+  }
+}
+
+export default GitHubService
