@@ -138,19 +138,30 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
   const filteredEvaluations = getFilteredEvaluations()
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
-      <h2 className="text-2xl font-bold mb-6">Historique des évaluations</h2>
+    <div className="bg-white rounded-lg shadow-md p-4 sm:p-6">
+      <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Historique des évaluations</h2>
 
       <div className="bg-gray-50 p-4 rounded-lg mb-6">
-        <h3 className="text-lg font-semibold mb-4">Filtres</h3>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div>
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-semibold flex items-center gap-2">
+            <Filter className="h-5 w-5" />
+            Filtres
+          </h3>
+          <button
+            onClick={() => setFilter({ service: '', dateFrom: '', dateTo: '', minScore: '' })}
+            className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
+          >
+            Réinitialiser
+          </button>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div className="col-span-1 sm:col-span-2 lg:col-span-1">
             <label className="block text-sm font-medium text-gray-700 mb-1">Service</label>
             <select
               name="service"
               value={filter.service}
               onChange={handleFilterChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hotel-gold focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hotel-gold focus:border-transparent text-sm"
             >
               <option value="">Tous les services</option>
               {positions.map(pos => (
@@ -167,7 +178,7 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
               name="dateFrom"
               value={filter.dateFrom}
               onChange={handleFilterChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hotel-gold focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hotel-gold focus:border-transparent text-sm"
             />
           </div>
           <div>
@@ -177,10 +188,10 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
               name="dateTo"
               value={filter.dateTo}
               onChange={handleFilterChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hotel-gold focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hotel-gold focus:border-transparent text-sm"
             />
           </div>
-          <div>
+          <div className="col-span-1 sm:col-span-2 lg:col-span-1">
             <label className="block text-sm font-medium text-gray-700 mb-1">Score minimum (%)</label>
             <input
               type="number"
@@ -190,7 +201,7 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
               value={filter.minScore}
               onChange={handleFilterChange}
               placeholder="0"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hotel-gold focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hotel-gold focus:border-transparent text-sm"
             />
           </div>
         </div>
@@ -219,8 +230,9 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
           onAction={() => window.location.hash = 'evaluation'}
         />
       ) : (
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
+        <div className="overflow-x-auto -mx-4 sm:mx-0">
+          <div className="inline-block min-w-full align-middle px-4 sm:px-0">
+            <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -317,6 +329,7 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
               ))}
             </tbody>
           </table>
+          </div>
         </div>
       )}
 
