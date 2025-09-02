@@ -84,7 +84,7 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-100">
       <header className="bg-hotel-dark text-white py-6 px-8 shadow-lg">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1600px] mx-auto">
           <h1 className="text-3xl font-bold text-hotel-gold">
             Al Afifa Hotel - Système d'Évaluation
           </h1>
@@ -92,7 +92,7 @@ function App() {
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-8 py-6">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="bg-white rounded-lg shadow-md mb-6">
           <div className="border-b">
             <nav className="flex">
@@ -153,8 +153,8 @@ function App() {
               </div>
 
               {(selectedPosition || editingEvaluation) && (
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                  <div>
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+                  <div className="xl:max-w-2xl">
                     <EvaluationForm
                       position={selectedPosition || positions.find(p => p.label === editingEvaluation?.service)?.value || ''}
                       positionLabel={positions.find(p => p.value === selectedPosition)?.label || editingEvaluation?.service || ''}
@@ -170,11 +170,11 @@ function App() {
                       }}
                     />
                   </div>
-                  <div className="lg:sticky lg:top-6">
+                  <div className="xl:sticky xl:top-6">
                     <h3 className="text-lg font-semibold mb-4">
                       Aperçu du document
                     </h3>
-                    <div className="border rounded-lg overflow-auto max-h-screen">
+                    <div className="border-2 border-gray-300 rounded-lg overflow-auto max-h-[calc(100vh-200px)] shadow-xl">
                       <PreviewA4 
                         formData={formData} 
                         position={selectedPosition || positions.find(p => p.label === editingEvaluation?.service)?.value || ''}
