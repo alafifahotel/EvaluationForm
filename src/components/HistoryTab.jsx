@@ -4,7 +4,7 @@ import { fr } from 'date-fns/locale'
 import { positions } from '../data/criteriaConfig'
 import GitHubService from '../services/githubService'
 
-function HistoryTab({ evaluations: localEvaluations, githubToken }) {
+function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluation }) {
   const [evaluations, setEvaluations] = useState(localEvaluations || [])
   const [filter, setFilter] = useState({
     service: '',
@@ -60,6 +60,40 @@ function HistoryTab({ evaluations: localEvaluations, githubToken }) {
       if (filter.minScore && evaluation.percentage < parseFloat(filter.minScore)) return false
       return true
     })
+  }
+
+  const handleEdit = (evaluation) => {
+    if (onEditEvaluation) {
+      onEditEvaluation(evaluation)
+    }
+  }
+
+  const handleDelete = async (evaluation) => {
+    if (!window.confirm(`Êtes-vous sûr de vouloir supprimer l'évaluation de ${evaluation.nom} ?`)) {
+      return
+    }
+
+    try {
+      setLoading(true)
+      
+      // If evaluation has a GitHub path, delete from GitHub
+      if (evaluation.githubPath && githubToken) {
+        const githubService = new GitHubService(githubToken)
+        await githubService.deleteEvaluation(evaluation.githubPath)
+      }
+      
+      // Remove from local state
+      setEvaluations(prev => prev.filter(e => 
+        e.timestamp !== evaluation.timestamp || e.nom !== evaluation.nom
+      ))
+      
+      alert('Évaluation supprimée avec succès')
+    } catch (error) {
+      console.error('Erreur lors de la suppression:', error)
+      alert('Erreur lors de la suppression de l\'évaluation')
+    } finally {
+      setLoading(false)
+    }
   }
 
   const handleDownload = (evaluation) => {
@@ -205,16 +239,32 @@ function HistoryTab({ evaluations: localEvaluations, githubToken }) {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                     <button
+                      onClick={() => handleEdit(evaluation)}
+                      className="text-green-600 hover:text-green-800 mr-3"
+                      title="Modifier"
+                    >
+                      Modifier
+                    </button>
+                    <button
+                      onClick={() => handleDelete(evaluation)}
+                      className="text-red-600 hover:text-red-800 mr-3"
+                      title="Supprimer"
+                    >
+                      Supprimer
+                    </button>
+                    <button
                       onClick={() => handleView(evaluation)}
-                      className="text-hotel-gold hover:text-yellow-600 mr-4"
+                      className="text-hotel-gold hover:text-yellow-600 mr-3"
+                      title="Voir"
                     >
                       Voir
                     </button>
                     <button
                       onClick={() => handleDownload(evaluation)}
                       className="text-blue-600 hover:text-blue-900"
+                      title="Télécharger"
                     >
-                      Télécharger
+                      PDF
                     </button>
                   </td>
                 </tr>

@@ -37,7 +37,11 @@ class GitHubService {
         branch: this.branch
       })
       
-      return response.data
+      // Return the evaluation data with the GitHub path
+      return {
+        ...evaluationData,
+        githubPath: path
+      }
     } catch (error) {
       console.error('Error saving evaluation to GitHub:', error)
       throw error
@@ -101,6 +105,8 @@ class GitHubService {
                         
                         const content = atob(fileContent.data.content)
                         const evaluation = JSON.parse(content)
+                        // Add the GitHub path to the evaluation
+                        evaluation.githubPath = file.path
                         evaluations.push(evaluation)
                       }
                     }
@@ -116,6 +122,38 @@ class GitHubService {
     } catch (error) {
       console.error('Error loading evaluations from GitHub:', error)
       return []
+    }
+  }
+
+  async updateEvaluation(path, evaluationData) {
+    try {
+      // First get the file to get its SHA
+      const fileResponse = await this.octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
+        owner: this.owner,
+        repo: this.repo,
+        path: path,
+        ref: this.branch
+      })
+      
+      const content = btoa(JSON.stringify(evaluationData, null, 2))
+      
+      const response = await this.octokit.request('PUT /repos/{owner}/{repo}/contents/{path}', {
+        owner: this.owner,
+        repo: this.repo,
+        path: path,
+        message: `Update evaluation for ${evaluationData.nom} - ${format(new Date(), 'dd/MM/yyyy')}`,
+        content: content,
+        sha: fileResponse.data.sha,
+        branch: this.branch
+      })
+      
+      return {
+        ...evaluationData,
+        githubPath: path
+      }
+    } catch (error) {
+      console.error('Error updating evaluation on GitHub:', error)
+      throw error
     }
   }
 

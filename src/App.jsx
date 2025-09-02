@@ -10,6 +10,7 @@ function App() {
   const [formData, setFormData] = useState({})
   const [githubToken, setGithubToken] = useState('')
   const [evaluations, setEvaluations] = useState([])
+  const [editingEvaluation, setEditingEvaluation] = useState(null)
 
   useEffect(() => {
     const savedToken = localStorage.getItem('github_token')
@@ -37,7 +38,24 @@ function App() {
   }
 
   const handleSaveEvaluation = (evaluation) => {
-    setEvaluations([...evaluations, evaluation])
+    if (editingEvaluation) {
+      // Update existing evaluation
+      setEvaluations(prev => prev.map(e => 
+        e.githubPath === evaluation.githubPath ? evaluation : e
+      ))
+      setEditingEvaluation(null)
+    } else {
+      // Add new evaluation
+      setEvaluations([...evaluations, evaluation])
+    }
+  }
+
+  const handleEditEvaluation = (evaluation) => {
+    // Set the evaluation to edit
+    setEditingEvaluation(evaluation)
+    setSelectedPosition(positions.find(p => p.label === evaluation.service)?.value || '')
+    setFormData(evaluation)
+    setActiveTab('evaluation')
   }
 
   return (
@@ -109,6 +127,8 @@ function App() {
                       onFormChange={handleFormChange}
                       onSave={handleSaveEvaluation}
                       githubToken={githubToken}
+                      initialData={editingEvaluation}
+                      isEditing={!!editingEvaluation}
                     />
                   </div>
                   <div className="lg:sticky lg:top-6">
@@ -130,6 +150,7 @@ function App() {
           <HistoryTab 
             evaluations={evaluations}
             githubToken={githubToken}
+            onEditEvaluation={handleEditEvaluation}
           />
         )}
       </div>

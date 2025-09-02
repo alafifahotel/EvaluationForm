@@ -4,8 +4,8 @@ import { format } from 'date-fns'
 import { fr } from 'date-fns/locale'
 import GitHubService from '../services/githubService'
 
-function EvaluationForm({ position, positionLabel, onFormChange, onSave, githubToken }) {
-  const [formData, setFormData] = useState({
+function EvaluationForm({ position, positionLabel, onFormChange, onSave, githubToken, initialData, isEditing }) {
+  const [formData, setFormData] = useState(initialData || {
     nom: '',
     matricule: '',
     service: positionLabel || '',
@@ -21,13 +21,22 @@ function EvaluationForm({ position, positionLabel, onFormChange, onSave, githubT
   })
 
   useEffect(() => {
-    // Update service and poste when position changes
-    setFormData(prev => ({
-      ...prev,
-      service: positionLabel || '',
-      poste: positionLabel || ''
-    }))
-  }, [positionLabel])
+    // Update form when editing
+    if (initialData) {
+      setFormData(initialData)
+    }
+  }, [initialData])
+
+  useEffect(() => {
+    // Update service and poste when position changes (only if not editing)
+    if (!isEditing) {
+      setFormData(prev => ({
+        ...prev,
+        service: positionLabel || '',
+        poste: positionLabel || ''
+      }))
+    }
+  }, [positionLabel, isEditing])
 
   useEffect(() => {
     onFormChange(formData)
@@ -87,34 +96,45 @@ function EvaluationForm({ position, positionLabel, onFormChange, onSave, githubT
       maxScore,
       percentage,
       appreciation: appreciation.label,
-      timestamp: new Date().toISOString()
+      timestamp: isEditing ? formData.timestamp : new Date().toISOString(),
+      githubPath: formData.githubPath // Preserve GitHub path if editing
     }
 
     try {
       // Save to GitHub if token is available
       if (githubToken) {
         const githubService = new GitHubService(githubToken)
-        await githubService.saveEvaluation(evaluationData)
+        
+        if (isEditing && evaluationData.githubPath) {
+          // Update existing evaluation
+          await githubService.updateEvaluation(evaluationData.githubPath, evaluationData)
+        } else {
+          // Create new evaluation
+          const savedData = await githubService.saveEvaluation(evaluationData)
+          evaluationData.githubPath = savedData.githubPath
+        }
       }
       
       onSave(evaluationData)
-      alert('Évaluation enregistrée avec succès!')
+      alert(isEditing ? 'Évaluation mise à jour avec succès!' : 'Évaluation enregistrée avec succès!')
       
-      // Reset form
-      setFormData({
-        nom: '',
-        matricule: '',
-        service: '',
-        poste: '',
-        superieur: '',
-        dateDebut: '',
-        dateFin: '',
-        commonScores: {},
-        specificScores: {},
-        decisions: [],
-        evaluateurNom: '',
-        dateEvaluation: format(new Date(), 'yyyy-MM-dd')
-      })
+      // Reset form only if not editing
+      if (!isEditing) {
+        setFormData({
+          nom: '',
+          matricule: '',
+          service: positionLabel || '',
+          poste: positionLabel || '',
+          superieur: '',
+          dateDebut: '',
+          dateFin: '',
+          commonScores: {},
+          specificScores: {},
+          decisions: [],
+          evaluateurNom: '',
+          dateEvaluation: format(new Date(), 'yyyy-MM-dd')
+        })
+      }
     } catch (error) {
       console.error('Erreur lors de la sauvegarde:', error)
       alert('Erreur lors de la sauvegarde. Vérifiez votre token GitHub.')
@@ -326,12 +346,23 @@ function EvaluationForm({ position, positionLabel, onFormChange, onSave, githubT
         </div>
       </div>
 
-      <button
-        type="submit"
-        className="w-full bg-hotel-gold text-white py-3 px-4 rounded-lg font-semibold hover:bg-yellow-600 transition-colors"
-      >
-        Enregistrer l'évaluation
-      </button>
+      <div className="flex gap-4">
+        <button
+          type="submit"
+          className="flex-1 bg-hotel-gold text-white py-3 px-4 rounded-lg font-semibold hover:bg-yellow-600 transition-colors"
+        >
+          {isEditing ? 'Mettre à jour l\'évaluation' : 'Enregistrer l\'évaluation'}
+        </button>
+        {isEditing && (
+          <button
+            type="button"
+            onClick={() => window.location.reload()}
+            className="px-6 py-3 bg-gray-500 text-white rounded-lg font-semibold hover:bg-gray-600 transition-colors"
+          >
+            Annuler
+          </button>
+        )}
+      </div>
     </form>
   )
 }
