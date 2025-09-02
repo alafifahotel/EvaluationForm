@@ -50,18 +50,41 @@ function PreviewA4({ formData, position, isViewMode = false }) {
     if (!previewRef.current) return
 
     const canvas = await html2canvas(previewRef.current, {
-      scale: 2,
+      scale: 3, // Higher scale for better quality
       logging: false,
       useCORS: true,
       windowWidth: 794,
+      letterRendering: true,
+      allowTaint: true,
+      backgroundColor: '#ffffff',
+      imageTimeout: 0,
+      onclone: (clonedDoc) => {
+        // Fix alignment issues in cloned document
+        const clonedElement = clonedDoc.querySelector('[ref]')
+        if (clonedElement) {
+          // Ensure all flex items are properly aligned
+          const flexItems = clonedElement.querySelectorAll('.flex.items-center')
+          flexItems.forEach(item => {
+            item.style.alignItems = 'center'
+            item.style.display = 'flex'
+          })
+        }
+      }
     })
 
-    const imgData = canvas.toDataURL('image/png')
+    const imgData = canvas.toDataURL('image/png', 1.0) // Maximum quality
     const pdf = new jsPDF('p', 'mm', 'a4')
     const imgWidth = 210
     const imgHeight = (canvas.height * imgWidth) / canvas.width
     
-    pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight)
+    // Ensure the image fits on one page
+    const pageHeight = 297
+    if (imgHeight > pageHeight) {
+      const scaleFactor = pageHeight / imgHeight
+      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth * scaleFactor, pageHeight)
+    } else {
+      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight)
+    }
     
     const fileName = `EVAL_${positionLabel.replace(/\s+/g, '_')}_${formData.nom || 'Sans_nom'}_${format(new Date(), 'yyyy-MM-dd')}.pdf`
     pdf.save(fileName)
@@ -78,8 +101,8 @@ function PreviewA4({ formData, position, isViewMode = false }) {
   const renderScoreBar = (score, maxScore = 5) => {
     const percentage = (score / maxScore) * 100
     return (
-      <div className="flex items-center gap-1">
-        <div className="flex-1 bg-gray-200 rounded-full h-1.5 overflow-hidden">
+      <div className="flex items-center gap-1 w-full">
+        <div className="flex-1 bg-gray-200 rounded-full h-1.5 overflow-hidden relative">
           <div 
             className={`h-full transition-all ${
               percentage >= 80 ? 'bg-green-500' :
@@ -123,7 +146,7 @@ function PreviewA4({ formData, position, isViewMode = false }) {
         {/* Employee Information Section */}
         <div className="bg-gray-50 rounded p-2 mb-3">
           <h3 className="text-sm font-bold text-hotel-dark mb-2 flex items-center">
-            <span className="bg-hotel-gold text-white w-6 h-6 rounded-full flex items-center justify-center mr-2 text-xs">1</span>
+            <span className="bg-hotel-gold text-white w-6 h-6 rounded-full inline-flex items-center justify-center mr-2 text-xs flex-shrink-0">1</span>
             INFORMATIONS DE L'EMPLOYÉ
           </h3>
           <div className="grid grid-cols-2 gap-2 text-xs">
@@ -173,7 +196,7 @@ function PreviewA4({ formData, position, isViewMode = false }) {
         {/* Common Criteria Section */}
         <div className="mb-3">
           <h3 className="text-sm font-bold text-hotel-dark mb-2 flex items-center">
-            <span className="bg-hotel-gold text-white w-6 h-6 rounded-full flex items-center justify-center mr-2 text-xs">2</span>
+            <span className="bg-hotel-gold text-white w-6 h-6 rounded-full inline-flex items-center justify-center mr-2 text-xs flex-shrink-0">2</span>
             CRITÈRES COMMUNS
             <span className="ml-auto text-xs font-normal text-gray-600">Total: {commonTotal}/{maxCommon}</span>
           </h3>
@@ -195,8 +218,10 @@ function PreviewA4({ formData, position, isViewMode = false }) {
                     <td className="p-1">
                       <p className="text-gray-600 leading-tight" style={{ fontSize: '9px' }}>{criteria.description}</p>
                     </td>
-                    <td className="p-1">
-                      {renderScoreBar(formData.commonScores?.[criteria.id])}
+                    <td className="p-1 align-middle">
+                      <div className="flex items-center justify-center h-full">
+                        {renderScoreBar(formData.commonScores?.[criteria.id])}
+                      </div>
                     </td>
                   </tr>
                 ))}
@@ -209,7 +234,7 @@ function PreviewA4({ formData, position, isViewMode = false }) {
         {positionCriteria.length > 0 && (
           <div className="mb-3">
             <h3 className="text-sm font-bold text-hotel-dark mb-2 flex items-center">
-              <span className="bg-hotel-gold text-white w-6 h-6 rounded-full flex items-center justify-center mr-2 text-xs">3</span>
+              <span className="bg-hotel-gold text-white w-6 h-6 rounded-full inline-flex items-center justify-center mr-2 text-xs flex-shrink-0">3</span>
               CRITÈRES SPÉCIFIQUES - {positionLabel.toUpperCase()}
               <span className="ml-auto text-xs font-normal text-gray-600">Total: {specificTotal}/{maxSpecific}</span>
             </h3>
@@ -231,8 +256,10 @@ function PreviewA4({ formData, position, isViewMode = false }) {
                       <td className="p-1">
                         <p className="text-gray-600 leading-tight" style={{ fontSize: '9px' }}>{criteria.description}</p>
                       </td>
-                      <td className="p-1">
-                        {renderScoreBar(formData.specificScores?.[criteria.id])}
+                      <td className="p-1 align-middle">
+                        <div className="flex items-center justify-center h-full">
+                          {renderScoreBar(formData.specificScores?.[criteria.id])}
+                        </div>
                       </td>
                     </tr>
                   ))}
@@ -248,7 +275,7 @@ function PreviewA4({ formData, position, isViewMode = false }) {
           <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
           <div className="relative p-3 text-white">
             <h3 className="text-sm font-bold mb-2 flex items-center">
-              <span className="bg-white/20 backdrop-blur-sm text-white w-6 h-6 rounded-full flex items-center justify-center mr-2 text-xs border border-white/30">4</span>
+              <span className="bg-white/20 backdrop-blur-sm text-white w-6 h-6 rounded-full inline-flex items-center justify-center mr-2 text-xs border border-white/30 flex-shrink-0">4</span>
               RÉSULTAT DE L'ÉVALUATION
             </h3>
             <div className="grid grid-cols-3 gap-3">
@@ -277,7 +304,7 @@ function PreviewA4({ formData, position, isViewMode = false }) {
         {/* Decisions and Recommendations */}
         <div className="mb-3">
           <h3 className="text-sm font-bold text-hotel-dark mb-2 flex items-center">
-            <span className="bg-hotel-gold text-white w-6 h-6 rounded-full flex items-center justify-center mr-2 text-xs">5</span>
+            <span className="bg-hotel-gold text-white w-6 h-6 rounded-full inline-flex items-center justify-center mr-2 text-xs flex-shrink-0">5</span>
             DÉCISIONS & RECOMMANDATIONS
           </h3>
           <div className="border border-gray-300 rounded p-2">
@@ -303,7 +330,7 @@ function PreviewA4({ formData, position, isViewMode = false }) {
         {/* Signatures Section */}
         <div className="border-t-2 border-gray-300 pt-2">
           <h3 className="text-sm font-bold text-hotel-dark mb-2 flex items-center">
-            <span className="bg-hotel-gold text-white w-6 h-6 rounded-full flex items-center justify-center mr-2 text-xs">6</span>
+            <span className="bg-hotel-gold text-white w-6 h-6 rounded-full inline-flex items-center justify-center mr-2 text-xs flex-shrink-0">6</span>
             VALIDATION
           </h3>
           <div className="grid grid-cols-2 gap-4">

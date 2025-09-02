@@ -44,18 +44,35 @@ export async function generatePDF(evaluation, positionLabel) {
 
         // Generate canvas with high quality settings
         const canvas = await html2canvas(previewElement, {
-          scale: 2,
+          scale: 3, // Higher scale for better text quality
           logging: false,
           useCORS: true,
           windowWidth: 794, // A4 width in pixels at 96 DPI
           backgroundColor: '#ffffff',
+          letterRendering: true,
+          allowTaint: true,
+          imageTimeout: 0,
           onclone: (clonedDoc) => {
             // Ensure all styles are applied to the cloned document
             const clonedElement = clonedDoc.querySelector('.bg-white[style*="210mm"]')
             if (clonedElement) {
               clonedElement.style.width = '210mm'
               clonedElement.style.minHeight = '297mm'
-              clonedElement.style.padding = '15mm'
+              clonedElement.style.maxHeight = '297mm'
+              clonedElement.style.padding = '10mm'
+              
+              // Fix alignment issues
+              const flexItems = clonedElement.querySelectorAll('.flex.items-center')
+              flexItems.forEach(item => {
+                item.style.display = 'flex'
+                item.style.alignItems = 'center'
+              })
+              
+              // Fix table cell alignment
+              const tableCells = clonedElement.querySelectorAll('td.align-middle')
+              tableCells.forEach(cell => {
+                cell.style.verticalAlign = 'middle'
+              })
             }
           }
         })

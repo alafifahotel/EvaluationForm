@@ -48,3 +48,15 @@
     width: 0%;
   }
 }
+
+/* PDF Print Styles */
+@media print {
+  .flex.items-center {
+    display: flex !important;
+    align-items: center !important;
+  }
+  
+  td.align-middle {
+    vertical-align: middle !important;
+  }
+}
