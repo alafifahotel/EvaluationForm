@@ -4,12 +4,12 @@ import { format } from 'date-fns'
 import { fr } from 'date-fns/locale'
 import GitHubService from '../services/githubService'
 
-function EvaluationForm({ position, onFormChange, onSave, githubToken }) {
+function EvaluationForm({ position, positionLabel, onFormChange, onSave, githubToken }) {
   const [formData, setFormData] = useState({
     nom: '',
     matricule: '',
-    service: '',
-    poste: '',
+    service: positionLabel || '',
+    poste: positionLabel || '',
     superieur: '',
     dateDebut: '',
     dateFin: '',
@@ -19,6 +19,15 @@ function EvaluationForm({ position, onFormChange, onSave, githubToken }) {
     evaluateurNom: '',
     dateEvaluation: format(new Date(), 'yyyy-MM-dd')
   })
+
+  useEffect(() => {
+    // Update service and poste when position changes
+    setFormData(prev => ({
+      ...prev,
+      service: positionLabel || '',
+      poste: positionLabel || ''
+    }))
+  }, [positionLabel])
 
   useEffect(() => {
     onFormChange(formData)
@@ -141,6 +150,28 @@ function EvaluationForm({ position, onFormChange, onSave, githubToken }) {
               onChange={handleInputChange}
               className="form-input"
               required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Service</label>
+            <input
+              type="text"
+              name="service"
+              value={formData.service}
+              className="form-input bg-gray-100"
+              readOnly
+              disabled
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Poste</label>
+            <input
+              type="text"
+              name="poste"
+              value={formData.poste}
+              className="form-input bg-gray-100"
+              readOnly
+              disabled
             />
           </div>
           <div>

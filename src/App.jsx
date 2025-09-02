@@ -105,6 +105,7 @@ function App() {
                   <div>
                     <EvaluationForm
                       position={selectedPosition}
+                      positionLabel={positions.find(p => p.value === selectedPosition)?.label || ''}
                       onFormChange={handleFormChange}
                       onSave={handleSaveEvaluation}
                       githubToken={githubToken}
