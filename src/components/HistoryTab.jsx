@@ -49,9 +49,9 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
       )
       
       setEvaluations(uniqueEvaluations)
-      // Only show toast if we actually loaded evaluations from GitHub
-      if (githubEvaluations.length > 0) {
-        toast.success(`📂 ${githubEvaluations.length} évaluation(s) chargée(s) depuis GitHub`)
+      // Only show toast if we actually loaded evaluations
+      if (uniqueEvaluations.length > 0) {
+        toast.success(`📂 ${uniqueEvaluations.length} évaluation(s) chargée(s)`)
       }
     } catch (error) {
       console.error('Erreur lors du chargement des évaluations:', error)
