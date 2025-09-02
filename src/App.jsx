@@ -3,14 +3,37 @@ import EvaluationForm from './components/EvaluationForm'
 import PreviewA4 from './components/PreviewA4'
 import HistoryTab from './components/HistoryTab'
 import { positions } from './data/criteriaConfig'
+import { FileEdit, History } from 'lucide-react'
 
 function App() {
-  const [activeTab, setActiveTab] = useState('evaluation')
+  // Get initial tab from URL hash or default to 'evaluation'
+  const getInitialTab = () => {
+    const hash = window.location.hash.slice(1)
+    return hash === 'history' ? 'history' : 'evaluation'
+  }
+
+  const [activeTab, setActiveTab] = useState(getInitialTab())
   const [selectedPosition, setSelectedPosition] = useState('')
   const [formData, setFormData] = useState({})
   const [githubToken, setGithubToken] = useState('')
   const [evaluations, setEvaluations] = useState([])
   const [editingEvaluation, setEditingEvaluation] = useState(null)
+
+  // Update URL hash when tab changes
+  useEffect(() => {
+    window.location.hash = activeTab
+  }, [activeTab])
+
+  // Listen for hash changes (browser back/forward)
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.slice(1)
+      setActiveTab(hash === 'history' ? 'history' : 'evaluation')
+    }
+
+    window.addEventListener('hashchange', handleHashChange)
+    return () => window.removeEventListener('hashchange', handleHashChange)
+  }, [])
 
   useEffect(() => {
     const savedToken = localStorage.getItem('github_token')
@@ -75,22 +98,24 @@ function App() {
             <nav className="flex">
               <button
                 onClick={() => setActiveTab('evaluation')}
-                className={`px-6 py-3 font-medium transition-colors ${
+                className={`flex items-center px-6 py-3 font-medium transition-all duration-200 ${
                   activeTab === 'evaluation'
                     ? 'border-b-2 border-hotel-gold text-hotel-gold'
                     : 'text-gray-600 hover:text-gray-800'
                 }`}
               >
+                <FileEdit className="mr-2 h-4 w-4" />
                 Nouvelle Évaluation
               </button>
               <button
                 onClick={() => setActiveTab('history')}
-                className={`px-6 py-3 font-medium transition-colors ${
+                className={`flex items-center px-6 py-3 font-medium transition-all duration-200 ${
                   activeTab === 'history'
                     ? 'border-b-2 border-hotel-gold text-hotel-gold'
                     : 'text-gray-600 hover:text-gray-800'
                 }`}
               >
+                <History className="mr-2 h-4 w-4" />
                 Historique
               </button>
             </nav>

@@ -12,6 +12,9 @@ export default {
       },
       fontFamily: {
         'serif': ['Georgia', 'serif'],
+      },
+      animation: {
+        'bounce-slow': 'bounce 3s infinite',
       }
     },
   },

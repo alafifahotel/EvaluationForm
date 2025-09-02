@@ -3,6 +3,11 @@ import { format } from 'date-fns'
 import { fr } from 'date-fns/locale'
 import { positions } from '../data/criteriaConfig'
 import GitHubService from '../services/githubService'
+import ConfirmModal from './ConfirmModal'
+import EmptyState from './EmptyState'
+import LoadingSpinner from './LoadingSpinner'
+import LoadingButton from './LoadingButton'
+import { Edit, Trash2, Eye, Download, Search, Filter, RefreshCw } from 'lucide-react'
 
 function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluation }) {
   const [evaluations, setEvaluations] = useState(localEvaluations || [])
@@ -13,6 +18,8 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
     minScore: ''
   })
   const [loading, setLoading] = useState(false)
+  const [deleteModal, setDeleteModal] = useState({ isOpen: false, evaluation: null })
+  const [actionLoading, setActionLoading] = useState(null)
 
   useEffect(() => {
     loadEvaluationsFromGitHub()
@@ -68,14 +75,11 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
     }
   }
 
-  const handleDelete = async (evaluation) => {
-    if (!window.confirm(`Êtes-vous sûr de vouloir supprimer l'évaluation de ${evaluation.nom} ?`)) {
-      return
-    }
+  const handleDelete = async () => {
+    const evaluation = deleteModal.evaluation
+    if (!evaluation) return
 
     try {
-      setLoading(true)
-      
       // If evaluation has a GitHub path, delete from GitHub
       if (evaluation.githubPath && githubToken) {
         const githubService = new GitHubService(githubToken)
@@ -87,12 +91,10 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
         e.timestamp !== evaluation.timestamp || e.nom !== evaluation.nom
       ))
       
-      alert('Évaluation supprimée avec succès')
+      setDeleteModal({ isOpen: false, evaluation: null })
     } catch (error) {
       console.error('Erreur lors de la suppression:', error)
-      alert('Erreur lors de la suppression de l\'évaluation')
-    } finally {
-      setLoading(false)
+      throw error
     }
   }
 
@@ -105,6 +107,10 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
   const handleView = (evaluation) => {
     // Open evaluation in preview mode
     console.log('Viewing evaluation:', evaluation)
+  }
+
+  const handleRefresh = () => {
+    loadEvaluationsFromGitHub()
   }
 
   const filteredEvaluations = getFilteredEvaluations()
@@ -168,14 +174,28 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
         </div>
       </div>
 
+      <div className="flex justify-end mb-4">
+        <LoadingButton
+          onClick={handleRefresh}
+          icon={RefreshCw}
+          variant="outline"
+          size="sm"
+          isLoading={loading}
+        >
+          Rafraîchir
+        </LoadingButton>
+      </div>
+
       {loading ? (
-        <div className="text-center py-8">
-          <p className="text-gray-500">Chargement des évaluations...</p>
+        <div className="py-12">
+          <LoadingSpinner size="lg" text="Chargement des évaluations..." />
         </div>
       ) : filteredEvaluations.length === 0 ? (
-        <div className="text-center py-8">
-          <p className="text-gray-500">Aucune évaluation trouvée</p>
-        </div>
+        <EmptyState
+          type={filter.service || filter.dateFrom || filter.dateTo || filter.minScore ? 'no-results' : 'no-data'}
+          actionText="Créer une évaluation"
+          onAction={() => window.location.hash = 'evaluation'}
+        />
       ) : (
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
@@ -238,34 +258,46 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
                     {evaluation.evaluateurNom}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <button
-                      onClick={() => handleEdit(evaluation)}
-                      className="text-green-600 hover:text-green-800 mr-3"
-                      title="Modifier"
-                    >
-                      Modifier
-                    </button>
-                    <button
-                      onClick={() => handleDelete(evaluation)}
-                      className="text-red-600 hover:text-red-800 mr-3"
-                      title="Supprimer"
-                    >
-                      Supprimer
-                    </button>
-                    <button
-                      onClick={() => handleView(evaluation)}
-                      className="text-hotel-gold hover:text-yellow-600 mr-3"
-                      title="Voir"
-                    >
-                      Voir
-                    </button>
-                    <button
-                      onClick={() => handleDownload(evaluation)}
-                      className="text-blue-600 hover:text-blue-900"
-                      title="Télécharger"
-                    >
-                      PDF
-                    </button>
+                    <div className="flex items-center space-x-2">
+                      <LoadingButton
+                        onClick={() => {
+                          setActionLoading(`edit-${index}`)
+                          handleEdit(evaluation)
+                          setActionLoading(null)
+                        }}
+                        variant="outline"
+                        size="sm"
+                        icon={Edit}
+                        isLoading={actionLoading === `edit-${index}`}
+                      >
+                        Modifier
+                      </LoadingButton>
+                      <LoadingButton
+                        onClick={() => setDeleteModal({ isOpen: true, evaluation })}
+                        variant="outline"
+                        size="sm"
+                        icon={Trash2}
+                        className="text-red-600 hover:text-red-700 border-red-300 hover:border-red-400"
+                      >
+                        Supprimer
+                      </LoadingButton>
+                      <LoadingButton
+                        onClick={() => handleView(evaluation)}
+                        variant="outline"
+                        size="sm"
+                        icon={Eye}
+                      >
+                        Voir
+                      </LoadingButton>
+                      <LoadingButton
+                        onClick={() => handleDownload(evaluation)}
+                        variant="outline"
+                        size="sm"
+                        icon={Download}
+                      >
+                        PDF
+                      </LoadingButton>
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -273,6 +305,17 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
           </table>
         </div>
       )}
+
+      <ConfirmModal
+        isOpen={deleteModal.isOpen}
+        onClose={() => setDeleteModal({ isOpen: false, evaluation: null })}
+        onConfirm={handleDelete}
+        title="Supprimer l'évaluation"
+        message={`Êtes-vous sûr de vouloir supprimer l'évaluation de ${deleteModal.evaluation?.nom} ? Cette action est irréversible.`}
+        confirmText="Supprimer"
+        cancelText="Annuler"
+        variant="danger"
+      />
     </div>
   )
 }

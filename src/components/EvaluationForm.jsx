@@ -347,20 +347,26 @@ function EvaluationForm({ position, positionLabel, onFormChange, onSave, githubT
       </div>
 
       <div className="flex gap-4">
-        <button
+        <LoadingButton
           type="submit"
-          className="flex-1 bg-hotel-gold text-white py-3 px-4 rounded-lg font-semibold hover:bg-yellow-600 transition-colors"
+          className="flex-1"
+          icon={isEditing ? CheckCircle : Save}
+          isLoading={isSubmitting}
+          variant="primary"
+          size="lg"
         >
           {isEditing ? 'Mettre à jour l\'évaluation' : 'Enregistrer l\'évaluation'}
-        </button>
+        </LoadingButton>
         {isEditing && (
-          <button
+          <LoadingButton
             type="button"
             onClick={() => window.location.reload()}
-            className="px-6 py-3 bg-gray-500 text-white rounded-lg font-semibold hover:bg-gray-600 transition-colors"
+            icon={X}
+            variant="secondary"
+            size="lg"
           >
             Annuler
-          </button>
+          </LoadingButton>
         )}
       </div>
     </form>
