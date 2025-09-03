@@ -1,0 +1,44 @@
+{
+  "nom": "Ali Bachir",
+  "matricule": "46556",
+  "service": "Responsable Réception",
+  "poste": "Responsable Réception",
+  "superieur": "Self",
+  "dateDebut": "2025-01-01",
+  "dateFin": "2025-12-31",
+  "commonScores": {},
+  "specificScores": {},
+  "technicalScores": {
+    "gestion_equipe": 10,
+    "organisation_planification": 10,
+    "maitrise_procedures": 10,
+    "suivi_indicateurs": 10,
+    "reactivite_imprevus": 10,
+    "formation_equipes": 10
+  },
+  "behavioralScores": {
+    "leadership": 10,
+    "communication_equipe": 10,
+    "relation_direction": 10,
+    "collaboration_inter": 10,
+    "professionnalisme": 10,
+    "amelioration_continue": 10
+  },
+  "decisions": [
+    "formation",
+    "prime",
+    "disciplinaire",
+    "promotion"
+  ],
+  "evaluateurNom": "Self",
+  "dateEvaluation": "2025-09-03",
+  "employeeType": "supervisor",
+  "totalScore": 120,
+  "maxScore": 100,
+  "percentage": 120,
+  "appreciation": "Performance insuffisante",
+  "bonusEligible": "Pas de prime",
+  "technicalTotal": 60,
+  "behavioralTotal": 60,
+  "timestamp": "2025-09-03T00:08:30.073Z"
+}
