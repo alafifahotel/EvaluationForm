@@ -1,20 +1,21 @@
 import { useState, useEffect, useRef } from 'react'
 import { format } from 'date-fns'
 import { fr } from 'date-fns/locale'
-import { positions } from '../data/criteriaConfig'
+import { positions, supervisorPositions } from '../data/criteriaConfig'
 import GitHubService from '../services/githubService'
 import ConfirmModal from './ConfirmModal'
 import EmptyState from './EmptyState'
 import LoadingSpinner from './LoadingSpinner'
 import LoadingButton from './LoadingButton'
 import ViewModal from './ViewModal'
-import { Edit, Trash2, Eye, Search, Filter, RefreshCw, ChevronDown, ChevronUp, Calendar, Briefcase, Award, X } from 'lucide-react'
+import { Edit, Trash2, Eye, Search, Filter, RefreshCw, ChevronDown, ChevronUp, Calendar, Briefcase, Award, X, UserCheck, Users } from 'lucide-react'
 import { useToast } from '../contexts/ToastContext'
 
 function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluation }) {
   const [evaluations, setEvaluations] = useState(localEvaluations || [])
   const [filter, setFilter] = useState({
     service: '',
+    employeeType: '',
     dateFrom: '',
     dateTo: '',
     minScore: ''
@@ -79,6 +80,7 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
   const getFilteredEvaluations = () => {
     return evaluations.filter(evaluation => {
       if (filter.service && evaluation.service !== filter.service) return false
+      if (filter.employeeType && evaluation.employeeType !== filter.employeeType) return false
       if (filter.dateFrom && new Date(evaluation.dateEvaluation) < new Date(filter.dateFrom)) return false
       if (filter.dateTo && new Date(evaluation.dateEvaluation) > new Date(filter.dateTo)) return false
       if (filter.minScore && evaluation.percentage < parseFloat(filter.minScore)) return false
@@ -222,9 +224,29 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
 
           {/* Filter Fields */}
           <div className="p-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+              {/* Employee Type Filter */}
+              <div className="col-span-1">
+                <div className="bg-white rounded-lg p-3 border border-gray-200 hover:border-hotel-gold transition-colors">
+                  <label className="flex items-center gap-2 text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">
+                    <UserCheck className="h-4 w-4 text-hotel-gold" />
+                    Type de personnel
+                  </label>
+                  <select
+                    name="employeeType"
+                    value={filter.employeeType}
+                    onChange={handleFilterChange}
+                    className="w-full px-3 py-2 border-0 bg-gray-50 rounded-md focus:ring-2 focus:ring-hotel-gold focus:bg-white transition-colors text-sm"
+                  >
+                    <option value="">Tous les types</option>
+                    <option value="employee">Personnel opérationnel</option>
+                    <option value="supervisor">Personnel d'encadrement</option>
+                  </select>
+                </div>
+              </div>
+
               {/* Service Filter */}
-              <div className="col-span-1 sm:col-span-2 lg:col-span-1">
+              <div className="col-span-1">
                 <div className="bg-white rounded-lg p-3 border border-gray-200 hover:border-hotel-gold transition-colors">
                   <label className="flex items-center gap-2 text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">
                     <Briefcase className="h-4 w-4 text-hotel-gold" />
@@ -237,7 +259,7 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
                     className="w-full px-3 py-2 border-0 bg-gray-50 rounded-md focus:ring-2 focus:ring-hotel-gold focus:bg-white transition-colors text-sm"
                   >
                     <option value="">Tous les services</option>
-                    {positions.map(pos => (
+                    {[...positions, ...supervisorPositions].map(pos => (
                       <option key={pos.value} value={pos.label}>
                         {pos.label}
                       </option>
@@ -327,6 +349,15 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
         {/* Active Filters Pills - Mobile */}
         {hasActiveFilters() && !filtersExpanded && (
           <div className="sm:hidden mt-3 flex flex-wrap gap-2">
+            {filter.employeeType && (
+              <span className="inline-flex items-center gap-1 px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-xs">
+                <UserCheck className="h-3 w-3" />
+                {filter.employeeType === 'supervisor' ? 'Encadrement' : 'Opérationnel'}
+                <button onClick={() => setFilter(prev => ({ ...prev, employeeType: '' }))} className="ml-1">
+                  <X className="h-3 w-3" />
+                </button>
+              </span>
+            )}
             {filter.service && (
               <span className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">
                 <Briefcase className="h-3 w-3" />
@@ -393,6 +424,9 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
                   Employé
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Type
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Service
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -420,6 +454,19 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
                       <div className="text-sm font-medium text-gray-900">{evaluation.nom}</div>
                       <div className="text-sm text-gray-500">Mat: {evaluation.matricule}</div>
                     </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span className={`px-2 inline-flex items-center text-xs leading-5 font-semibold rounded-full ${
+                      evaluation.employeeType === 'supervisor' 
+                        ? 'bg-purple-100 text-purple-800' 
+                        : 'bg-blue-100 text-blue-800'
+                    }`}>
+                      {evaluation.employeeType === 'supervisor' ? (
+                        <><UserCheck className="h-3 w-3 mr-1" /> Encadrement</>
+                      ) : (
+                        <><Users className="h-3 w-3 mr-1" /> Opérationnel</>
+                      )}
+                    </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                     {evaluation.service || evaluation.poste}

@@ -9,6 +9,15 @@ export const positions = [
   { value: 'plongeurs', label: 'Plongeurs (Stewards)' }
 ];
 
+export const supervisorPositions = [
+  { value: 'reception_manager', label: 'Responsable Réception' },
+  { value: 'general_housekeeper', label: 'Gouvernante Générale' },
+  { value: 'hr_director', label: 'Directeur des Ressources Humaines' },
+  { value: 'head_accountant', label: 'Chef Comptable' },
+  { value: 'maitre_hotel', label: "Maître d'Hôtel" },
+  { value: 'head_chef', label: 'Chef de Cuisine' }
+];
+
 export const commonCriteria = [
   {
     id: 'ponctualite',
@@ -231,12 +240,86 @@ export const specificCriteria = {
   ]
 };
 
+export const supervisorTechnicalCriteria = [
+  {
+    id: 'gestion_equipe',
+    label: 'Compétence en gestion d\'équipe',
+    description: 'Capacité à diriger, motiver et coordonner l\'équipe'
+  },
+  {
+    id: 'organisation_planification',
+    label: 'Capacité d\'organisation et de planification',
+    description: 'Structuration du travail, gestion des priorités'
+  },
+  {
+    id: 'maitrise_procedures',
+    label: 'Maîtrise des procédures de service',
+    description: 'Connaissance et application des standards'
+  },
+  {
+    id: 'suivi_indicateurs',
+    label: 'Suivi des indicateurs de performance',
+    description: 'Analyse des KPIs, tableaux de bord'
+  },
+  {
+    id: 'reactivite_imprevus',
+    label: 'Réactivité face aux imprévus',
+    description: 'Gestion de crise, résolution de problèmes'
+  },
+  {
+    id: 'formation_equipes',
+    label: 'Capacité à former et encadrer les équipes',
+    description: 'Transmission de compétences, coaching'
+  }
+];
+
+export const supervisorBehavioralCriteria = [
+  {
+    id: 'leadership',
+    label: 'Leadership et exemplarité',
+    description: 'Influence positive, modèle pour l\'équipe'
+  },
+  {
+    id: 'communication_equipe',
+    label: 'Communication avec l\'équipe',
+    description: 'Clarté, écoute, feedback constructif'
+  },
+  {
+    id: 'relation_direction',
+    label: 'Relation avec la direction',
+    description: 'Reporting, alignement stratégique'
+  },
+  {
+    id: 'collaboration_inter',
+    label: 'Esprit de collaboration inter-départements',
+    description: 'Transversalité, synergie'
+  },
+  {
+    id: 'professionnalisme',
+    label: 'Professionnalisme / Présentation',
+    description: 'Image, tenue, comportement exemplaire'
+  },
+  {
+    id: 'amelioration_continue',
+    label: 'Implication dans l\'amélioration continue',
+    description: 'Innovation, propositions, optimisation'
+  }
+];
+
 export const appreciationScale = [
   { min: 90, max: 100, label: 'Excellent', color: 'text-green-600' },
   { min: 80, max: 89, label: 'Très Bon', color: 'text-blue-600' },
   { min: 70, max: 79, label: 'Bon', color: 'text-indigo-600' },
   { min: 60, max: 69, label: 'À améliorer', color: 'text-yellow-600' },
   { min: 0, max: 59, label: 'Insuffisant', color: 'text-red-600' }
+];
+
+export const supervisorAppreciationScale = [
+  { min: 90, max: 100, label: 'Performance exceptionnelle', color: 'text-green-600', bonusEligible: 'Prime maximale' },
+  { min: 80, max: 89, label: 'Très bonne performance', color: 'text-blue-600', bonusEligible: 'Prime standard' },
+  { min: 70, max: 79, label: 'Bonne performance', color: 'text-indigo-600', bonusEligible: 'Prime réduite' },
+  { min: 60, max: 69, label: 'Performance à améliorer', color: 'text-yellow-600', bonusEligible: 'Pas de prime' },
+  { min: 0, max: 59, label: 'Performance insuffisante', color: 'text-red-600', bonusEligible: 'Pas de prime' }
 ];
 
 export const decisions = [

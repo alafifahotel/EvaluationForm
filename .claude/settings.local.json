@@ -15,7 +15,8 @@
       "Read(C:\\Users\\wissa\\Pictures\\Screenshots/**)",
       "Bash(npm uninstall:*)",
       "Read(C:\\Users\\wissa\\Pictures\\Screenshots/**)",
-      "Read(C:\\Users\\wissa\\Pictures\\Screenshots/**)"
+      "Read(C:\\Users\\wissa\\Pictures\\Screenshots/**)",
+      "Bash(npm run dev:*)"
     ],
     "deny": [],
     "ask": []

@@ -1,5 +1,13 @@
 import { useState, useEffect } from 'react'
-import { commonCriteria, specificCriteria, appreciationScale, decisions } from '../data/criteriaConfig'
+import { 
+  commonCriteria, 
+  specificCriteria, 
+  appreciationScale, 
+  supervisorAppreciationScale,
+  supervisorTechnicalCriteria,
+  supervisorBehavioralCriteria,
+  decisions 
+} from '../data/criteriaConfig'
 import { format } from 'date-fns'
 import { fr } from 'date-fns/locale'
 import GitHubService from '../services/githubService'
@@ -7,7 +15,7 @@ import LoadingButton from './LoadingButton'
 import { Save, X, CheckCircle, User, Hash, Briefcase, Users, Calendar, PenTool, CalendarCheck, ClipboardList, Target, Trophy, FileCheck } from 'lucide-react'
 import { useToast } from '../contexts/ToastContext'
 
-function EvaluationForm({ position, positionLabel, onFormChange, onSave, githubToken, initialData, isEditing, onCancel }) {
+function EvaluationForm({ position, positionLabel, employeeType = 'employee', onFormChange, onSave, githubToken, initialData, isEditing, onCancel }) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const toast = useToast()
   const [formData, setFormData] = useState(initialData || {
@@ -20,9 +28,12 @@ function EvaluationForm({ position, positionLabel, onFormChange, onSave, githubT
     dateFin: '',
     commonScores: {},
     specificScores: {},
+    technicalScores: {},
+    behavioralScores: {},
     decisions: [],
     evaluateurNom: '',
-    dateEvaluation: format(new Date(), 'yyyy-MM-dd')
+    dateEvaluation: format(new Date(), 'yyyy-MM-dd'),
+    employeeType: employeeType
   })
 
   useEffect(() => {
@@ -38,10 +49,11 @@ function EvaluationForm({ position, positionLabel, onFormChange, onSave, githubT
       setFormData(prev => ({
         ...prev,
         service: positionLabel || '',
-        poste: positionLabel || ''
+        poste: positionLabel || '',
+        employeeType: employeeType
       }))
     }
-  }, [positionLabel, isEditing])
+  }, [positionLabel, isEditing, employeeType])
 
   useEffect(() => {
     onFormChange(formData)
@@ -56,7 +68,8 @@ function EvaluationForm({ position, positionLabel, onFormChange, onSave, githubT
   }
 
   const handleScoreChange = (criteriaType, criteriaId, value) => {
-    const score = Math.min(5, Math.max(0, parseFloat(value) || 0))
+    const maxScore = employeeType === 'supervisor' ? 10 : 5
+    const score = Math.min(maxScore, Math.max(0, parseFloat(value) || 0))
     setFormData(prev => ({
       ...prev,
       [`${criteriaType}Scores`]: {
@@ -76,17 +89,29 @@ function EvaluationForm({ position, positionLabel, onFormChange, onSave, githubT
   }
 
   const calculateTotal = () => {
-    const commonTotal = Object.values(formData.commonScores).reduce((sum, score) => sum + (score || 0), 0)
-    const specificTotal = Object.values(formData.specificScores).reduce((sum, score) => sum + (score || 0), 0)
-    const maxCommon = commonCriteria.length * 5
-    const maxSpecific = (specificCriteria[position]?.length || 0) * 5
-    const percentage = ((commonTotal + specificTotal) / (maxCommon + maxSpecific)) * 100
-    return { total: commonTotal + specificTotal, percentage: percentage.toFixed(1) }
+    if (employeeType === 'supervisor') {
+      const technicalTotal = Object.values(formData.technicalScores || {}).reduce((sum, score) => sum + (score || 0), 0)
+      const behavioralTotal = Object.values(formData.behavioralScores || {}).reduce((sum, score) => sum + (score || 0), 0)
+      const total = technicalTotal + behavioralTotal
+      const maxTechnical = supervisorTechnicalCriteria.length * 10 // 6 criteria * 10 points = 60
+      const maxBehavioral = supervisorBehavioralCriteria.length * 10 // 6 criteria * 10 points = 60
+      const maxTotal = maxTechnical + maxBehavioral // 120 points total
+      const percentage = (total / maxTotal) * 100
+      return { total, percentage: percentage.toFixed(1), technicalTotal, behavioralTotal, maxTechnical, maxBehavioral, maxTotal }
+    } else {
+      const commonTotal = Object.values(formData.commonScores || {}).reduce((sum, score) => sum + (score || 0), 0)
+      const specificTotal = Object.values(formData.specificScores || {}).reduce((sum, score) => sum + (score || 0), 0)
+      const maxCommon = commonCriteria.length * 5
+      const maxSpecific = (specificCriteria[position]?.length || 0) * 5
+      const percentage = ((commonTotal + specificTotal) / (maxCommon + maxSpecific)) * 100
+      return { total: commonTotal + specificTotal, percentage: percentage.toFixed(1) }
+    }
   }
 
   const getAppreciation = (percentage) => {
-    const scale = appreciationScale.find(s => percentage >= s.min && percentage <= s.max)
-    return scale || appreciationScale[appreciationScale.length - 1]
+    const scale = employeeType === 'supervisor' ? supervisorAppreciationScale : appreciationScale
+    const scaleItem = scale.find(s => percentage >= s.min && percentage <= s.max)
+    return scaleItem || scale[scale.length - 1]
   }
 
   const handleSubmit = async (e) => {
@@ -94,9 +119,16 @@ function EvaluationForm({ position, positionLabel, onFormChange, onSave, githubT
     setIsSubmitting(true)
     
     try {
-      const { total, percentage } = calculateTotal()
+      const calculatedValues = calculateTotal()
+      const { total, percentage } = calculatedValues
       const appreciation = getAppreciation(percentage)
-      const maxScore = (commonCriteria.length + (specificCriteria[position]?.length || 0)) * 5
+      
+      let maxScore
+      if (employeeType === 'supervisor') {
+        maxScore = supervisorTechnicalCriteria.length * 10 + supervisorBehavioralCriteria.length * 10 // 120 points total
+      } else {
+        maxScore = (commonCriteria.length + (specificCriteria[position]?.length || 0)) * 5
+      }
       
       const evaluationData = {
         ...formData,
@@ -104,6 +136,9 @@ function EvaluationForm({ position, positionLabel, onFormChange, onSave, githubT
         maxScore,
         percentage,
         appreciation: appreciation.label,
+        bonusEligible: appreciation.bonusEligible || null,
+        technicalTotal: calculatedValues.technicalTotal || null,
+        behavioralTotal: calculatedValues.behavioralTotal || null,
         timestamp: isEditing ? formData.timestamp : new Date().toISOString(),
         githubPath: formData.githubPath // Preserve GitHub path if editing
       }
@@ -136,9 +171,12 @@ function EvaluationForm({ position, positionLabel, onFormChange, onSave, githubT
           dateFin: '',
           commonScores: {},
           specificScores: {},
+          technicalScores: {},
+          behavioralScores: {},
           decisions: [],
           evaluateurNom: '',
-          dateEvaluation: format(new Date(), 'yyyy-MM-dd')
+          dateEvaluation: format(new Date(), 'yyyy-MM-dd'),
+          employeeType: employeeType
         })
       }
     } catch (error) {
@@ -150,7 +188,8 @@ function EvaluationForm({ position, positionLabel, onFormChange, onSave, githubT
   }
 
   const positionCriteria = specificCriteria[position] || []
-  const { total, percentage } = calculateTotal()
+  const calculatedValues = calculateTotal()
+  const { total, percentage } = calculatedValues
   const appreciation = getAppreciation(percentage)
 
   return (
@@ -335,78 +374,157 @@ function EvaluationForm({ position, positionLabel, onFormChange, onSave, githubT
         </div>
       </div>
 
-      {/* Enhanced Common Criteria Section */}
-      <div className="bg-gradient-to-b from-gray-50 to-gray-100 p-3 sm:p-4 rounded-lg border border-gray-200">
-        <h3 className="text-base sm:text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
-          <div className="p-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg shadow-sm">
-            <ClipboardList className="h-4 w-4 text-white" />
-          </div>
-          Critères communs
-          <span className="text-xs font-normal text-gray-500">(tous services)</span>
-        </h3>
-        <div className="space-y-3">
-          {commonCriteria.map(criteria => (
-            <div key={criteria.id} className="bg-white rounded-lg p-3 border border-gray-100 hover:border-blue-200 transition-colors">
-              <div className="flex items-center justify-between">
-                <div className="flex-1 pr-4">
-                  <p className="text-sm sm:text-base font-medium text-gray-800">{criteria.label}</p>
-                  <p className="text-xs sm:text-sm text-gray-600 mt-1">{criteria.description}</p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <input
-                    type="number"
-                    min="0"
-                    max="5"
-                    step="0.5"
-                    value={formData.commonScores[criteria.id] || ''}
-                    onChange={(e) => handleScoreChange('common', criteria.id, e.target.value)}
-                    className="w-16 px-2 py-1.5 text-sm text-center bg-gray-50 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="0"
-                  />
-                  <span className="text-xs sm:text-sm text-gray-500 font-medium">/5</span>
-                </div>
+      {/* Criteria Sections - Different for Employees and Supervisors */}
+      {employeeType === 'supervisor' ? (
+        <>
+          {/* Technical Skills Section for Supervisors */}
+          <div className="bg-gradient-to-b from-gray-50 to-gray-100 p-3 sm:p-4 rounded-lg border border-gray-200">
+            <h3 className="text-base sm:text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+              <div className="p-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg shadow-sm">
+                <ClipboardList className="h-4 w-4 text-white" />
               </div>
+              Compétences Techniques
+              <span className="text-xs font-normal text-gray-500">(60 points)</span>
+            </h3>
+            <div className="space-y-3">
+              {supervisorTechnicalCriteria.map(criteria => (
+                <div key={criteria.id} className="bg-white rounded-lg p-3 border border-gray-100 hover:border-blue-200 transition-colors">
+                  <div className="flex items-center justify-between">
+                    <div className="flex-1 pr-4">
+                      <p className="text-sm sm:text-base font-medium text-gray-800">{criteria.label}</p>
+                      <p className="text-xs sm:text-sm text-gray-600 mt-1">{criteria.description}</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="number"
+                        min="0"
+                        max="10"
+                        step="0.5"
+                        value={formData.technicalScores[criteria.id] || ''}
+                        onChange={(e) => handleScoreChange('technical', criteria.id, e.target.value)}
+                        className="w-16 px-2 py-1.5 text-sm text-center bg-gray-50 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder="0"
+                      />
+                      <span className="text-xs sm:text-sm text-gray-500 font-medium">/10</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-      </div>
+          </div>
 
-      {/* Enhanced Specific Criteria Section */}
-      {positionCriteria.length > 0 && (
-        <div className="bg-gradient-to-b from-purple-50 to-indigo-50 p-3 sm:p-4 rounded-lg border border-purple-200">
-          <h3 className="text-base sm:text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
-            <div className="p-1.5 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-lg shadow-sm">
-              <Target className="h-4 w-4 text-white" />
-            </div>
-            Critères spécifiques
-            <span className="text-xs font-normal text-gray-500">({positionLabel})</span>
-          </h3>
-          <div className="space-y-3">
-            {positionCriteria.map(criteria => (
-              <div key={criteria.id} className="bg-white rounded-lg p-3 border border-gray-100 hover:border-purple-200 transition-colors">
-                <div className="flex items-center justify-between">
-                  <div className="flex-1 pr-4">
-                    <p className="text-sm sm:text-base font-medium text-gray-800">{criteria.label}</p>
-                    <p className="text-xs sm:text-sm text-gray-600 mt-1">{criteria.description}</p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="number"
-                      min="0"
-                      max="5"
-                      step="0.5"
-                      value={formData.specificScores[criteria.id] || ''}
-                      onChange={(e) => handleScoreChange('specific', criteria.id, e.target.value)}
-                      className="w-16 px-2 py-1.5 text-sm text-center bg-gray-50 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                      placeholder="0"
-                    />
-                    <span className="text-xs sm:text-sm text-gray-500 font-medium">/5</span>
+          {/* Behavioral Skills Section for Supervisors */}
+          <div className="bg-gradient-to-b from-purple-50 to-indigo-50 p-3 sm:p-4 rounded-lg border border-purple-200">
+            <h3 className="text-base sm:text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+              <div className="p-1.5 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-lg shadow-sm">
+                <Target className="h-4 w-4 text-white" />
+              </div>
+              Comportement & Attitude
+              <span className="text-xs font-normal text-gray-500">(40 points)</span>
+            </h3>
+            <div className="space-y-3">
+              {supervisorBehavioralCriteria.map(criteria => (
+                <div key={criteria.id} className="bg-white rounded-lg p-3 border border-gray-100 hover:border-purple-200 transition-colors">
+                  <div className="flex items-center justify-between">
+                    <div className="flex-1 pr-4">
+                      <p className="text-sm sm:text-base font-medium text-gray-800">{criteria.label}</p>
+                      <p className="text-xs sm:text-sm text-gray-600 mt-1">{criteria.description}</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="number"
+                        min="0"
+                        max="10"
+                        step="0.5"
+                        value={formData.behavioralScores[criteria.id] || ''}
+                        onChange={(e) => handleScoreChange('behavioral', criteria.id, e.target.value)}
+                        className="w-16 px-2 py-1.5 text-sm text-center bg-gray-50 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                        placeholder="0"
+                      />
+                      <span className="text-xs sm:text-sm text-gray-500 font-medium">/10</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
+        </>
+      ) : (
+        <>
+          {/* Enhanced Common Criteria Section for Employees */}
+          <div className="bg-gradient-to-b from-gray-50 to-gray-100 p-3 sm:p-4 rounded-lg border border-gray-200">
+            <h3 className="text-base sm:text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+              <div className="p-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg shadow-sm">
+                <ClipboardList className="h-4 w-4 text-white" />
+              </div>
+              Critères communs
+              <span className="text-xs font-normal text-gray-500">(tous services)</span>
+            </h3>
+            <div className="space-y-3">
+              {commonCriteria.map(criteria => (
+                <div key={criteria.id} className="bg-white rounded-lg p-3 border border-gray-100 hover:border-blue-200 transition-colors">
+                  <div className="flex items-center justify-between">
+                    <div className="flex-1 pr-4">
+                      <p className="text-sm sm:text-base font-medium text-gray-800">{criteria.label}</p>
+                      <p className="text-xs sm:text-sm text-gray-600 mt-1">{criteria.description}</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="number"
+                        min="0"
+                        max="5"
+                        step="0.5"
+                        value={formData.commonScores[criteria.id] || ''}
+                        onChange={(e) => handleScoreChange('common', criteria.id, e.target.value)}
+                        className="w-16 px-2 py-1.5 text-sm text-center bg-gray-50 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder="0"
+                      />
+                      <span className="text-xs sm:text-sm text-gray-500 font-medium">/5</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Enhanced Specific Criteria Section for Employees */}
+          {positionCriteria.length > 0 && (
+            <div className="bg-gradient-to-b from-purple-50 to-indigo-50 p-3 sm:p-4 rounded-lg border border-purple-200">
+              <h3 className="text-base sm:text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <div className="p-1.5 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-lg shadow-sm">
+                  <Target className="h-4 w-4 text-white" />
+                </div>
+                Critères spécifiques
+                <span className="text-xs font-normal text-gray-500">({positionLabel})</span>
+              </h3>
+              <div className="space-y-3">
+                {positionCriteria.map(criteria => (
+                  <div key={criteria.id} className="bg-white rounded-lg p-3 border border-gray-100 hover:border-purple-200 transition-colors">
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1 pr-4">
+                        <p className="text-sm sm:text-base font-medium text-gray-800">{criteria.label}</p>
+                        <p className="text-xs sm:text-sm text-gray-600 mt-1">{criteria.description}</p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="number"
+                          min="0"
+                          max="5"
+                          step="0.5"
+                          value={formData.specificScores[criteria.id] || ''}
+                          onChange={(e) => handleScoreChange('specific', criteria.id, e.target.value)}
+                          className="w-16 px-2 py-1.5 text-sm text-center bg-gray-50 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                          placeholder="0"
+                        />
+                        <span className="text-xs sm:text-sm text-gray-500 font-medium">/5</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </>
       )}
 
       {/* Enhanced Final Score Section */}
@@ -419,12 +537,29 @@ function EvaluationForm({ position, positionLabel, onFormChange, onSave, githubT
         </h3>
         <div className="bg-white rounded-lg p-4 border border-yellow-100">
           <div className="space-y-3">
+            {employeeType === 'supervisor' && calculatedValues.technicalTotal !== undefined && (
+              <>
+                <div className="flex justify-between items-center">
+                  <p className="text-sm sm:text-base text-gray-700">Total Compétences Techniques:</p>
+                  <span className="text-sm sm:text-base font-bold text-gray-900">{calculatedValues.technicalTotal} / {calculatedValues.maxTechnical || 60}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <p className="text-sm sm:text-base text-gray-700">Total Comportement & Attitude:</p>
+                  <span className="text-sm sm:text-base font-bold text-gray-900">{calculatedValues.behavioralTotal} / {calculatedValues.maxBehavioral || 60}</span>
+                </div>
+                <div className="border-t pt-2"></div>
+              </>
+            )}
             <div className="flex justify-between items-center">
               <p className="text-sm sm:text-base text-gray-700">Total points obtenus:</p>
-              <span className="text-sm sm:text-base font-bold text-gray-900">{total} / {(commonCriteria.length + positionCriteria.length) * 5}</span>
+              <span className="text-sm sm:text-base font-bold text-gray-900">
+                {total} / {employeeType === 'supervisor' ? (supervisorTechnicalCriteria.length * 10 + supervisorBehavioralCriteria.length * 10) : (commonCriteria.length + positionCriteria.length) * 5}
+              </span>
             </div>
             <div className="flex justify-between items-center">
-              <p className="text-sm sm:text-base text-gray-700">Pourcentage:</p>
+              <p className="text-sm sm:text-base text-gray-700">
+                {employeeType === 'supervisor' ? 'Score final:' : 'Pourcentage:'}
+              </p>
               <span className="text-sm sm:text-base font-bold text-gray-900">{percentage}%</span>
             </div>
             <div className="flex justify-between items-center">
@@ -432,10 +567,17 @@ function EvaluationForm({ position, positionLabel, onFormChange, onSave, githubT
               <span className={`text-sm sm:text-base font-bold px-3 py-1 rounded-full ${
                 appreciation.color === 'text-green-600' ? 'bg-green-100 text-green-800' :
                 appreciation.color === 'text-blue-600' ? 'bg-blue-100 text-blue-800' :
+                appreciation.color === 'text-indigo-600' ? 'bg-indigo-100 text-indigo-800' :
                 appreciation.color === 'text-yellow-600' ? 'bg-yellow-100 text-yellow-800' :
                 'bg-red-100 text-red-800'
               }`}>{appreciation.label}</span>
             </div>
+            {employeeType === 'supervisor' && appreciation.bonusEligible && (
+              <div className="flex justify-between items-center border-t pt-2">
+                <p className="text-sm sm:text-base text-gray-700">Éligibilité prime:</p>
+                <span className="text-sm sm:text-base font-semibold text-green-700">{appreciation.bonusEligible}</span>
+              </div>
+            )}
           </div>
         </div>
       </div>

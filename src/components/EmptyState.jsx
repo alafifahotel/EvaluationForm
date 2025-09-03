@@ -34,12 +34,7 @@ function EmptyState({
 
   return (
     <div className="flex flex-col items-center justify-center py-12 px-4">
-      <div className="relative">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className={`h-32 w-32 rounded-full bg-gradient-to-br from-gray-100 to-gray-200 opacity-50 animate-pulse`}></div>
-        </div>
-        <Icon className={`relative h-24 w-24 ${config.iconColor} animate-bounce-slow`} strokeWidth={1.5} />
-      </div>
+      <Icon className={`h-24 w-24 ${config.iconColor}`} strokeWidth={1.5} />
       
       <h3 className="mt-6 text-xl font-semibold text-gray-900">
         {title || config.defaultTitle}

@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import EvaluationForm from './components/EvaluationForm'
 import PreviewA4 from './components/PreviewA4'
 import HistoryTab from './components/HistoryTab'
-import { positions } from './data/criteriaConfig'
-import { FileEdit, History, Edit } from 'lucide-react'
+import { positions, supervisorPositions } from './data/criteriaConfig'
+import { FileEdit, History, Edit, Users, UserCheck } from 'lucide-react'
 import { ToastProvider, useToast } from './contexts/ToastContext'
 
 function AppContent() {
@@ -15,6 +15,7 @@ function AppContent() {
   }
 
   const [activeTab, setActiveTab] = useState(getInitialTab())
+  const [employeeType, setEmployeeType] = useState('') // 'employee' or 'supervisor'
   const [selectedPosition, setSelectedPosition] = useState('')
   const [formData, setFormData] = useState({})
   const [githubToken, setGithubToken] = useState('')
@@ -53,11 +54,23 @@ function AppContent() {
     }
   }, [])
 
+  const handleEmployeeTypeChange = (type) => {
+    setEmployeeType(type)
+    setSelectedPosition('')
+    setFormData({})
+  }
+
   const handlePositionChange = (e) => {
-    setSelectedPosition(e.target.value)
+    const positionValue = e.target.value
+    setSelectedPosition(positionValue)
+    
+    const positionsList = employeeType === 'supervisor' ? supervisorPositions : positions
+    const selectedPos = positionsList.find(p => p.value === positionValue)
+    
     setFormData({
-      service: positions.find(p => p.value === e.target.value)?.label || '',
-      poste: positions.find(p => p.value === e.target.value)?.label || ''
+      service: selectedPos?.label || '',
+      poste: selectedPos?.label || '',
+      employeeType: employeeType
     })
   }
 
@@ -81,7 +94,11 @@ function AppContent() {
   const handleEditEvaluation = (evaluation) => {
     // Set the evaluation to edit
     setEditingEvaluation(evaluation)
-    setSelectedPosition(positions.find(p => p.label === evaluation.service)?.value || '')
+    const type = evaluation.employeeType || 'employee'
+    setEmployeeType(type)
+    
+    const positionsList = type === 'supervisor' ? supervisorPositions : positions
+    setSelectedPosition(positionsList.find(p => p.label === evaluation.service)?.value || '')
     setFormData(evaluation)
     setActiveTab('evaluation')
   }
@@ -91,7 +108,7 @@ function AppContent() {
       <header className="bg-hotel-dark text-white py-6 px-8 shadow-lg">
         <div className="max-w-[1600px] mx-auto">
           <h1 className="text-3xl font-bold text-hotel-gold">
-            Al Afifa Hotel - Système d'Évaluation
+            Al Afifa Hotel
           </h1>
           <p className="text-gray-300 mt-2">Fiche d'évaluation du personnel</p>
         </div>
@@ -138,31 +155,74 @@ function AppContent() {
                   </span>
                 </div>
               )}
-              <div className="mb-6">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Sélectionner le poste à évaluer
-                </label>
-                <select
-                  value={selectedPosition}
-                  onChange={handlePositionChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hotel-gold focus:border-transparent"
-                  disabled={editingEvaluation}
-                >
-                  <option value="">-- Choisir un poste --</option>
-                  {positions.map((pos) => (
-                    <option key={pos.value} value={pos.value}>
-                      {pos.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
+              
+              {!editingEvaluation && (
+                <div className="mb-6">
+                  <label className="block text-sm font-medium text-gray-700 mb-3">
+                    Type de personnel à évaluer
+                  </label>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <button
+                      onClick={() => handleEmployeeTypeChange('employee')}
+                      className={`p-4 rounded-lg border-2 transition-all ${
+                        employeeType === 'employee'
+                          ? 'border-hotel-gold bg-hotel-gold/10 text-hotel-gold'
+                          : 'border-gray-300 hover:border-gray-400'
+                      }`}
+                    >
+                      <Users className="h-8 w-8 mx-auto mb-2" />
+                      <div className="font-semibold">Personnel opérationnel</div>
+                      <div className="text-sm text-gray-600 mt-1">
+                        Employés de service (réception, housekeeping, cuisine, etc.)
+                      </div>
+                    </button>
+                    
+                    <button
+                      onClick={() => handleEmployeeTypeChange('supervisor')}
+                      className={`p-4 rounded-lg border-2 transition-all ${
+                        employeeType === 'supervisor'
+                          ? 'border-hotel-gold bg-hotel-gold/10 text-hotel-gold'
+                          : 'border-gray-300 hover:border-gray-400'
+                      }`}
+                    >
+                      <UserCheck className="h-8 w-8 mx-auto mb-2" />
+                      <div className="font-semibold">Personnel d'encadrement</div>
+                      <div className="text-sm text-gray-600 mt-1">
+                        Responsables et superviseurs de département
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {(employeeType || editingEvaluation) && (
+                <div className="mb-6">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Sélectionner le poste à évaluer
+                  </label>
+                  <select
+                    value={selectedPosition}
+                    onChange={handlePositionChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hotel-gold focus:border-transparent"
+                    disabled={editingEvaluation}
+                  >
+                    <option value="">-- Choisir un poste --</option>
+                    {(employeeType === 'supervisor' ? supervisorPositions : positions).map((pos) => (
+                      <option key={pos.value} value={pos.value}>
+                        {pos.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
 
               {(selectedPosition || editingEvaluation) && (
                 <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
                   <div className="xl:max-w-2xl">
                     <EvaluationForm
-                      position={selectedPosition || positions.find(p => p.label === editingEvaluation?.service)?.value || ''}
-                      positionLabel={positions.find(p => p.value === selectedPosition)?.label || editingEvaluation?.service || ''}
+                      position={selectedPosition || (editingEvaluation?.employeeType === 'supervisor' ? supervisorPositions : positions).find(p => p.label === editingEvaluation?.service)?.value || ''}
+                      positionLabel={(employeeType === 'supervisor' ? supervisorPositions : positions).find(p => p.value === selectedPosition)?.label || editingEvaluation?.service || ''}
+                      employeeType={employeeType || editingEvaluation?.employeeType || 'employee'}
                       onFormChange={handleFormChange}
                       onSave={handleSaveEvaluation}
                       githubToken={githubToken}
@@ -171,6 +231,7 @@ function AppContent() {
                       onCancel={() => {
                         setEditingEvaluation(null)
                         setSelectedPosition('')
+                        setEmployeeType('')
                         setFormData({})
                       }}
                     />
@@ -182,7 +243,8 @@ function AppContent() {
                     <div className="border-2 border-gray-300 rounded-lg overflow-auto max-h-100vh shadow-xl">
                       <PreviewA4 
                         formData={formData} 
-                        position={selectedPosition || positions.find(p => p.label === editingEvaluation?.service)?.value || ''}
+                        position={selectedPosition || (editingEvaluation?.employeeType === 'supervisor' ? supervisorPositions : positions).find(p => p.label === editingEvaluation?.service)?.value || ''}
+                        employeeType={employeeType || editingEvaluation?.employeeType || 'employee'}
                       />
                     </div>
                   </div>

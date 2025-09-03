@@ -1,15 +1,126 @@
 import { X, Printer } from 'lucide-react'
 import PreviewA4 from './PreviewA4'
-import { specificCriteria, positions } from '../data/criteriaConfig'
-import { useRef } from 'react'
+import { specificCriteria, positions, supervisorPositions } from '../data/criteriaConfig'
+import { useRef, useEffect } from 'react'
 
 function ViewModal({ isOpen, onClose, evaluation }) {
   const printRef = useRef(null)
   
+  // Add print styles when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      const style = document.createElement('style')
+      style.id = 'view-modal-print-styles'
+      style.textContent = `
+        @media print {
+          * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+          }
+          body, html, #root {
+            width: 100% !important;
+            height: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+          }
+          .print-a4-container {
+            width: 210mm !important;
+            height: 297mm !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            page-break-before: avoid !important;
+            page-break-inside: avoid !important;
+            page-break-after: avoid !important;
+            position: fixed !important;
+            top: 0 !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+          }
+          .print-a4-container .print-content {
+            width: 210mm !important;
+            height: 297mm !important;
+            margin: 0 !important;
+            padding: 5mm 2mm !important;
+            box-sizing: border-box !important;
+            transform: none !important;
+            page-break-before: avoid !important;
+            page-break-inside: avoid !important;
+            page-break-after: avoid !important;
+          }
+          /* Employee evaluation - scale up content to fill page */
+          .print-a4-container .print-content[data-employee-type="employee"] {
+            font-size: 12pt !important;
+            line-height: 1.5 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: space-between !important;
+          }
+          .print-a4-container .print-content[data-employee-type="employee"] h2 {
+            font-size: 18pt !important;
+            text-align: center !important;
+          }
+          .print-a4-container .print-content[data-employee-type="employee"] h3 {
+            font-size: 14pt !important;
+            margin-bottom: 5mm !important;
+          }
+          .print-a4-container .print-content[data-employee-type="employee"] table {
+            font-size: 11pt !important;
+            width: 100% !important;
+            table-layout: fixed !important;
+          }
+          .print-a4-container .print-content[data-employee-type="employee"] table th:nth-child(1) {
+            width: 25% !important;
+          }
+          .print-a4-container .print-content[data-employee-type="employee"] table th:nth-child(2) {
+            width: 55% !important;
+          }
+          .print-a4-container .print-content[data-employee-type="employee"] table th:nth-child(3) {
+            width: 20% !important;
+          }
+          .print-a4-container .print-content[data-employee-type="employee"] table td,
+          .print-a4-container .print-content[data-employee-type="employee"] table th {
+            padding: 2mm 1.5mm !important;
+          }
+          .print-a4-container .print-content[data-employee-type="employee"] .bg-gray-50 {
+            padding: 5mm !important;
+            margin-bottom: 6mm !important;
+          }
+          .print-a4-container .print-content[data-employee-type="employee"] > div {
+            margin-bottom: 5mm !important;
+          }
+          .print-a4-container .print-content[data-employee-type="employee"] > div:nth-last-child(3) {
+            margin-top: auto !important;
+          }
+          /* Supervisor evaluation - normal sizing */
+          .print-a4-container .print-content[data-employee-type="supervisor"] {
+            font-size: 11pt !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: flex-start !important;
+          }
+        }
+        @page {
+          size: A4 portrait;
+          margin: 0;
+        }
+      `
+      document.head.appendChild(style)
+      
+      return () => {
+        const existingStyle = document.getElementById('view-modal-print-styles')
+        if (existingStyle) {
+          document.head.removeChild(existingStyle)
+        }
+      }
+    }
+  }, [isOpen])
+  
   if (!isOpen || !evaluation) return null
 
-  // Find the position value from the evaluation's service
-  const position = positions.find(p => p.label === evaluation.service)?.value || ''
+  // Determine employee type and find the position value
+  const employeeType = evaluation.employeeType || 'employee'
+  const positionsList = employeeType === 'supervisor' ? supervisorPositions : positions
+  const position = positionsList.find(p => p.label === evaluation.service)?.value || ''
   
   const handlePrint = () => {
     window.print()
@@ -18,10 +129,11 @@ function ViewModal({ isOpen, onClose, evaluation }) {
   return (
     <>
       {/* Print-only content */}
-      <div className="hidden print:block print:fixed print:top-0 print:left-0 print:right-0 print:m-0 print:p-0" style={{ pageBreakBefore: 'avoid' }}>
+      <div className="hidden print:block print:fixed print:top-0 print:left-0 print:right-0 print:m-0 print:p-0 print-a4-container" style={{ pageBreakBefore: 'avoid' }}>
         <PreviewA4 
           formData={evaluation} 
           position={position}
+          employeeType={employeeType}
           isViewMode={true}
         />
       </div>
@@ -68,6 +180,7 @@ function ViewModal({ isOpen, onClose, evaluation }) {
               <PreviewA4 
                 formData={evaluation} 
                 position={position}
+                employeeType={employeeType}
                 isViewMode={true}
               />
             </div>
