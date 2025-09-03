@@ -69,10 +69,10 @@ function PreviewA4({ formData, position, employeeType = 'employee', isViewMode =
         }
         .print-content {
           margin: 0 auto !important;
-          padding: ${isViewMode ? '5mm 2mm' : '10mm'} !important;
-          width: 210mm !important;
-          height: 297mm !important;
-          max-width: 210mm !important;
+          padding: ${isViewMode ? '5mm 10mm' : '10mm'} !important;
+          width: ${isViewMode ? '100%' : '210mm'} !important;
+          height: ${isViewMode ? 'auto' : '297mm'} !important;
+          max-width: ${isViewMode ? '100%' : '210mm'} !important;
           box-sizing: border-box !important;
           position: fixed !important;
           left: 0 !important;
@@ -82,8 +82,9 @@ function PreviewA4({ formData, position, employeeType = 'employee', isViewMode =
           page-break-before: avoid !important;
           page-break-inside: avoid !important;
         }
-        .print-content[data-employee-type="employee"] {
-          padding: 5mm 2mm !important;
+        .print-content[data-employee-type="employee"],
+        .print-content[data-employee-type="supervisor"] {
+          padding: 20mm 25mm 5mm 25mm !important;
         }
         .no-print, .print\\:hidden {
           display: none !important;

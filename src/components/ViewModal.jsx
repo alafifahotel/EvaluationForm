@@ -24,8 +24,8 @@ function ViewModal({ isOpen, onClose, evaluation }) {
             padding: 0 !important;
           }
           .print-a4-container {
-            width: 210mm !important;
-            height: 297mm !important;
+            width: 100% !important;
+            height: 100% !important;
             margin: 0 !important;
             padding: 0 !important;
             page-break-before: avoid !important;
@@ -33,38 +33,23 @@ function ViewModal({ isOpen, onClose, evaluation }) {
             page-break-after: avoid !important;
             position: fixed !important;
             top: 0 !important;
-            left: 50% !important;
-            transform: translateX(-50%) !important;
+            left: 0 !important;
+            transform: none !important;
           }
           .print-a4-container .print-content {
-            width: 210mm !important;
-            height: 297mm !important;
+            width: 100% !important;
+            height: auto !important;
+            min-height: 100vh !important;
             margin: 0 !important;
-            padding: 5mm 2mm !important;
+            padding: 20mm 25mm 5mm 25mm !important;
             box-sizing: border-box !important;
             transform: none !important;
             page-break-before: avoid !important;
             page-break-inside: avoid !important;
             page-break-after: avoid !important;
           }
-          /* Employee evaluation - scale up content to fill page */
-          .print-a4-container .print-content[data-employee-type="employee"] {
-            font-size: 12pt !important;
-            line-height: 1.5 !important;
-            display: flex !important;
-            flex-direction: column !important;
-            justify-content: space-between !important;
-          }
-          .print-a4-container .print-content[data-employee-type="employee"] h2 {
-            font-size: 18pt !important;
-            text-align: center !important;
-          }
-          .print-a4-container .print-content[data-employee-type="employee"] h3 {
-            font-size: 14pt !important;
-            margin-bottom: 5mm !important;
-          }
+          /* Employee evaluation */
           .print-a4-container .print-content[data-employee-type="employee"] table {
-            font-size: 11pt !important;
             width: 100% !important;
             table-layout: fixed !important;
           }
@@ -77,31 +62,15 @@ function ViewModal({ isOpen, onClose, evaluation }) {
           .print-a4-container .print-content[data-employee-type="employee"] table th:nth-child(3) {
             width: 20% !important;
           }
-          .print-a4-container .print-content[data-employee-type="employee"] table td,
-          .print-a4-container .print-content[data-employee-type="employee"] table th {
-            padding: 2mm 1.5mm !important;
-          }
-          .print-a4-container .print-content[data-employee-type="employee"] .bg-gray-50 {
-            padding: 5mm !important;
-            margin-bottom: 6mm !important;
-          }
-          .print-a4-container .print-content[data-employee-type="employee"] > div {
-            margin-bottom: 5mm !important;
-          }
-          .print-a4-container .print-content[data-employee-type="employee"] > div:nth-last-child(3) {
-            margin-top: auto !important;
-          }
-          /* Supervisor evaluation - normal sizing */
-          .print-a4-container .print-content[data-employee-type="supervisor"] {
-            font-size: 11pt !important;
-            display: flex !important;
-            flex-direction: column !important;
-            justify-content: flex-start !important;
+          /* Supervisor evaluation */
+          .print-a4-container .print-content[data-employee-type="supervisor"] table {
+            width: 100% !important;
+            table-layout: fixed !important;
           }
         }
         @page {
-          size: A4 portrait;
-          margin: 0;
+          size: auto;
+          margin: 10mm;
         }
       `
       document.head.appendChild(style)

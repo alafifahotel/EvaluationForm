@@ -51,7 +51,6 @@ function AppContent() {
     const savedToken = localStorage.getItem('evaluation_access_token')
     if (savedToken) {
       setGithubToken(savedToken)
-      toast.success('🔐 Token récupéré depuis la session précédente')
     } else {
       setShowTokenModal(true)
     }
@@ -272,7 +271,7 @@ function AppContent() {
                       }}
                     />
                   </div>
-                  <div className="xl:sticky xl:top-6">
+                  <div className="xl:sticky xl:top-6 mt-6 sm:mt-0">
                     <h3 className="text-lg font-semibold mb-4">
                       Aperçu du document
                     </h3>
