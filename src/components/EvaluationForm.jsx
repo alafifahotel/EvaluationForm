@@ -181,7 +181,7 @@ function EvaluationForm({ position, positionLabel, employeeType = 'employee', on
       }
     } catch (error) {
       console.error('Erreur lors de la sauvegarde:', error)
-      toast.error('❌ Erreur lors de la sauvegarde. Vérifiez votre token GitHub.')
+      toast.error('❌ Erreur lors de la sauvegarde. Vérifiez votre token d\'accès.')
     } finally {
       setIsSubmitting(false)
     }

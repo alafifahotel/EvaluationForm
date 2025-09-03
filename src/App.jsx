@@ -1,13 +1,16 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import EvaluationForm from './components/EvaluationForm'
 import PreviewA4 from './components/PreviewA4'
 import HistoryTab from './components/HistoryTab'
+import TokenModal from './components/TokenModal'
 import { positions, supervisorPositions } from './data/criteriaConfig'
 import { FileEdit, History, Edit, Users, UserCheck } from 'lucide-react'
 import { ToastProvider, useToast } from './contexts/ToastContext'
 
 function AppContent() {
   const toast = useToast()
+  const hasInitializedToken = useRef(false)
+  
   // Get initial tab from URL hash or default to 'evaluation'
   const getInitialTab = () => {
     const hash = window.location.hash.slice(1)
@@ -21,6 +24,7 @@ function AppContent() {
   const [githubToken, setGithubToken] = useState('')
   const [evaluations, setEvaluations] = useState([])
   const [editingEvaluation, setEditingEvaluation] = useState(null)
+  const [showTokenModal, setShowTokenModal] = useState(false)
 
   // Update URL hash when tab changes
   useEffect(() => {
@@ -38,21 +42,34 @@ function AppContent() {
     return () => window.removeEventListener('hashchange', handleHashChange)
   }, [])
 
+  // Initialize token on component mount
   useEffect(() => {
-    const savedToken = localStorage.getItem('github_token')
+    // Use ref to ensure this only runs once
+    if (hasInitializedToken.current) return
+    hasInitializedToken.current = true
+    
+    const savedToken = localStorage.getItem('evaluation_access_token')
     if (savedToken) {
       setGithubToken(savedToken)
+      toast.success('🔐 Token récupéré depuis la session précédente')
     } else {
-      const token = prompt('Veuillez entrer votre token GitHub:')
-      if (token) {
-        localStorage.setItem('github_token', token)
-        setGithubToken(token)
-        toast.success('🔐 Token GitHub enregistré avec succès')
-      } else {
-        toast.warning('⚠️ Aucun token GitHub fourni - fonctionnement en mode local')
-      }
+      setShowTokenModal(true)
     }
   }, [])
+
+  const handleTokenConfirm = async (token) => {
+    if (token) {
+      // Save token to localStorage for future sessions
+      localStorage.setItem('evaluation_access_token', token)
+      setGithubToken(token)
+      toast.success('🔐 Token enregistré avec succès')
+    } else {
+      // User chose to continue without token
+      toast.warning('⚠️ Mode local activé - synchronisation désactivée')
+    }
+    setShowTokenModal(false)
+    return Promise.resolve()
+  }
 
   const handleEmployeeTypeChange = (type) => {
     setEmployeeType(type)
@@ -105,12 +122,31 @@ function AppContent() {
 
   return (
     <div className="min-h-screen bg-gray-100">
+      <TokenModal 
+        isOpen={showTokenModal}
+        onClose={() => setShowTokenModal(false)}
+        onConfirm={handleTokenConfirm}
+        initialToken={githubToken}
+      />
+      
       <header className="bg-hotel-dark text-white py-6 px-8 shadow-lg">
-        <div className="max-w-[1600px] mx-auto">
-          <h1 className="text-3xl font-bold text-hotel-gold">
-            Al Afifa Hotel
-          </h1>
-          <p className="text-gray-300 mt-2">Fiche d'évaluation du personnel</p>
+        <div className="max-w-[1600px] mx-auto flex justify-between items-center">
+          <div>
+            <h1 className="text-3xl font-bold text-hotel-gold">
+              Al Afifa Hotel
+            </h1>
+            <p className="text-gray-300 mt-2">Fiche d'évaluation du personnel</p>
+          </div>
+          <button
+            onClick={() => setShowTokenModal(true)}
+            className="px-4 py-2 bg-hotel-gold/20 hover:bg-hotel-gold/30 text-hotel-gold border border-hotel-gold/50 rounded-lg transition-all duration-200 flex items-center gap-2"
+            title="Configurer le token d'accès"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+            </svg>
+            <span className="hidden sm:inline">Token</span>
+          </button>
         </div>
       </header>
 
@@ -217,7 +253,7 @@ function AppContent() {
               )}
 
               {(selectedPosition || editingEvaluation) && (
-                <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+                <div className="grid grid-cols-1 xl:grid-cols-2">
                   <div className="xl:max-w-2xl">
                     <EvaluationForm
                       position={selectedPosition || (editingEvaluation?.employeeType === 'supervisor' ? supervisorPositions : positions).find(p => p.label === editingEvaluation?.service)?.value || ''}
