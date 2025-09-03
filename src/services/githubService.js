@@ -6,7 +6,7 @@ class GitHubService {
     this.octokit = new Octokit({
       auth: token
     })
-    this.owner = 'wissamyah'
+    this.owner = 'alafifahotel'
     this.repo = 'EvaluationForm'
     this.branch = 'main'
   }

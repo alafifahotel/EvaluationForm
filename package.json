@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "homepage": "https://wissamyah.github.io/EvaluationForm",
+  "homepage": "https://alafifahotel.github.io/EvaluationForm",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
