@@ -70,7 +70,7 @@ function ViewModal({ isOpen, onClose, evaluation }) {
         }
         @page {
           size: auto;
-          margin: 10mm;
+          margin: 0;
         }
       `
       document.head.appendChild(style)
