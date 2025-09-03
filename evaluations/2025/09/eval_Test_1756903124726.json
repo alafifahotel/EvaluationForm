@@ -1,0 +1,41 @@
+{
+  "nom": "Test",
+  "matricule": "Test",
+  "service": "Réception",
+  "poste": "Réception",
+  "superieur": "Test",
+  "dateDebut": "2025-01-01",
+  "dateFin": "2025-12-31",
+  "commonScores": {
+    "ponctualite": 5,
+    "presentation": 5,
+    "discipline": 5,
+    "esprit_equipe": 5,
+    "attitude_client": 5
+  },
+  "specificScores": {
+    "pms": 5,
+    "vip": 5,
+    "facturation": 5,
+    "plaintes": 5
+  },
+  "technicalScores": {},
+  "behavioralScores": {},
+  "decisions": [
+    "prime",
+    "formation",
+    "disciplinaire",
+    "promotion"
+  ],
+  "evaluateurNom": "Test",
+  "dateEvaluation": "2025-09-03",
+  "employeeType": "employee",
+  "totalScore": 45,
+  "maxScore": 45,
+  "percentage": "100.0",
+  "appreciation": "Excellent",
+  "bonusEligible": null,
+  "technicalTotal": null,
+  "behavioralTotal": null,
+  "timestamp": "2025-09-03T12:38:44.724Z"
+}
