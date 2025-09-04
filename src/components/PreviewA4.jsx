@@ -69,7 +69,7 @@ function PreviewA4({ formData, position, employeeType = 'employee', isViewMode =
         }
         .print-content {
           margin: 0 auto !important;
-          padding: ${isViewMode ? '5mm 10mm' : '10mm'} !important;
+          padding: ${isViewMode ? '5mm 10mm' : '10mm 8mm'} !important;
           width: ${isViewMode ? '100%' : '210mm'} !important;
           height: ${isViewMode ? 'auto' : '297mm'} !important;
           max-width: ${isViewMode ? '100%' : '210mm'} !important;
@@ -85,7 +85,7 @@ function PreviewA4({ formData, position, employeeType = 'employee', isViewMode =
         }
         .print-content[data-employee-type="employee"],
         .print-content[data-employee-type="supervisor"] {
-          padding: 18mm 22mm 5mm 22mm !important;
+          padding: 18mm 15mm 5mm 15mm !important;
         }
         .print-content .text-xs {
           font-size: 0.85em !important;
