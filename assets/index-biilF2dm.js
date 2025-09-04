@@ -274,7 +274,7 @@ Error generating stack: `+u.message+`
         }
         .print-content {
           margin: 0 auto !important;
-          padding: ${c?"5mm 10mm":"10mm"} !important;
+          padding: ${c?"5mm 10mm":"10mm 8mm"} !important;
           width: ${c?"100%":"210mm"} !important;
           height: ${c?"auto":"297mm"} !important;
           max-width: ${c?"100%":"210mm"} !important;
@@ -290,7 +290,7 @@ Error generating stack: `+u.message+`
         }
         .print-content[data-employee-type="employee"],
         .print-content[data-employee-type="supervisor"] {
-          padding: 18mm 22mm 5mm 22mm !important;
+          padding: 18mm 15mm 5mm 15mm !important;
         }
         .print-content .text-xs {
           font-size: 0.85em !important;
