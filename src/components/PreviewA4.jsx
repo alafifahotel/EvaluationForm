@@ -81,10 +81,29 @@ function PreviewA4({ formData, position, employeeType = 'employee', isViewMode =
           transform: none !important;
           page-break-before: avoid !important;
           page-break-inside: avoid !important;
+          font-size: 1.15em !important;
         }
         .print-content[data-employee-type="employee"],
         .print-content[data-employee-type="supervisor"] {
-          padding: 20mm 25mm 5mm 25mm !important;
+          padding: 18mm 22mm 5mm 22mm !important;
+        }
+        .print-content .text-xs {
+          font-size: 0.85em !important;
+        }
+        .print-content .text-sm {
+          font-size: 0.95em !important;
+        }
+        .print-content .text-base {
+          font-size: 1.05em !important;
+        }
+        .print-content .text-lg {
+          font-size: 1.2em !important;
+        }
+        .print-content h2 {
+          font-size: 1.3em !important;
+        }
+        .print-content h3 {
+          font-size: 1em !important;
         }
         .no-print, .print\\:hidden {
           display: none !important;
