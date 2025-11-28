@@ -150,14 +150,16 @@ function CustomDropdown({
         </div>
         <div className="flex items-center gap-1 flex-shrink-0">
           {value && !disabled && (
-            <button
-              type="button"
+            <span
+              role="button"
+              tabIndex={0}
               onClick={handleClear}
-              className="p-1 rounded-full hover:bg-gray-100 transition-colors"
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleClear(e) }}
+              className="p-1 rounded-full hover:bg-gray-100 transition-colors cursor-pointer"
               aria-label="Effacer la sélection"
             >
               <X className="h-4 w-4 text-gray-400 hover:text-gray-600" />
-            </button>
+            </span>
           )}
           <ChevronDown
             className={`h-5 w-5 text-gray-400 transition-transform duration-300 ${isOpen ? 'rotate-180 text-hotel-gold' : ''}`}
