@@ -16,7 +16,12 @@
       "Bash(npm uninstall:*)",
       "Read(C:\\Users\\wissa\\Pictures\\Screenshots/**)",
       "Read(C:\\Users\\wissa\\Pictures\\Screenshots/**)",
-      "Bash(npm run dev:*)"
+      "Bash(npm run dev:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm run deploy:*)",
+      "mcp__ide__getDiagnostics",
+      "Bash(cat:*)",
+      "Bash(npm install:*)"
     ],
     "deny": [],
     "ask": []
