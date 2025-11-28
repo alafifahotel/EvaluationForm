@@ -3,8 +3,50 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+  }
+
+  html:hover {
+    scrollbar-color: rgba(180, 180, 180, 0.5) transparent;
+  }
+
+  /* Webkit browsers (Chrome, Safari, Edge) */
+  html::-webkit-scrollbar {
+    width: 6px;
+    background: transparent;
+  }
+
+  html::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  html::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border-radius: 3px;
+  }
+
+  html:hover::-webkit-scrollbar-thumb {
+    background-color: rgba(180, 180, 180, 0.5);
+  }
+
+  html::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(150, 150, 150, 0.7);
+  }
+
   body {
     @apply font-sans antialiased;
+  }
+
+  /* Remove default browser focus outline on inputs */
+  input, textarea, select, button {
+    outline: none !important;
+  }
+
+  input:focus, textarea:focus, select:focus, button:focus {
+    outline: none !important;
   }
 }
 
@@ -172,5 +214,171 @@
   to {
     width: 0%;
   }
+}
+
+/* Custom Calendar Animations */
+@keyframes calendar-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes calendar-slide-left {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes calendar-slide-right {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes day-pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.calendar-dropdown {
+  animation: calendar-fade-in 0.25s ease-out forwards;
+}
+
+.calendar-month-enter-left {
+  animation: calendar-slide-left 0.2s ease-out forwards;
+}
+
+.calendar-month-enter-right {
+  animation: calendar-slide-right 0.2s ease-out forwards;
+}
+
+.calendar-day-selected {
+  animation: day-pop 0.2s ease-out forwards;
+}
+
+/* Shimmer effect for loading states */
+.calendar-shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Calendar input focus glow */
+.calendar-input-glow {
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15), 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* Smooth hover transitions for calendar days */
+.calendar-day-hover {
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.calendar-day-hover:hover {
+  transform: scale(1.05);
+}
+
+/* Custom Dropdown Animations */
+@keyframes dropdown-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes dropdown-option-highlight {
+  from {
+    background-color: transparent;
+  }
+  to {
+    background-color: rgba(212, 175, 55, 0.1);
+  }
+}
+
+@keyframes dropdown-check-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.dropdown-menu-enter {
+  animation: dropdown-fade-in 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform-origin: top center;
+}
+
+.dropdown-option {
+  transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+.dropdown-option:active {
+  transform: scale(0.98);
+}
+
+.dropdown-check-enter {
+  animation: dropdown-check-pop 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.dropdown-list-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(212, 175, 55, 0.3) transparent;
+}
+
+.dropdown-list-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.dropdown-list-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dropdown-list-scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(212, 175, 55, 0.3);
+  border-radius: 3px;
+}
+
+.dropdown-list-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(212, 175, 55, 0.5);
 }
 

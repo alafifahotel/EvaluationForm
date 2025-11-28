@@ -1,17 +1,18 @@
 import { useState, useEffect } from 'react'
-import { 
-  commonCriteria, 
-  specificCriteria, 
-  appreciationScale, 
+import {
+  commonCriteria,
+  specificCriteria,
+  appreciationScale,
   supervisorAppreciationScale,
   supervisorTechnicalCriteria,
   supervisorBehavioralCriteria,
-  decisions 
+  decisions
 } from '../data/criteriaConfig'
 import { format } from 'date-fns'
 import { fr } from 'date-fns/locale'
 import GitHubService from '../services/githubService'
 import LoadingButton from './LoadingButton'
+import CustomCalendar from './CustomCalendar'
 import { Save, X, CheckCircle, User, Hash, Briefcase, Users, Calendar, PenTool, CalendarCheck, ClipboardList, Target, Trophy, FileCheck } from 'lucide-react'
 import { useToast } from '../contexts/ToastContext'
 
@@ -222,7 +223,7 @@ function EvaluationForm({ position, positionLabel, employeeType = 'employee', on
                   name="nom"
                   value={formData.nom}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2.5 bg-gray-50 border-0 rounded-md focus:ring-2 focus:ring-hotel-gold focus:bg-white transition-all text-sm"
+                  className="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl focus:outline-none focus:border-hotel-gold hover:border-hotel-gold/50 hover:shadow-md transition-all duration-300"
                   placeholder="Ex: Jean Dupont"
                   required
                 />
@@ -237,7 +238,7 @@ function EvaluationForm({ position, positionLabel, employeeType = 'employee', on
                   name="matricule"
                   value={formData.matricule}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2.5 bg-gray-50 border-0 rounded-md focus:ring-2 focus:ring-hotel-gold focus:bg-white transition-all text-sm"
+                  className="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl focus:outline-none focus:border-hotel-gold hover:border-hotel-gold/50 hover:shadow-md transition-all duration-300"
                   placeholder="Ex: EMP001"
                   required
                 />
@@ -309,7 +310,7 @@ function EvaluationForm({ position, positionLabel, employeeType = 'employee', on
                 name="superieur"
                 value={formData.superieur}
                 onChange={handleInputChange}
-                className="w-full px-3 py-2.5 bg-gray-50 border-0 rounded-md focus:ring-2 focus:ring-hotel-gold focus:bg-white transition-all text-sm"
+                className="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl focus:outline-none focus:border-hotel-gold hover:border-hotel-gold/50 hover:shadow-md transition-all duration-300"
                 placeholder="Ex: Marie Martin"
                 required
               />
@@ -327,20 +328,16 @@ function EvaluationForm({ position, positionLabel, employeeType = 'employee', on
                 <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1.5">
                   Date de début
                 </label>
-                <div className="relative">
-                  <input
-                    type="date"
-                    name="dateDebut"
-                    value={formData.dateDebut}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2.5 pl-9 bg-white border border-gray-200 rounded-md focus:ring-2 focus:ring-hotel-gold focus:border-transparent transition-all text-sm"
-                    required
-                  />
-                  <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-                </div>
+                <CustomCalendar
+                  name="dateDebut"
+                  value={formData.dateDebut}
+                  onChange={handleInputChange}
+                  placeholder="Sélectionner le début"
+                  maxDate={formData.dateFin || undefined}
+                />
               </div>
               
-              <div className="hidden sm:flex items-center justify-center px-2">
+              <div className="hidden sm:flex items-center justify-center px-2 h-[46px] self-end">
                 <span className="text-gray-400 font-medium">→</span>
               </div>
               
@@ -348,17 +345,13 @@ function EvaluationForm({ position, positionLabel, employeeType = 'employee', on
                 <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1.5">
                   Date de fin
                 </label>
-                <div className="relative">
-                  <input
-                    type="date"
-                    name="dateFin"
-                    value={formData.dateFin}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2.5 pl-9 bg-white border border-gray-200 rounded-md focus:ring-2 focus:ring-hotel-gold focus:border-transparent transition-all text-sm"
-                    required
-                  />
-                  <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-                </div>
+                <CustomCalendar
+                  name="dateFin"
+                  value={formData.dateFin}
+                  onChange={handleInputChange}
+                  placeholder="Sélectionner la fin"
+                  minDate={formData.dateDebut || undefined}
+                />
               </div>
             </div>
             
@@ -632,7 +625,7 @@ function EvaluationForm({ position, positionLabel, employeeType = 'employee', on
                   name="evaluateurNom"
                   value={formData.evaluateurNom}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2.5 pl-10 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent focus:bg-white transition-all text-sm placeholder-gray-400"
+                  className="w-full px-4 py-3 pl-11 bg-white border-2 border-gray-200 rounded-xl focus:outline-none focus:border-hotel-gold hover:border-hotel-gold/50 hover:shadow-md transition-all duration-300 placeholder-gray-400"
                   placeholder="Ex: Directeur des Ressources Humaines"
                   required
                 />
@@ -658,24 +651,12 @@ function EvaluationForm({ position, positionLabel, employeeType = 'employee', on
                 Date de l'évaluation
                 <span className="text-red-500">*</span>
               </label>
-              <div className="relative">
-                <input
-                  type="date"
-                  name="dateEvaluation"
-                  value={formData.dateEvaluation}
-                  onChange={handleInputChange}
-                  className="w-full px-3 py-2.5 pl-10 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent focus:bg-white transition-all text-sm"
-                  required
-                />
-                <CalendarCheck className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-green-600" />
-              </div>
-              {formData.dateEvaluation && (
-                <p className="mt-1.5 text-xs text-gray-600">
-                  Évaluation du: <span className="font-medium text-green-700">
-                    {format(new Date(formData.dateEvaluation), 'EEEE dd MMMM yyyy', { locale: fr })}
-                  </span>
-                </p>
-              )}
+              <CustomCalendar
+                name="dateEvaluation"
+                value={formData.dateEvaluation}
+                onChange={handleInputChange}
+                placeholder="Sélectionner la date"
+              />
             </div>
 
             {/* Signature Visual Confirmation - Mobile Only */}

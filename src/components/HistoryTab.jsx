@@ -8,6 +8,8 @@ import EmptyState from './EmptyState'
 import LoadingSpinner from './LoadingSpinner'
 import LoadingButton from './LoadingButton'
 import ViewModal from './ViewModal'
+import CustomCalendar from './CustomCalendar'
+import CustomDropdown from './CustomDropdown'
 import { Edit, Trash2, Eye, Search, Filter, RefreshCw, ChevronDown, ChevronUp, Calendar, Briefcase, Award, X, UserCheck, Users } from 'lucide-react'
 import { useToast } from '../contexts/ToastContext'
 
@@ -55,10 +57,6 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
       )
       
       setEvaluations(uniqueEvaluations)
-      // Only show toast if we actually loaded evaluations
-      if (uniqueEvaluations.length > 0) {
-        toast.success(`📂 ${uniqueEvaluations.length} évaluation(s) chargée(s)`)
-      }
     } catch (error) {
       console.error('Erreur lors du chargement des évaluations:', error)
       toast.error('⚠️ Erreur lors du chargement des évaluations')
@@ -182,7 +180,7 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
         </div>
 
         {/* Filter Content */}
-        <div className={`bg-gradient-to-b from-gray-50 to-gray-100 rounded-lg border border-gray-200 overflow-hidden transition-all duration-300 ${
+        <div className={`bg-gradient-to-b from-gray-50 to-gray-100 rounded-lg border border-gray-200 overflow-visible transition-all duration-300 ${
           filtersExpanded ? 'block' : 'hidden sm:block'
         }`}>
           {/* Filter Header - Desktop Only */}
@@ -227,82 +225,76 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
               {/* Employee Type Filter */}
               <div className="col-span-1">
-                <div className="bg-white rounded-lg p-3 border border-gray-200 hover:border-hotel-gold transition-colors">
+                <div className="bg-white rounded-lg p-3 border border-gray-200 hover:border-hotel-gold transition-colors h-full">
                   <label className="flex items-center gap-2 text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">
                     <UserCheck className="h-4 w-4 text-hotel-gold" />
                     Type de personnel
                   </label>
-                  <select
+                  <CustomDropdown
                     name="employeeType"
                     value={filter.employeeType}
                     onChange={handleFilterChange}
-                    className="w-full px-3 py-2 border-0 bg-gray-50 rounded-md focus:ring-2 focus:ring-hotel-gold focus:bg-white transition-colors text-sm"
-                  >
-                    <option value="">Tous les types</option>
-                    <option value="employee">Personnel opérationnel</option>
-                    <option value="supervisor">Personnel d'encadrement</option>
-                  </select>
+                    options={[
+                      { value: 'employee', label: 'Personnel opérationnel' },
+                      { value: 'supervisor', label: 'Personnel d\'encadrement' }
+                    ]}
+                    placeholder="Tous les types"
+                    icon={UserCheck}
+                  />
                 </div>
               </div>
 
               {/* Service Filter */}
               <div className="col-span-1">
-                <div className="bg-white rounded-lg p-3 border border-gray-200 hover:border-hotel-gold transition-colors">
+                <div className="bg-white rounded-lg p-3 border border-gray-200 hover:border-hotel-gold transition-colors h-full">
                   <label className="flex items-center gap-2 text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">
                     <Briefcase className="h-4 w-4 text-hotel-gold" />
                     Service
                   </label>
-                  <select
+                  <CustomDropdown
                     name="service"
                     value={filter.service}
                     onChange={handleFilterChange}
-                    className="w-full px-3 py-2 border-0 bg-gray-50 rounded-md focus:ring-2 focus:ring-hotel-gold focus:bg-white transition-colors text-sm"
-                  >
-                    <option value="">Tous les services</option>
-                    {[...positions, ...supervisorPositions].map(pos => (
-                      <option key={pos.value} value={pos.label}>
-                        {pos.label}
-                      </option>
-                    ))}
-                  </select>
+                    options={[...positions, ...supervisorPositions].map(pos => ({
+                      value: pos.label,
+                      label: pos.label
+                    }))}
+                    placeholder="Tous les services"
+                    searchable={true}
+                    icon={Briefcase}
+                  />
                 </div>
               </div>
 
               {/* Date Range Filters */}
               <div className="col-span-1 sm:col-span-2 lg:col-span-2">
-                <div className="bg-white rounded-lg p-3 border border-gray-200 hover:border-hotel-gold transition-colors">
+                <div className="bg-white rounded-lg p-3 border border-gray-200 hover:border-hotel-gold transition-colors h-full">
                   <label className="flex items-center gap-2 text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">
                     <Calendar className="h-4 w-4 text-hotel-gold" />
                     Période d'évaluation
                   </label>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    <div>
-                      <label className="text-xs text-gray-500 mb-1 block">Du</label>
-                      <input
-                        type="date"
-                        name="dateFrom"
-                        value={filter.dateFrom}
-                        onChange={handleFilterChange}
-                        className="w-full px-3 py-2 bg-gray-50 border-0 rounded-md focus:ring-2 focus:ring-hotel-gold focus:bg-white transition-colors text-sm"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-xs text-gray-500 mb-1 block">Au</label>
-                      <input
-                        type="date"
-                        name="dateTo"
-                        value={filter.dateTo}
-                        onChange={handleFilterChange}
-                        className="w-full px-3 py-2 bg-gray-50 border-0 rounded-md focus:ring-2 focus:ring-hotel-gold focus:bg-white transition-colors text-sm"
-                      />
-                    </div>
+                    <CustomCalendar
+                      name="dateFrom"
+                      value={filter.dateFrom}
+                      onChange={handleFilterChange}
+                      placeholder="Date début"
+                      maxDate={filter.dateTo || undefined}
+                    />
+                    <CustomCalendar
+                      name="dateTo"
+                      value={filter.dateTo}
+                      onChange={handleFilterChange}
+                      placeholder="Date fin"
+                      minDate={filter.dateFrom || undefined}
+                    />
                   </div>
                 </div>
               </div>
 
               {/* Score Filter */}
               <div className="col-span-1 sm:col-span-2 lg:col-span-1">
-                <div className="bg-white rounded-lg p-3 border border-gray-200 hover:border-hotel-gold transition-colors">
+                <div className="bg-white rounded-lg p-3 border border-gray-200 hover:border-hotel-gold transition-colors h-full">
                   <label className="flex items-center gap-2 text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">
                     <Award className="h-4 w-4 text-hotel-gold" />
                     Score minimum
@@ -316,9 +308,9 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
                       value={filter.minScore}
                       onChange={handleFilterChange}
                       placeholder="0"
-                      className="w-full px-3 py-2 pr-8 bg-gray-50 border-0 rounded-md focus:ring-2 focus:ring-hotel-gold focus:bg-white transition-colors text-sm"
+                      className="w-full px-4 py-3 pr-10 bg-white border-2 border-gray-200 rounded-xl focus:outline-none focus:border-hotel-gold hover:border-hotel-gold/50 hover:shadow-md transition-all duration-300"
                     />
-                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">%</span>
+                    <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500">%</span>
                   </div>
                   {filter.minScore && (
                     <div className="mt-2">

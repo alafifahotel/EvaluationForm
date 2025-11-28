@@ -4,7 +4,8 @@ import PreviewA4 from './components/PreviewA4'
 import HistoryTab from './components/HistoryTab'
 import TokenModal from './components/TokenModal'
 import { positions, supervisorPositions } from './data/criteriaConfig'
-import { FileEdit, History, Edit, Users, UserCheck } from 'lucide-react'
+import CustomDropdown from './components/CustomDropdown'
+import { FileEdit, History, Edit, Users, UserCheck, Briefcase } from 'lucide-react'
 import { ToastProvider, useToast } from './contexts/ToastContext'
 
 function AppContent() {
@@ -150,34 +151,30 @@ function AppContent() {
       </header>
 
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="bg-white rounded-lg shadow-md mb-6">
-          <div className="border-b">
-            <nav className="flex">
-              <button
-                onClick={() => setActiveTab('evaluation')}
-                className={`flex items-center px-6 py-3 font-medium transition-all duration-200 ${
-                  activeTab === 'evaluation'
-                    ? 'border-b-2 border-hotel-gold text-hotel-gold'
-                    : 'text-gray-600 hover:text-gray-800'
-                }`}
-              >
-                <FileEdit className="mr-2 h-4 w-4" />
-                Nouvelle Évaluation
-              </button>
-              <button
-                onClick={() => setActiveTab('history')}
-                className={`flex items-center px-6 py-3 font-medium transition-all duration-200 ${
-                  activeTab === 'history'
-                    ? 'border-b-2 border-hotel-gold text-hotel-gold'
-                    : 'text-gray-600 hover:text-gray-800'
-                }`}
-              >
-                <History className="mr-2 h-4 w-4" />
-                Historique
-              </button>
-            </nav>
-          </div>
-        </div>
+        <nav className="flex mb-0">
+          <button
+            onClick={() => setActiveTab('evaluation')}
+            className={`flex items-center px-6 py-3 font-medium transition-all duration-200 rounded-t-lg ${
+              activeTab === 'evaluation'
+                ? 'bg-white text-hotel-gold shadow-[0_-2px_6px_rgba(0,0,0,0.1)]'
+                : 'bg-gray-200 text-gray-600 hover:text-gray-800 hover:bg-gray-300'
+            }`}
+          >
+            <FileEdit className="mr-2 h-4 w-4" />
+            Nouvelle Évaluation
+          </button>
+          <button
+            onClick={() => setActiveTab('history')}
+            className={`flex items-center px-6 py-3 font-medium transition-all duration-200 rounded-t-lg ${
+              activeTab === 'history'
+                ? 'bg-white text-hotel-gold shadow-[0_-2px_6px_rgba(0,0,0,0.1)]'
+                : 'bg-gray-200 text-gray-600 hover:text-gray-800 hover:bg-gray-300'
+            }`}
+          >
+            <History className="mr-2 h-4 w-4" />
+            Historique
+          </button>
+        </nav>
 
         {activeTab === 'evaluation' ? (
           <>
@@ -199,10 +196,10 @@ function AppContent() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <button
                       onClick={() => handleEmployeeTypeChange('employee')}
-                      className={`p-4 rounded-lg border-2 transition-all ${
+                      className={`p-4 rounded-lg border transition-all ${
                         employeeType === 'employee'
                           ? 'border-hotel-gold bg-hotel-gold/10 text-hotel-gold'
-                          : 'border-gray-300 hover:border-gray-400'
+                          : 'border-gray-300 hover:border-gray-400 text-gray-400'
                       }`}
                     >
                       <Users className="h-8 w-8 mx-auto mb-2" />
@@ -214,10 +211,10 @@ function AppContent() {
                     
                     <button
                       onClick={() => handleEmployeeTypeChange('supervisor')}
-                      className={`p-4 rounded-lg border-2 transition-all ${
+                      className={`p-4 rounded-lg border transition-all ${
                         employeeType === 'supervisor'
                           ? 'border-hotel-gold bg-hotel-gold/10 text-hotel-gold'
-                          : 'border-gray-300 hover:border-gray-400'
+                          : 'border-gray-300 hover:border-gray-400 text-gray-400'
                       }`}
                     >
                       <UserCheck className="h-8 w-8 mx-auto mb-2" />
@@ -235,19 +232,16 @@ function AppContent() {
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Sélectionner le poste à évaluer
                   </label>
-                  <select
+                  <CustomDropdown
+                    name="position"
                     value={selectedPosition}
                     onChange={handlePositionChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hotel-gold focus:border-transparent"
-                    disabled={editingEvaluation}
-                  >
-                    <option value="">-- Choisir un poste --</option>
-                    {(employeeType === 'supervisor' ? supervisorPositions : positions).map((pos) => (
-                      <option key={pos.value} value={pos.value}>
-                        {pos.label}
-                      </option>
-                    ))}
-                  </select>
+                    options={(employeeType === 'supervisor' ? supervisorPositions : positions)}
+                    placeholder="-- Choisir un poste --"
+                    disabled={!!editingEvaluation}
+                    searchable={true}
+                    icon={Briefcase}
+                  />
                 </div>
               )}
 
