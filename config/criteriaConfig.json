@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastModified": "2025-11-28T13:33:22.404Z",
+  "lastModified": "2025-11-28T13:33:41.092Z",
   "employees": {
     "positions": [
       {
@@ -53,14 +53,14 @@
         "description": "Uniforme, propreté, posture"
       },
       {
-        "id": "esprit_equipe",
-        "label": "Esprit d'équipe",
-        "description": "Collaboration, entraide"
-      },
-      {
         "id": "ponctualite",
         "label": "Ponctualité & Assiduité",
         "description": "Respect des horaires, présence régulière"
+      },
+      {
+        "id": "esprit_equipe",
+        "label": "Esprit d'équipe",
+        "description": "Collaboration, entraide"
       }
     ],
     "specificCriteria": {
