@@ -2,27 +2,30 @@ import { useState, useEffect, useRef } from 'react'
 import EvaluationForm from './components/EvaluationForm'
 import PreviewA4 from './components/PreviewA4'
 import HistoryTab from './components/HistoryTab'
+import ParametresTab from './components/ParametresTab'
 import TokenModal from './components/TokenModal'
-import { positions, supervisorPositions } from './data/criteriaConfig'
 import CustomDropdown from './components/CustomDropdown'
-import { FileEdit, History, Edit, Users, UserCheck, Briefcase } from 'lucide-react'
+import { FileEdit, History, Edit, Users, UserCheck, Briefcase, Settings } from 'lucide-react'
 import { ToastProvider, useToast } from './contexts/ToastContext'
+import { CriteriaProvider, useCriteria } from './contexts/CriteriaContext'
 
-function AppContent() {
+function AppContent({ githubToken, onTokenChange }) {
   const toast = useToast()
+  const { positions, supervisorPositions, loadConfig } = useCriteria()
   const hasInitializedToken = useRef(false)
-  
+
   // Get initial tab from URL hash or default to 'evaluation'
   const getInitialTab = () => {
     const hash = window.location.hash.slice(1)
-    return hash === 'history' ? 'history' : 'evaluation'
+    if (hash === 'history') return 'history'
+    if (hash === 'parametres') return 'parametres'
+    return 'evaluation'
   }
 
   const [activeTab, setActiveTab] = useState(getInitialTab())
   const [employeeType, setEmployeeType] = useState('') // 'employee' or 'supervisor'
   const [selectedPosition, setSelectedPosition] = useState('')
   const [formData, setFormData] = useState({})
-  const [githubToken, setGithubToken] = useState('')
   const [evaluations, setEvaluations] = useState([])
   const [editingEvaluation, setEditingEvaluation] = useState(null)
   const [showTokenModal, setShowTokenModal] = useState(false)
@@ -36,7 +39,9 @@ function AppContent() {
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.slice(1)
-      setActiveTab(hash === 'history' ? 'history' : 'evaluation')
+      if (hash === 'history') setActiveTab('history')
+      else if (hash === 'parametres') setActiveTab('parametres')
+      else setActiveTab('evaluation')
     }
 
     window.addEventListener('hashchange', handleHashChange)
@@ -48,24 +53,23 @@ function AppContent() {
     // Use ref to ensure this only runs once
     if (hasInitializedToken.current) return
     hasInitializedToken.current = true
-    
-    const savedToken = localStorage.getItem('evaluation_access_token')
-    if (savedToken) {
-      setGithubToken(savedToken)
-    } else {
+
+    if (!githubToken) {
       setShowTokenModal(true)
     }
-  }, [])
+  }, [githubToken])
 
   const handleTokenConfirm = async (token) => {
     if (token) {
       // Save token to localStorage for future sessions
       localStorage.setItem('evaluation_access_token', token)
-      setGithubToken(token)
-      toast.success('🔐 Token enregistré avec succès')
+      onTokenChange(token)
+      toast.success('Token enregistré avec succès')
+      // Reload criteria config with new token
+      setTimeout(() => loadConfig(), 100)
     } else {
       // User chose to continue without token
-      toast.warning('⚠️ Mode local activé - synchronisation désactivée')
+      toast.warning('Mode local activé - synchronisation désactivée')
     }
     setShowTokenModal(false)
     return Promise.resolve()
@@ -174,6 +178,17 @@ function AppContent() {
             <History className="mr-2 h-4 w-4" />
             Historique
           </button>
+          <button
+            onClick={() => setActiveTab('parametres')}
+            className={`flex items-center px-6 py-3 font-medium transition-all duration-200 rounded-t-lg ${
+              activeTab === 'parametres'
+                ? 'bg-white text-hotel-gold shadow-[0_-2px_6px_rgba(0,0,0,0.1)]'
+                : 'bg-gray-200 text-gray-600 hover:text-gray-800 hover:bg-gray-300'
+            }`}
+          >
+            <Settings className="mr-2 h-4 w-4" />
+            Paramètres
+          </button>
         </nav>
 
         {activeTab === 'evaluation' ? (
@@ -281,12 +296,14 @@ function AppContent() {
               )}
             </div>
           </>
-        ) : (
-          <HistoryTab 
+        ) : activeTab === 'history' ? (
+          <HistoryTab
             evaluations={evaluations}
             githubToken={githubToken}
             onEditEvaluation={handleEditEvaluation}
           />
+        ) : (
+          <ParametresTab githubToken={githubToken} />
         )}
       </div>
     </div>
@@ -294,9 +311,15 @@ function AppContent() {
 }
 
 function App() {
+  const [githubToken, setGithubToken] = useState(() => {
+    return localStorage.getItem('evaluation_access_token') || ''
+  })
+
   return (
     <ToastProvider>
-      <AppContent />
+      <CriteriaProvider githubToken={githubToken}>
+        <AppContent githubToken={githubToken} onTokenChange={setGithubToken} />
+      </CriteriaProvider>
     </ToastProvider>
   )
 }

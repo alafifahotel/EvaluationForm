@@ -383,3 +383,29 @@ export const decisions = [
   { id: "disciplinaire", label: "Suivi disciplinaire" },
   { id: "promotion", label: "Promotion / Évolution possible" },
 ];
+
+// Generate default config for migration (used when no GitHub config exists)
+export function getDefaultConfig() {
+  return {
+    version: 1,
+    lastModified: new Date().toISOString(),
+    employees: {
+      positions: positions,
+      commonCriteria: commonCriteria,
+      specificCriteria: specificCriteria,
+      scoring: {
+        maxPerCriterion: 5,
+        maxCriteria: 6
+      }
+    },
+    supervisors: {
+      positions: supervisorPositions,
+      technicalCriteria: supervisorTechnicalCriteria,
+      behavioralCriteria: supervisorBehavioralCriteria,
+      scoring: {
+        maxPerCriterion: 10,
+        maxCriteria: 6
+      }
+    }
+  };
+}

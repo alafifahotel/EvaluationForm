@@ -1,22 +1,29 @@
 import { useRef, useEffect } from 'react'
-import { 
-  commonCriteria, 
-  specificCriteria, 
-  positions, 
-  supervisorPositions,
+import {
   appreciationScale,
   supervisorAppreciationScale,
-  supervisorTechnicalCriteria,
-  supervisorBehavioralCriteria,
-  decisions 
+  decisions
 } from '../data/criteriaConfig'
 import { format } from 'date-fns'
 import { fr } from 'date-fns/locale'
 import hotelLogo from '../assets/imgs/logo-hotel-al-afifa.png'
+import { useCriteria } from '../contexts/CriteriaContext'
 
 function PreviewA4({ formData, position, employeeType = 'employee', isViewMode = false }) {
   const previewRef = useRef(null)
-  
+
+  // Get criteria from context
+  const {
+    positions,
+    supervisorPositions,
+    commonCriteria,
+    specificCriteria,
+    technicalCriteria: supervisorTechnicalCriteria,
+    behavioralCriteria: supervisorBehavioralCriteria,
+    employeeScoring,
+    supervisorScoring
+  } = useCriteria()
+
   useEffect(() => {
     const calculateScale = () => {
       if (!previewRef.current) return
@@ -125,19 +132,22 @@ function PreviewA4({ formData, position, employeeType = 'employee', isViewMode =
   
   const employeeTypeActual = formData.employeeType || employeeType || 'employee'
   const positionsList = employeeTypeActual === 'supervisor' ? supervisorPositions : positions
-  const positionLabel = positionsList.find(p => p.value === position)?.label || ''
-  const positionCriteria = specificCriteria[position] || []
-  
+  const positionLabel = positionsList?.find(p => p.value === position)?.label || ''
+  const positionCriteria = specificCriteria?.[position] || []
+
+  const supMaxScore = supervisorScoring?.maxPerCriterion || 10
+  const empMaxScore = employeeScoring?.maxPerCriterion || 5
+
   const calculateTotal = () => {
     if (employeeTypeActual === 'supervisor') {
       const technicalTotal = Object.values(formData.technicalScores || {}).reduce((sum, score) => sum + (score || 0), 0)
       const behavioralTotal = Object.values(formData.behavioralScores || {}).reduce((sum, score) => sum + (score || 0), 0)
       const total = technicalTotal + behavioralTotal
-      const maxTechnical = supervisorTechnicalCriteria.length * 10 // 6 criteria * 10 points = 60
-      const maxBehavioral = supervisorBehavioralCriteria.length * 10 // 6 criteria * 10 points = 60
-      const maxTotal = maxTechnical + maxBehavioral // 120 points total
-      const percentage = (total / maxTotal) * 100
-      return { 
+      const maxTechnical = (supervisorTechnicalCriteria?.length || 0) * supMaxScore
+      const maxBehavioral = (supervisorBehavioralCriteria?.length || 0) * supMaxScore
+      const maxTotal = maxTechnical + maxBehavioral
+      const percentage = maxTotal > 0 ? (total / maxTotal) * 100 : 0
+      return {
         technicalTotal,
         behavioralTotal,
         total,
@@ -149,17 +159,18 @@ function PreviewA4({ formData, position, employeeType = 'employee', isViewMode =
     } else {
       const commonTotal = Object.values(formData.commonScores || {}).reduce((sum, score) => sum + (score || 0), 0)
       const specificTotal = Object.values(formData.specificScores || {}).reduce((sum, score) => sum + (score || 0), 0)
-      const maxCommon = commonCriteria.length * 5
-      const maxSpecific = positionCriteria.length * 5
-      const percentage = ((commonTotal + specificTotal) / (maxCommon + maxSpecific)) * 100
-      return { 
+      const maxCommon = (commonCriteria?.length || 0) * empMaxScore
+      const maxSpecific = (positionCriteria?.length || 0) * empMaxScore
+      const maxTotal = maxCommon + maxSpecific
+      const percentage = maxTotal > 0 ? ((commonTotal + specificTotal) / maxTotal) * 100 : 0
+      return {
         commonTotal,
         specificTotal,
-        total: commonTotal + specificTotal, 
+        total: commonTotal + specificTotal,
         maxCommon,
         maxSpecific,
-        max: maxCommon + maxSpecific,
-        percentage: percentage.toFixed(1) 
+        max: maxTotal,
+        percentage: percentage.toFixed(1)
       }
     }
   }
@@ -322,11 +333,11 @@ function PreviewA4({ formData, position, employeeType = 'employee', isViewMode =
                     <tr>
                       <th className="text-left px-2 py-1 font-semibold text-gray-700" style={{ width: '30%' }}>Critère</th>
                       <th className="text-left px-2 py-1 font-semibold text-gray-700" style={{ width: '45%' }}>Description</th>
-                      <th className="text-center p-1 font-semibold text-gray-700" style={{ width: '25%' }}>Note /10</th>
+                      <th className="text-center p-1 font-semibold text-gray-700" style={{ width: '25%' }}>Note /{supMaxScore}</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {supervisorTechnicalCriteria.map((criteria, index) => (
+                    {(supervisorTechnicalCriteria || []).map((criteria, index) => (
                       <tr key={criteria.id} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
                         <td className="px-2 py-1">
                           <p className="font-medium text-sm">{criteria.label}</p>
@@ -336,7 +347,7 @@ function PreviewA4({ formData, position, employeeType = 'employee', isViewMode =
                         </td>
                         <td className="px-2 py-1 align-middle">
                           <div className="flex items-center justify-center h-full">
-                            {renderScoreBar(formData.technicalScores?.[criteria.id], 10)}
+                            {renderScoreBar(formData.technicalScores?.[criteria.id], supMaxScore)}
                           </div>
                         </td>
                       </tr>
@@ -359,11 +370,11 @@ function PreviewA4({ formData, position, employeeType = 'employee', isViewMode =
                     <tr>
                       <th className="text-left px-2 py-1 font-semibold text-gray-700" style={{ width: '30%' }}>Critère</th>
                       <th className="text-left px-2 py-1 font-semibold text-gray-700" style={{ width: '45%' }}>Description</th>
-                      <th className="text-center p-1 font-semibold text-gray-700" style={{ width: '25%' }}>Note /10</th>
+                      <th className="text-center p-1 font-semibold text-gray-700" style={{ width: '25%' }}>Note /{supMaxScore}</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {supervisorBehavioralCriteria.map((criteria, index) => (
+                    {(supervisorBehavioralCriteria || []).map((criteria, index) => (
                       <tr key={criteria.id} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
                         <td className="px-2 py-1">
                           <p className="font-medium text-sm">{criteria.label}</p>
@@ -373,7 +384,7 @@ function PreviewA4({ formData, position, employeeType = 'employee', isViewMode =
                         </td>
                         <td className="px-2 py-1 align-middle">
                           <div className="flex items-center justify-center h-full">
-                            {renderScoreBar(formData.behavioralScores?.[criteria.id], 10)}
+                            {renderScoreBar(formData.behavioralScores?.[criteria.id], supMaxScore)}
                           </div>
                         </td>
                       </tr>
@@ -402,7 +413,7 @@ function PreviewA4({ formData, position, employeeType = 'employee', isViewMode =
                     </tr>
                   </thead>
                   <tbody>
-                    {commonCriteria.map((criteria, index) => (
+                    {(commonCriteria || []).map((criteria, index) => (
                       <tr key={criteria.id} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
                         <td className="px-2 py-1">
                           <p className="font-medium text-sm">{criteria.label}</p>
@@ -412,7 +423,7 @@ function PreviewA4({ formData, position, employeeType = 'employee', isViewMode =
                         </td>
                         <td className="px-2 py-1 align-middle">
                           <div className="flex items-center justify-center h-full">
-                            {renderScoreBar(formData.commonScores?.[criteria.id])}
+                            {renderScoreBar(formData.commonScores?.[criteria.id], empMaxScore)}
                           </div>
                         </td>
                       </tr>
@@ -440,7 +451,7 @@ function PreviewA4({ formData, position, employeeType = 'employee', isViewMode =
                       </tr>
                     </thead>
                     <tbody>
-                      {positionCriteria.map((criteria, index) => (
+                      {(positionCriteria || []).map((criteria, index) => (
                         <tr key={criteria.id} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
                           <td className="px-2 py-1">
                             <p className="font-medium text-sm">{criteria.label}</p>
@@ -450,7 +461,7 @@ function PreviewA4({ formData, position, employeeType = 'employee', isViewMode =
                           </td>
                           <td className="px-2 py-1 align-middle">
                             <div className="flex items-center justify-center h-full">
-                              {renderScoreBar(formData.specificScores?.[criteria.id])}
+                              {renderScoreBar(formData.specificScores?.[criteria.id], empMaxScore)}
                             </div>
                           </td>
                         </tr>

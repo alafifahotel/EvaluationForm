@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { format } from 'date-fns'
 import { fr } from 'date-fns/locale'
-import { positions, supervisorPositions } from '../data/criteriaConfig'
 import GitHubService from '../services/githubService'
 import ConfirmModal from './ConfirmModal'
 import EmptyState from './EmptyState'
@@ -12,6 +11,7 @@ import CustomCalendar from './CustomCalendar'
 import CustomDropdown from './CustomDropdown'
 import { Edit, Trash2, Eye, Search, Filter, RefreshCw, ChevronDown, ChevronUp, Calendar, Briefcase, Award, X, UserCheck, Users } from 'lucide-react'
 import { useToast } from '../contexts/ToastContext'
+import { useCriteria } from '../contexts/CriteriaContext'
 
 function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluation }) {
   const [evaluations, setEvaluations] = useState(localEvaluations || [])
@@ -29,6 +29,9 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
   const [filtersExpanded, setFiltersExpanded] = useState(false)
   const hasLoadedRef = useRef(false)
   const toast = useToast()
+
+  // Get positions from context
+  const { positions, supervisorPositions } = useCriteria()
 
   useEffect(() => {
     // Only load if we haven't loaded yet in this component instance
@@ -137,11 +140,12 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
   }
 
   const hasActiveFilters = () => {
-    return filter.service || filter.dateFrom || filter.dateTo || filter.minScore
+    return filter.service || filter.employeeType || filter.dateFrom || filter.dateTo || filter.minScore
   }
 
   const getActiveFilterCount = () => {
     let count = 0
+    if (filter.employeeType) count++
     if (filter.service) count++
     if (filter.dateFrom || filter.dateTo) count++
     if (filter.minScore) count++
@@ -149,7 +153,7 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
   }
 
   const clearAllFilters = () => {
-    setFilter({ service: '', dateFrom: '', dateTo: '', minScore: '' })
+    setFilter({ service: '', employeeType: '', dateFrom: '', dateTo: '', minScore: '' })
   }
 
   const filteredEvaluations = getFilteredEvaluations()
@@ -194,13 +198,15 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
                 </span>
               )}
             </h3>
-            <button
-              onClick={clearAllFilters}
-              className="text-sm text-gray-500 hover:text-red-600 transition-colors flex items-center gap-1"
-            >
-              <X className="h-4 w-4" />
-              Réinitialiser
-            </button>
+            {hasActiveFilters() && (
+              <button
+                onClick={clearAllFilters}
+                className="text-sm text-gray-500 hover:text-red-600 transition-colors flex items-center gap-1"
+              >
+                <X className="h-4 w-4" />
+                Réinitialiser
+              </button>
+            )}
           </div>
 
           {/* Mobile Filter Header */}

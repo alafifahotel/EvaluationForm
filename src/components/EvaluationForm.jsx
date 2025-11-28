@@ -1,11 +1,7 @@
 import { useState, useEffect } from 'react'
 import {
-  commonCriteria,
-  specificCriteria,
   appreciationScale,
   supervisorAppreciationScale,
-  supervisorTechnicalCriteria,
-  supervisorBehavioralCriteria,
   decisions
 } from '../data/criteriaConfig'
 import { format } from 'date-fns'
@@ -15,10 +11,22 @@ import LoadingButton from './LoadingButton'
 import CustomCalendar from './CustomCalendar'
 import { Save, X, CheckCircle, User, Hash, Briefcase, Users, Calendar, PenTool, CalendarCheck, ClipboardList, Target, Trophy, FileCheck } from 'lucide-react'
 import { useToast } from '../contexts/ToastContext'
+import { useCriteria } from '../contexts/CriteriaContext'
 
 function EvaluationForm({ position, positionLabel, employeeType = 'employee', onFormChange, onSave, githubToken, initialData, isEditing, onCancel }) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const toast = useToast()
+
+  // Get criteria from context
+  const {
+    commonCriteria,
+    specificCriteria,
+    technicalCriteria: supervisorTechnicalCriteria,
+    behavioralCriteria: supervisorBehavioralCriteria,
+    employeeScoring,
+    supervisorScoring
+  } = useCriteria()
+
   const [formData, setFormData] = useState(initialData || {
     nom: '',
     matricule: '',
@@ -69,7 +77,9 @@ function EvaluationForm({ position, positionLabel, employeeType = 'employee', on
   }
 
   const handleScoreChange = (criteriaType, criteriaId, value) => {
-    const maxScore = employeeType === 'supervisor' ? 10 : 5
+    const maxScore = employeeType === 'supervisor'
+      ? (supervisorScoring?.maxPerCriterion || 10)
+      : (employeeScoring?.maxPerCriterion || 5)
     const score = Math.min(maxScore, Math.max(0, parseFloat(value) || 0))
     setFormData(prev => ({
       ...prev,
@@ -90,22 +100,26 @@ function EvaluationForm({ position, positionLabel, employeeType = 'employee', on
   }
 
   const calculateTotal = () => {
+    const supMaxScore = supervisorScoring?.maxPerCriterion || 10
+    const empMaxScore = employeeScoring?.maxPerCriterion || 5
+
     if (employeeType === 'supervisor') {
       const technicalTotal = Object.values(formData.technicalScores || {}).reduce((sum, score) => sum + (score || 0), 0)
       const behavioralTotal = Object.values(formData.behavioralScores || {}).reduce((sum, score) => sum + (score || 0), 0)
       const total = technicalTotal + behavioralTotal
-      const maxTechnical = supervisorTechnicalCriteria.length * 10 // 6 criteria * 10 points = 60
-      const maxBehavioral = supervisorBehavioralCriteria.length * 10 // 6 criteria * 10 points = 60
-      const maxTotal = maxTechnical + maxBehavioral // 120 points total
-      const percentage = (total / maxTotal) * 100
+      const maxTechnical = (supervisorTechnicalCriteria?.length || 0) * supMaxScore
+      const maxBehavioral = (supervisorBehavioralCriteria?.length || 0) * supMaxScore
+      const maxTotal = maxTechnical + maxBehavioral
+      const percentage = maxTotal > 0 ? (total / maxTotal) * 100 : 0
       return { total, percentage: percentage.toFixed(1), technicalTotal, behavioralTotal, maxTechnical, maxBehavioral, maxTotal }
     } else {
       const commonTotal = Object.values(formData.commonScores || {}).reduce((sum, score) => sum + (score || 0), 0)
       const specificTotal = Object.values(formData.specificScores || {}).reduce((sum, score) => sum + (score || 0), 0)
-      const maxCommon = commonCriteria.length * 5
-      const maxSpecific = (specificCriteria[position]?.length || 0) * 5
-      const percentage = ((commonTotal + specificTotal) / (maxCommon + maxSpecific)) * 100
-      return { total: commonTotal + specificTotal, percentage: percentage.toFixed(1) }
+      const maxCommon = (commonCriteria?.length || 0) * empMaxScore
+      const maxSpecific = (specificCriteria?.[position]?.length || 0) * empMaxScore
+      const maxTotal = maxCommon + maxSpecific
+      const percentage = maxTotal > 0 ? ((commonTotal + specificTotal) / maxTotal) * 100 : 0
+      return { total: commonTotal + specificTotal, percentage: percentage.toFixed(1), maxTotal }
     }
   }
 
@@ -124,11 +138,14 @@ function EvaluationForm({ position, positionLabel, employeeType = 'employee', on
       const { total, percentage } = calculatedValues
       const appreciation = getAppreciation(percentage)
       
+      const supMaxScore = supervisorScoring?.maxPerCriterion || 10
+      const empMaxScore = employeeScoring?.maxPerCriterion || 5
+
       let maxScore
       if (employeeType === 'supervisor') {
-        maxScore = supervisorTechnicalCriteria.length * 10 + supervisorBehavioralCriteria.length * 10 // 120 points total
+        maxScore = (supervisorTechnicalCriteria?.length || 0) * supMaxScore + (supervisorBehavioralCriteria?.length || 0) * supMaxScore
       } else {
-        maxScore = (commonCriteria.length + (specificCriteria[position]?.length || 0)) * 5
+        maxScore = ((commonCriteria?.length || 0) + (specificCriteria?.[position]?.length || 0)) * empMaxScore
       }
       
       const evaluationData = {
@@ -188,10 +205,12 @@ function EvaluationForm({ position, positionLabel, employeeType = 'employee', on
     }
   }
 
-  const positionCriteria = specificCriteria[position] || []
+  const positionCriteria = specificCriteria?.[position] || []
   const calculatedValues = calculateTotal()
   const { total, percentage } = calculatedValues
   const appreciation = getAppreciation(percentage)
+  const empMaxScore = employeeScoring?.maxPerCriterion || 5
+  const supMaxScore = supervisorScoring?.maxPerCriterion || 10
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
@@ -391,14 +410,14 @@ function EvaluationForm({ position, positionLabel, employeeType = 'employee', on
                       <input
                         type="number"
                         min="0"
-                        max="10"
+                        max={supMaxScore}
                         step="0.5"
                         value={formData.technicalScores[criteria.id] || ''}
                         onChange={(e) => handleScoreChange('technical', criteria.id, e.target.value)}
                         className="w-16 px-2 py-1.5 text-sm text-center bg-gray-50 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         placeholder="0"
                       />
-                      <span className="text-xs sm:text-sm text-gray-500 font-medium">/10</span>
+                      <span className="text-xs sm:text-sm text-gray-500 font-medium">/{supMaxScore}</span>
                     </div>
                   </div>
                 </div>
@@ -427,14 +446,14 @@ function EvaluationForm({ position, positionLabel, employeeType = 'employee', on
                       <input
                         type="number"
                         min="0"
-                        max="10"
+                        max={supMaxScore}
                         step="0.5"
                         value={formData.behavioralScores[criteria.id] || ''}
                         onChange={(e) => handleScoreChange('behavioral', criteria.id, e.target.value)}
                         className="w-16 px-2 py-1.5 text-sm text-center bg-gray-50 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                         placeholder="0"
                       />
-                      <span className="text-xs sm:text-sm text-gray-500 font-medium">/10</span>
+                      <span className="text-xs sm:text-sm text-gray-500 font-medium">/{supMaxScore}</span>
                     </div>
                   </div>
                 </div>
@@ -465,14 +484,14 @@ function EvaluationForm({ position, positionLabel, employeeType = 'employee', on
                       <input
                         type="number"
                         min="0"
-                        max="5"
+                        max={empMaxScore}
                         step="0.5"
                         value={formData.commonScores[criteria.id] || ''}
                         onChange={(e) => handleScoreChange('common', criteria.id, e.target.value)}
                         className="w-16 px-2 py-1.5 text-sm text-center bg-gray-50 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         placeholder="0"
                       />
-                      <span className="text-xs sm:text-sm text-gray-500 font-medium">/5</span>
+                      <span className="text-xs sm:text-sm text-gray-500 font-medium">/{empMaxScore}</span>
                     </div>
                   </div>
                 </div>
@@ -502,14 +521,14 @@ function EvaluationForm({ position, positionLabel, employeeType = 'employee', on
                         <input
                           type="number"
                           min="0"
-                          max="5"
+                          max={empMaxScore}
                           step="0.5"
                           value={formData.specificScores[criteria.id] || ''}
                           onChange={(e) => handleScoreChange('specific', criteria.id, e.target.value)}
                           className="w-16 px-2 py-1.5 text-sm text-center bg-gray-50 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                           placeholder="0"
                         />
-                        <span className="text-xs sm:text-sm text-gray-500 font-medium">/5</span>
+                        <span className="text-xs sm:text-sm text-gray-500 font-medium">/{empMaxScore}</span>
                       </div>
                     </div>
                   </div>
@@ -546,7 +565,7 @@ function EvaluationForm({ position, positionLabel, employeeType = 'employee', on
             <div className="flex justify-between items-center">
               <p className="text-sm sm:text-base text-gray-700">Total points obtenus:</p>
               <span className="text-sm sm:text-base font-bold text-gray-900">
-                {total} / {employeeType === 'supervisor' ? (supervisorTechnicalCriteria.length * 10 + supervisorBehavioralCriteria.length * 10) : (commonCriteria.length + positionCriteria.length) * 5}
+                {total} / {calculatedValues.maxTotal || 0}
               </span>
             </div>
             <div className="flex justify-between items-center">

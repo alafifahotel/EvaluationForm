@@ -206,7 +206,7 @@ class GitHubService {
         try {
           const placeholderPath = `${path}/.gitkeep`
           const content = btoa('')
-          
+
           await this.octokit.request('PUT /repos/{owner}/{repo}/contents/{path}', {
             owner: this.owner,
             repo: this.repo,
@@ -215,7 +215,7 @@ class GitHubService {
             content: content,
             branch: this.branch
           })
-          
+
           console.log(`Created directory: ${path}`)
           return true
         } catch (createError) {
@@ -226,6 +226,76 @@ class GitHubService {
           throw createError
         }
       }
+      throw error
+    }
+  }
+
+  // =============================================
+  // Criteria Configuration Methods
+  // =============================================
+
+  async loadCriteriaConfig() {
+    try {
+      const response = await this.octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
+        owner: this.owner,
+        repo: this.repo,
+        path: 'config/criteriaConfig.json',
+        ref: this.branch
+      })
+
+      // Properly decode UTF-8 content
+      const decodedContent = decodeURIComponent(escape(atob(response.data.content)))
+      return {
+        config: JSON.parse(decodedContent),
+        sha: response.data.sha
+      }
+    } catch (error) {
+      if (error.status === 404) {
+        // Config file doesn't exist yet, return null to trigger migration
+        return null
+      }
+      console.error('Error loading criteria config from GitHub:', error)
+      throw error
+    }
+  }
+
+  async saveCriteriaConfig(config, sha = null) {
+    try {
+      // Ensure the config directory exists
+      await this.ensureDirectoryExists('config')
+
+      // Update lastModified timestamp
+      const configToSave = {
+        ...config,
+        lastModified: new Date().toISOString()
+      }
+
+      // Properly encode UTF-8 content
+      const jsonString = JSON.stringify(configToSave, null, 2)
+      const content = btoa(unescape(encodeURIComponent(jsonString)))
+
+      const params = {
+        owner: this.owner,
+        repo: this.repo,
+        path: 'config/criteriaConfig.json',
+        message: `Update criteria configuration - ${format(new Date(), 'dd/MM/yyyy HH:mm')}`,
+        content: content,
+        branch: this.branch
+      }
+
+      // If we have a SHA, include it for update (otherwise it's a create)
+      if (sha) {
+        params.sha = sha
+      }
+
+      const response = await this.octokit.request('PUT /repos/{owner}/{repo}/contents/{path}', params)
+
+      return {
+        config: configToSave,
+        sha: response.data.content.sha
+      }
+    } catch (error) {
+      console.error('Error saving criteria config to GitHub:', error)
       throw error
     }
   }
