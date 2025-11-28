@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastModified": "2025-11-28T13:33:41.092Z",
+  "lastModified": "2025-11-28T13:37:45.995Z",
   "employees": {
     "positions": [
       {
@@ -38,14 +38,9 @@
     ],
     "commonCriteria": [
       {
-        "id": "discipline",
-        "label": "Discipline & Respect des règles",
-        "description": "Suivi procédures, respect hiérarchie"
-      },
-      {
-        "id": "attitude_client",
-        "label": "Attitude client",
-        "description": "Politesse, courtoisie, respect"
+        "id": "esprit_equipe",
+        "label": "Esprit d'équipe",
+        "description": "Collaboration, entraide"
       },
       {
         "id": "presentation",
@@ -53,14 +48,19 @@
         "description": "Uniforme, propreté, posture"
       },
       {
+        "id": "discipline",
+        "label": "Discipline & Respect des règles",
+        "description": "Suivi procédures, respect hiérarchie"
+      },
+      {
         "id": "ponctualite",
         "label": "Ponctualité & Assiduité",
         "description": "Respect des horaires, présence régulière"
       },
       {
-        "id": "esprit_equipe",
-        "label": "Esprit d'équipe",
-        "description": "Collaboration, entraide"
+        "id": "attitude_client",
+        "label": "Attitude client",
+        "description": "Politesse, courtoisie, respect"
       }
     ],
     "specificCriteria": {
