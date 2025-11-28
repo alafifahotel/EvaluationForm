@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastModified": "2025-11-28T12:33:57.343Z",
+  "lastModified": "2025-11-28T12:48:56.545Z",
   "employees": {
     "positions": [
       {
@@ -34,6 +34,10 @@
       {
         "value": "plongeurs",
         "label": "Plongeurs (Stewards)"
+      },
+      {
+        "value": "nayik_el_manta2a_miiuxg33",
+        "label": "Nayik el manta2a"
       }
     ],
     "commonCriteria": [
@@ -279,7 +283,8 @@
           "label": "Support à la cuisine",
           "description": "Disponibilité, flexibilité"
         }
-      ]
+      ],
+      "nayik_el_manta2a_miiuxg33": []
     },
     "scoring": {
       "maxPerCriterion": 5,
