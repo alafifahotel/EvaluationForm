@@ -175,7 +175,7 @@ function EvaluationForm({ position, positionLabel, employeeType = 'employee', on
       }
       
       onSave(evaluationData)
-      toast.success(isEditing ? '✅ Évaluation mise à jour avec succès!' : '✅ Évaluation enregistrée avec succès!')
+      toast.success(isEditing ? 'Évaluation mise à jour avec succès' : 'Évaluation enregistrée avec succès')
       
       // Reset form only if not editing
       if (!isEditing) {
@@ -199,7 +199,7 @@ function EvaluationForm({ position, positionLabel, employeeType = 'employee', on
       }
     } catch (error) {
       console.error('Erreur lors de la sauvegarde:', error)
-      toast.error('❌ Erreur lors de la sauvegarde. Vérifiez votre token d\'accès.')
+      toast.error('Erreur lors de la sauvegarde. Vérifiez votre token d\'accès.')
     } finally {
       setIsSubmitting(false)
     }

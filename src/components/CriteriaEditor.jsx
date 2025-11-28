@@ -1,5 +1,19 @@
 import { useState } from 'react'
 import { Plus, AlertCircle } from 'lucide-react'
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core'
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable'
 import CriteriaItem from './CriteriaItem'
 import AddCriteriaModal from './AddCriteriaModal'
 import ConfirmModal from './ConfirmModal'
@@ -15,6 +29,22 @@ function CriteriaEditor({
 }) {
   const [showAddModal, setShowAddModal] = useState(false)
   const [deleteTarget, setDeleteTarget] = useState(null)
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  )
+
+  const handleDragEnd = (event) => {
+    const { active, over } = event
+    if (active.id !== over?.id) {
+      const oldIndex = criteria.findIndex((c) => c.id === active.id)
+      const newIndex = criteria.findIndex((c) => c.id === over.id)
+      onUpdate(arrayMove(criteria, oldIndex, newIndex))
+    }
+  }
 
   const handleAddCriterion = (newCriterion) => {
     onUpdate([...criteria, newCriterion])
@@ -66,17 +96,28 @@ function CriteriaEditor({
           <p>{emptyMessage}</p>
         </div>
       ) : (
-        <div className="space-y-2 mb-4">
-          {criteria.map((criterion) => (
-            <CriteriaItem
-              key={criterion.id}
-              criterion={criterion}
-              onUpdate={handleUpdateCriterion}
-              onDelete={(c) => setDeleteTarget(c)}
-              maxScore={maxScore}
-            />
-          ))}
-        </div>
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+        >
+          <SortableContext
+            items={criteria.map((c) => c.id)}
+            strategy={verticalListSortingStrategy}
+          >
+            <div className="space-y-2 mb-4">
+              {criteria.map((criterion) => (
+                <CriteriaItem
+                  key={criterion.id}
+                  criterion={criterion}
+                  onUpdate={handleUpdateCriterion}
+                  onDelete={(c) => setDeleteTarget(c)}
+                  maxScore={maxScore}
+                />
+              ))}
+            </div>
+          </SortableContext>
+        </DndContext>
       )}
 
       {/* Add Button */}

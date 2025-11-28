@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { Edit2, Trash2, Check, X, GripVertical } from 'lucide-react'
+import { useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
 
 function CriteriaItem({
   criterion,
@@ -12,6 +14,22 @@ function CriteriaItem({
   const [editLabel, setEditLabel] = useState(criterion.label)
   const [editDescription, setEditDescription] = useState(criterion.description || '')
   const [error, setError] = useState('')
+
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: criterion.id })
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition: isDragging ? 'none' : transition,
+    opacity: isDragging ? 0.5 : 1,
+    zIndex: isDragging ? 1000 : 'auto',
+  }
 
   const handleSave = () => {
     if (!editLabel.trim()) {
@@ -107,9 +125,17 @@ function CriteriaItem({
   }
 
   return (
-    <div className="group bg-white rounded-lg p-3 border border-gray-200 hover:border-hotel-gold/50 hover:shadow-md transition-all duration-200">
+    <div
+      ref={setNodeRef}
+      style={style}
+      className={`group bg-white rounded-lg p-3 border border-gray-200 hover:border-hotel-gold/50 hover:shadow-md transition-all duration-200 ${isDragging ? 'shadow-lg' : ''}`}
+    >
       <div className="flex items-start gap-3">
-        <div className="text-gray-300 cursor-grab mt-1">
+        <div
+          className="text-gray-300 hover:text-gray-500 cursor-grab active:cursor-grabbing mt-1 touch-none"
+          {...attributes}
+          {...listeners}
+        >
           <GripVertical className="w-4 h-4" />
         </div>
 

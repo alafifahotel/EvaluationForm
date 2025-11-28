@@ -62,7 +62,7 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
       setEvaluations(uniqueEvaluations)
     } catch (error) {
       console.error('Erreur lors du chargement des évaluations:', error)
-      toast.error('⚠️ Erreur lors du chargement des évaluations')
+      toast.error('Erreur lors du chargement des évaluations')
       // Fall back to local evaluations
       setEvaluations(localEvaluations || [])
     } finally {
@@ -114,7 +114,7 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
         e.timestamp !== evaluation.timestamp || e.nom !== evaluation.nom
       ))
       
-      toast.success(`🗑️ Évaluation de ${evaluation.nom} supprimée avec succès`)
+      toast.success(`Évaluation de ${evaluation.nom} supprimée avec succès`)
       // Close modal after successful deletion
       setDeleteModal({ isOpen: false, evaluation: null, isLoading: false, error: null })
     } catch (error) {
