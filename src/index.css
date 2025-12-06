@@ -187,13 +187,66 @@
     .text-xs {
       font-size: 0.75rem !important;
     }
-    
+
     .text-sm {
       font-size: 0.875rem !important;
     }
-    
+
     .text-base {
       font-size: 1rem !important;
+    }
+
+    /* Organigramme A4 Portrait Print Styles */
+    .printable-orgchart,
+    .printable-orgchart * {
+      visibility: visible !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    /* Reset the scaled container for print */
+    .printable-orgchart {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      transform: none !important;
+      width: 210mm !important;
+      min-height: 297mm !important;
+      padding: 15mm !important;
+      margin: 0 !important;
+      box-sizing: border-box !important;
+      overflow: visible !important;
+      display: block !important;
+      background: white !important;
+      box-shadow: none !important;
+      z-index: 99999 !important;
+    }
+
+    /* Make the container invisible but let content through */
+    .printable-orgchart-container {
+      display: contents !important;
+    }
+
+    /* Organigramme text sizes for print */
+    .print-title {
+      font-size: 9px !important;
+    }
+
+    .print-position {
+      font-size: 10px !important;
+    }
+
+    .print-employee {
+      font-size: 9px !important;
+    }
+
+    .print-footer {
+      font-size: 10px !important;
+    }
+
+    .print-node {
+      padding: 3px 8px !important;
+      margin-bottom: 2px !important;
     }
   }
   
