@@ -1,0 +1,263 @@
+{
+  "version": 1,
+  "lastModified": "2025-12-06T10:28:30.684Z",
+  "structure": {
+    "id": "direction",
+    "title": "Direction Générale",
+    "position": "Directeur de l'exploitation",
+    "employees": [
+      "Ali Bachir"
+    ],
+    "children": [
+      {
+        "id": "hebergement",
+        "title": "Département Hébergement",
+        "position": "Responsable Hébergement",
+        "employees": [
+          "Youmna Jaber"
+        ],
+        "children": [
+          {
+            "id": "reception",
+            "title": "Réception",
+            "position": "Chef de Réception",
+            "employees": [
+              "Abdoulaye Samb"
+            ],
+            "children": [
+              {
+                "id": "rec-1",
+                "position": "Réceptionniste",
+                "employees": []
+              },
+              {
+                "id": "rec-2",
+                "position": "Portier",
+                "employees": []
+              }
+            ]
+          },
+          {
+            "id": "gouvernante",
+            "title": "Gouvernante Générale",
+            "position": "Gouvernante Générale",
+            "employees": [
+              "Lucie Tine"
+            ],
+            "children": [
+              {
+                "id": "gouv-1",
+                "position": "Aide gouvernant",
+                "employees": [
+                  "Abdou Seydi Seck"
+                ]
+              },
+              {
+                "id": "gouv-2",
+                "position": "Aide gouvernant",
+                "employees": [
+                  "René Lagahuzere"
+                ]
+              },
+              {
+                "id": "gouv-3",
+                "position": "Femme / Valet de chambre",
+                "employees": []
+              },
+              {
+                "id": "gouv-4",
+                "position": "Lingères",
+                "employees": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "cuisine",
+        "title": "Département Cuisine",
+        "position": "Chef de Cuisine",
+        "employees": [
+          "Waranka Ba"
+        ],
+        "children": [
+          {
+            "id": "sous-chefs",
+            "title": "Sous-chefs",
+            "position": "Sous-chef",
+            "employees": [
+              "Mohamed Mbaye",
+              "Tamsir Seck"
+            ],
+            "children": [
+              {
+                "id": "cuis-1",
+                "position": "Chef de partie",
+                "employees": [
+                  "Mamina Diedhiou"
+                ]
+              },
+              {
+                "id": "cuis-2",
+                "position": "Commis de cuisine",
+                "employees": []
+              }
+            ]
+          },
+          {
+            "id": "cuis-3",
+            "position": "Plongeurs",
+            "employees": []
+          }
+        ]
+      },
+      {
+        "id": "restauration",
+        "title": "Département Restauration & Bar",
+        "position": "Responsable Restauration",
+        "employees": [
+          "Yoba Mballo"
+        ],
+        "children": [
+          {
+            "id": "rang",
+            "title": "Service de Salle",
+            "position": "Chef de rang",
+            "employees": [
+              "Frederic Tendeng",
+              "Mohamed Diedhiou"
+            ],
+            "children": [
+              {
+                "id": "rest-1",
+                "position": "Commis de salle",
+                "employees": []
+              }
+            ]
+          },
+          {
+            "id": "bar",
+            "title": "Bar",
+            "position": "Chef barman",
+            "employees": [
+              "Alassane Sané"
+            ],
+            "children": [
+              {
+                "id": "bar-1",
+                "position": "Commis de bar",
+                "employees": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "espaces-publics",
+        "title": "Département Espaces Publics & Jardins",
+        "position": "Responsable Espaces Publics",
+        "employees": [
+          "Rahmé Kassem"
+        ],
+        "children": [
+          {
+            "id": "esp-1",
+            "position": "Équipiers",
+            "employees": []
+          },
+          {
+            "id": "esp-2",
+            "position": "Jardinier",
+            "employees": [
+              "Cheikh Kabe"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "admin-rh",
+        "title": "Administration & RH",
+        "position": "Responsable Administration & RH",
+        "employees": [
+          "Abdoulaye Cissé"
+        ],
+        "children": [
+          {
+            "id": "admin-1",
+            "position": "Secrétaire",
+            "employees": [
+              "Rose Thiam"
+            ]
+          },
+          {
+            "id": "admin-2",
+            "position": "Commis d'Administration",
+            "employees": [
+              "Serigne Ndiaye"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "comptabilite",
+        "title": "Comptabilité & Économat",
+        "position": "Responsable Comptabilité",
+        "employees": [
+          "Pape Mamadou Seck"
+        ],
+        "children": [
+          {
+            "id": "compta-1",
+            "position": "Comptable",
+            "employees": [
+              "Abdoul Aziz Gning"
+            ]
+          },
+          {
+            "id": "compta-2",
+            "position": "Caissière principale",
+            "employees": [
+              "Diouma Diouf"
+            ]
+          },
+          {
+            "id": "compta-3",
+            "position": "Contrôleur",
+            "employees": [
+              "Mah Touré"
+            ]
+          },
+          {
+            "id": "compta-4",
+            "position": "Achats/Econome",
+            "employees": [
+              "Catherine Diedhiou"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "maintenance",
+        "title": "Maintenance / Technique",
+        "position": "Service Technique",
+        "employees": [],
+        "children": [
+          {
+            "id": "maint-1",
+            "position": "Ouvrier spécialisé",
+            "employees": [
+              "Oumar Sène"
+            ]
+          },
+          {
+            "id": "maint-2",
+            "position": "Ouvrier spécialisé",
+            "employees": [
+              "Bacary Badji"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
