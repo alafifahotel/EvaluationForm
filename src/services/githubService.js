@@ -299,6 +299,76 @@ class GitHubService {
       throw error
     }
   }
+
+  // =============================================
+  // Organigramme (Organization Chart) Methods
+  // =============================================
+
+  async loadOrganigramme() {
+    try {
+      const response = await this.octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
+        owner: this.owner,
+        repo: this.repo,
+        path: 'config/organigramme.json',
+        ref: this.branch
+      })
+
+      // Properly decode UTF-8 content
+      const decodedContent = decodeURIComponent(escape(atob(response.data.content)))
+      return {
+        data: JSON.parse(decodedContent),
+        sha: response.data.sha
+      }
+    } catch (error) {
+      if (error.status === 404) {
+        // Config file doesn't exist yet, return null to trigger migration
+        return null
+      }
+      console.error('Error loading organigramme from GitHub:', error)
+      throw error
+    }
+  }
+
+  async saveOrganigramme(data, sha = null) {
+    try {
+      // Ensure the config directory exists
+      await this.ensureDirectoryExists('config')
+
+      // Update lastModified timestamp
+      const dataToSave = {
+        ...data,
+        lastModified: new Date().toISOString()
+      }
+
+      // Properly encode UTF-8 content
+      const jsonString = JSON.stringify(dataToSave, null, 2)
+      const content = btoa(unescape(encodeURIComponent(jsonString)))
+
+      const params = {
+        owner: this.owner,
+        repo: this.repo,
+        path: 'config/organigramme.json',
+        message: `Update organigramme - ${format(new Date(), 'dd/MM/yyyy HH:mm')}`,
+        content: content,
+        branch: this.branch
+      }
+
+      // If we have a SHA, include it for update (otherwise it's a create)
+      if (sha) {
+        params.sha = sha
+      }
+
+      const response = await this.octokit.request('PUT /repos/{owner}/{repo}/contents/{path}', params)
+
+      return {
+        data: dataToSave,
+        sha: response.data.content.sha
+      }
+    } catch (error) {
+      console.error('Error saving organigramme to GitHub:', error)
+      throw error
+    }
+  }
 }
 
 export default GitHubService

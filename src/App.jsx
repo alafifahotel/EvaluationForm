@@ -3,11 +3,13 @@ import EvaluationForm from './components/EvaluationForm'
 import PreviewA4 from './components/PreviewA4'
 import HistoryTab from './components/HistoryTab'
 import ParametresTab from './components/ParametresTab'
+import OrganigrammeTab from './components/OrganigrammeTab'
 import TokenModal from './components/TokenModal'
 import CustomDropdown from './components/CustomDropdown'
-import { FileEdit, History, Edit, Users, UserCheck, Briefcase, Settings } from 'lucide-react'
+import { FileEdit, History, Edit, Users, UserCheck, Briefcase, Settings, Network } from 'lucide-react'
 import { ToastProvider, useToast } from './contexts/ToastContext'
 import { CriteriaProvider, useCriteria } from './contexts/CriteriaContext'
+import { OrgChartProvider } from './contexts/OrgChartContext'
 
 function AppContent({ githubToken, onTokenChange }) {
   const toast = useToast()
@@ -19,6 +21,7 @@ function AppContent({ githubToken, onTokenChange }) {
     const hash = window.location.hash.slice(1)
     if (hash === 'history') return 'history'
     if (hash === 'parametres') return 'parametres'
+    if (hash === 'organigramme') return 'organigramme'
     return 'evaluation'
   }
 
@@ -41,6 +44,7 @@ function AppContent({ githubToken, onTokenChange }) {
       const hash = window.location.hash.slice(1)
       if (hash === 'history') setActiveTab('history')
       else if (hash === 'parametres') setActiveTab('parametres')
+      else if (hash === 'organigramme') setActiveTab('organigramme')
       else setActiveTab('evaluation')
     }
 
@@ -179,6 +183,17 @@ function AppContent({ githubToken, onTokenChange }) {
             Historique
           </button>
           <button
+            onClick={() => setActiveTab('organigramme')}
+            className={`flex items-center px-6 py-3 font-medium transition-all duration-200 rounded-t-lg ${
+              activeTab === 'organigramme'
+                ? 'bg-white text-hotel-gold shadow-[0_-2px_6px_rgba(0,0,0,0.1)]'
+                : 'bg-gray-200 text-gray-600 hover:text-gray-800 hover:bg-gray-300'
+            }`}
+          >
+            <Network className="mr-2 h-4 w-4" />
+            Organigramme
+          </button>
+          <button
             onClick={() => setActiveTab('parametres')}
             className={`flex items-center px-6 py-3 font-medium transition-all duration-200 rounded-t-lg ${
               activeTab === 'parametres'
@@ -302,6 +317,8 @@ function AppContent({ githubToken, onTokenChange }) {
             githubToken={githubToken}
             onEditEvaluation={handleEditEvaluation}
           />
+        ) : activeTab === 'organigramme' ? (
+          <OrganigrammeTab githubToken={githubToken} />
         ) : (
           <ParametresTab githubToken={githubToken} />
         )}
@@ -318,7 +335,9 @@ function App() {
   return (
     <ToastProvider>
       <CriteriaProvider githubToken={githubToken}>
-        <AppContent githubToken={githubToken} onTokenChange={setGithubToken} />
+        <OrgChartProvider githubToken={githubToken}>
+          <AppContent githubToken={githubToken} onTokenChange={setGithubToken} />
+        </OrgChartProvider>
       </CriteriaProvider>
     </ToastProvider>
   )
