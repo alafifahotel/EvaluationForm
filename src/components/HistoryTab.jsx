@@ -5,11 +5,10 @@ import GitHubService from '../services/githubService'
 import ConfirmModal from './ConfirmModal'
 import EmptyState from './EmptyState'
 import LoadingSpinner from './LoadingSpinner'
-import LoadingButton from './LoadingButton'
 import ViewModal from './ViewModal'
 import CustomCalendar from './CustomCalendar'
 import CustomDropdown from './CustomDropdown'
-import { Edit, Trash2, Eye, Search, Filter, RefreshCw, ChevronDown, ChevronUp, Calendar, Briefcase, Award, X, UserCheck, Users } from 'lucide-react'
+import { Edit, Trash2, Eye, Search, Filter, ChevronDown, ChevronUp, Calendar, Briefcase, Award, X, UserCheck, Users } from 'lucide-react'
 import { useToast } from '../contexts/ToastContext'
 import { useCriteria } from '../contexts/CriteriaContext'
 
@@ -132,11 +131,6 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
 
   const handleView = (evaluation) => {
     setViewModal({ isOpen: true, evaluation })
-  }
-
-  const handleRefresh = () => {
-    hasLoadedRef.current = false
-    loadEvaluationsFromGitHub()
   }
 
   const hasActiveFilters = () => {
@@ -385,18 +379,6 @@ function HistoryTab({ evaluations: localEvaluations, githubToken, onEditEvaluati
             )}
           </div>
         )}
-      </div>
-
-      <div className="flex justify-end mb-4">
-        <LoadingButton
-          onClick={handleRefresh}
-          icon={RefreshCw}
-          variant="outline"
-          size="sm"
-          isLoading={loading}
-        >
-          Rafraîchir
-        </LoadingButton>
       </div>
 
       {loading ? (

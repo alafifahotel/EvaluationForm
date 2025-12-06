@@ -159,7 +159,24 @@ function AppContent({ githubToken, onTokenChange }) {
       </header>
 
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <nav className="flex mb-0">
+        {/* Mobile: Dropdown select */}
+        <div className="sm:hidden mb-4">
+          <CustomDropdown
+            name="activeTab"
+            value={activeTab}
+            onChange={(e) => setActiveTab(e.target.value)}
+            options={[
+              { value: 'evaluation', label: 'Nouvelle Évaluation' },
+              { value: 'history', label: 'Historique' },
+              { value: 'organigramme', label: 'Organigramme' },
+              { value: 'parametres', label: 'Paramètres' }
+            ]}
+            icon={activeTab === 'evaluation' ? FileEdit : activeTab === 'history' ? History : activeTab === 'organigramme' ? Network : Settings}
+          />
+        </div>
+
+        {/* Desktop: Tab buttons */}
+        <nav className="hidden sm:flex mb-0">
           <button
             onClick={() => setActiveTab('evaluation')}
             className={`flex items-center px-6 py-3 font-medium transition-all duration-200 rounded-t-lg ${
