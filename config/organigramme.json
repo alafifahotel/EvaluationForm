@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastModified": "2025-12-10T17:05:18.242Z",
+  "lastModified": "2025-12-10T17:05:31.163Z",
   "structure": {
     "id": "direction",
     "title": "Direction Générale",
@@ -154,7 +154,7 @@
       },
       {
         "id": "espaces-publics",
-        "title": "Département Espaces Publics & Jardins",
+        "title": "Service Espaces Publics & Jardins",
         "position": "Responsable Espaces Publics",
         "employees": [
           "Rahmé Kassem"
