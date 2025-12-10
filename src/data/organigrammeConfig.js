@@ -199,3 +199,32 @@ export const countTotalPositions = (node) => {
   }
   return count
 }
+
+// Helper function to reorder children within a parent node
+export const reorderChildrenInTree = (node, parentId, childId, direction) => {
+  if (node.id === parentId && node.children) {
+    const children = [...node.children]
+    const currentIndex = children.findIndex(c => c.id === childId)
+
+    if (currentIndex === -1) return node
+
+    const newIndex = direction === 'up' ? currentIndex - 1 : currentIndex + 1
+
+    // Bounds check
+    if (newIndex < 0 || newIndex >= children.length) return node
+
+    // Swap positions
+    [children[currentIndex], children[newIndex]] = [children[newIndex], children[currentIndex]]
+
+    return { ...node, children }
+  }
+
+  if (node.children) {
+    return {
+      ...node,
+      children: node.children.map(child => reorderChildrenInTree(child, parentId, childId, direction))
+    }
+  }
+
+  return node
+}

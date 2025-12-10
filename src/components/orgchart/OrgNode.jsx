@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import { ChevronDown, Plus, Trash2, X, Check, UserPlus, Users, Pencil } from 'lucide-react'
+import { ChevronDown, ChevronUp, Plus, Trash2, X, Check, UserPlus, Users, Pencil } from 'lucide-react'
 import { useOrgChart } from '../../contexts/OrgChartContext'
 import AddPositionModal from './AddPositionModal'
 import EditPositionModal from './EditPositionModal'
 import { getDepartmentColor, findDepartmentId, getAllDepartmentIds } from '../../data/departmentColors'
 
-function OrgNode({ node, isEditMode, isRoot = false, level = 0, departmentId = null }) {
-  const { addEmployee, removeEmployee, updateEmployee, addPosition, removePosition, updateNode, structure } = useOrgChart()
+function OrgNode({ node, isEditMode, isRoot = false, level = 0, departmentId = null, parentId = null, siblingIndex = 0, totalSiblings = 1 }) {
+  const { addEmployee, removeEmployee, updateEmployee, addPosition, removePosition, updateNode, reorderChildren, structure } = useOrgChart()
 
   const [isExpanded, setIsExpanded] = useState(true)
   const [editingEmployeeIndex, setEditingEmployeeIndex] = useState(null)
@@ -223,6 +223,36 @@ function OrgNode({ node, isEditMode, isRoot = false, level = 0, departmentId = n
             </div>
           )}
 
+          {/* Reorder Buttons (only for departments - level 1) */}
+          {isEditMode && level === 1 && parentId && (
+            <div className="flex-shrink-0 flex flex-col -my-1">
+              <button
+                onClick={() => reorderChildren(parentId, node.id, 'up')}
+                disabled={siblingIndex === 0}
+                className={`w-5 h-4 flex items-center justify-center rounded-t transition-colors ${
+                  siblingIndex === 0
+                    ? 'text-gray-300 cursor-not-allowed'
+                    : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'
+                }`}
+                title="Monter"
+              >
+                <ChevronUp className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => reorderChildren(parentId, node.id, 'down')}
+                disabled={siblingIndex === totalSiblings - 1}
+                className={`w-5 h-4 flex items-center justify-center rounded-b transition-colors ${
+                  siblingIndex === totalSiblings - 1
+                    ? 'text-gray-300 cursor-not-allowed'
+                    : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'
+                }`}
+                title="Descendre"
+              >
+                <ChevronDown className="w-4 h-4" />
+              </button>
+            </div>
+          )}
+
           {/* Edit & Delete Position Buttons (not for root) */}
           {isEditMode && !isRoot && (
             <>
@@ -367,13 +397,16 @@ function OrgNode({ node, isEditMode, isRoot = false, level = 0, departmentId = n
       {/* Children */}
       {hasChildren && isExpanded && (
         <div className="mt-1">
-          {node.children.map((child) => (
+          {node.children.map((child, index) => (
             <OrgNode
               key={child.id}
               node={child}
               isEditMode={isEditMode}
               level={level + 1}
               departmentId={currentDepartmentId}
+              parentId={node.id}
+              siblingIndex={index}
+              totalSiblings={node.children.length}
             />
           ))}
         </div>
