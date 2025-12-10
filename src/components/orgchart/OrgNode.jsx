@@ -227,7 +227,12 @@ function OrgNode({ node, isEditMode, isRoot = false, level = 0, departmentId = n
           {isEditMode && level === 1 && parentId && (
             <div className="flex-shrink-0 flex flex-col -my-1">
               <button
-                onClick={() => reorderChildren(parentId, node.id, 'up')}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  if (siblingIndex > 0) {
+                    reorderChildren(parentId, node.id, 'up')
+                  }
+                }}
                 disabled={siblingIndex === 0}
                 className={`w-5 h-4 flex items-center justify-center rounded-t transition-colors ${
                   siblingIndex === 0
@@ -239,7 +244,12 @@ function OrgNode({ node, isEditMode, isRoot = false, level = 0, departmentId = n
                 <ChevronUp className="w-4 h-4" />
               </button>
               <button
-                onClick={() => reorderChildren(parentId, node.id, 'down')}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  if (siblingIndex < totalSiblings - 1) {
+                    reorderChildren(parentId, node.id, 'down')
+                  }
+                }}
                 disabled={siblingIndex === totalSiblings - 1}
                 className={`w-5 h-4 flex items-center justify-center rounded-b transition-colors ${
                   siblingIndex === totalSiblings - 1
