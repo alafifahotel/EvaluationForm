@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastModified": "2025-12-10T17:04:20.822Z",
+  "lastModified": "2025-12-10T17:04:32.892Z",
   "structure": {
     "id": "direction",
     "title": "Direction Générale",
@@ -75,7 +75,7 @@
       },
       {
         "id": "cuisine",
-        "title": "Département Cuisine",
+        "title": "Service Cuisine",
         "position": "Chef de Cuisine",
         "employees": [
           "Waranka Ba"
