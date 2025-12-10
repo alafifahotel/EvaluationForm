@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastModified": "2025-12-10T16:56:53.296Z",
+  "lastModified": "2025-12-10T17:04:03.588Z",
   "structure": {
     "id": "direction",
     "title": "Direction Générale",
@@ -39,7 +39,7 @@
           },
           {
             "id": "gouvernante",
-            "title": "Gouvernante Générale",
+            "title": "Service Étages",
             "position": "Gouvernante Générale",
             "employees": [
               "Lucie Tine"
