@@ -1,0 +1,1862 @@
+{
+  "metadata": {
+    "title": "Manuel de Procédures Opérationnelles",
+    "establishment": "Hôtel Al Afifa",
+    "version": "1.0",
+    "validatedBy": "Direction Générale",
+    "validationDate": "2025-07-31",
+    "distribution": "Tous les chefs de service et responsables",
+    "lastModified": "2025-12-10T17:26:42.058Z"
+  },
+  "departments": [
+    {
+      "id": "dept-reception",
+      "name": "RÉCEPTION & RÉSERVATIONS",
+      "order": 1,
+      "procedures": [
+        {
+          "id": "proc-rec-1",
+          "number": 1,
+          "title": "CHECK-IN CLIENT",
+          "objective": "Accueillir le client dans les meilleures conditions, vérifier son identité, encaisser le paiement ou la garantie, et l'installer en chambre en respectant les standards de l'hôtel.",
+          "scope": "Réceptionnistes, Chefs de Réception",
+          "responsible": "Chef de Réception",
+          "documents": "Fiche de police, fiche client, PMS Orchestra, carte d'accès chambre",
+          "frequency": "À chaque arrivée client",
+          "steps": [
+            "Accueillir chaleureusement le client en se levant",
+            "Demander une pièce d'identité ou un passeport",
+            "Vérifier la réservation sur le PMS (nom, dates, tarif, chambre)",
+            "Encaisser : paiement à l'arrivée ou garantie",
+            "Remplir ou vérifier la fiche client (cardex)",
+            "Faire signer la fiche de police",
+            "Attribuer la chambre et encoder la clé",
+            "Donner les informations pratiques",
+            "Accompagner ou faire accompagner le client",
+            "Noter toute remarque spécifique dans le PMS"
+          ]
+        },
+        {
+          "id": "proc-rec-2",
+          "number": 2,
+          "title": "CHECK-OUT CLIENT",
+          "objective": "Assurer un départ fluide, vérifier les consommations, régler les paiements et remercier le client.",
+          "scope": "Réceptionnistes",
+          "responsible": "Chef de Réception",
+          "documents": "Facture, fiche client, état des consommations PMS",
+          "frequency": "À chaque départ client",
+          "steps": [
+            "Vérifier le nom du client et le numéro de chambre",
+            "S'assurer qu'il n'y a pas de solde impayé ou minibar",
+            "Imprimer ou envoyer la facture",
+            "Encaisser le règlement",
+            "Demander un retour ou une appréciation",
+            "Fermer la chambre dans le PMS",
+            "Noter toute remarque utile"
+          ]
+        },
+        {
+          "id": "proc-rec-3",
+          "number": 3,
+          "title": "MISE À JOUR DU CARDEX CLIENT",
+          "objective": "Garantir une base de données fiable et exploitable pour les relances commerciales et les séjours futurs.",
+          "scope": "Réceptionnistes, Commerciaux",
+          "responsible": "Chef Réception / Commercial",
+          "documents": "PMS Orchestra, fiche client",
+          "frequency": "À chaque passage client ou modification",
+          "steps": [
+            "Rechercher le client sur le PMS",
+            "Compléter les champs manquants",
+            "Vérifier l'exactitude des données",
+            "Enregistrer toute remarque spécifique",
+            "Valider l'enregistrement"
+          ]
+        },
+        {
+          "id": "proc-rec-4",
+          "number": 4,
+          "title": "GESTION DES PLAINTES CLIENTS",
+          "objective": "Réagir rapidement et efficacement à toute insatisfaction afin de préserver l'image de l'hôtel et fidéliser le client.",
+          "scope": "Tout le personnel de la Réception",
+          "responsible": "Chef de Réception / Directeur",
+          "documents": "Fiche de plainte, note PMS",
+          "frequency": "Dès qu'une plainte est formulée",
+          "steps": [
+            "Écouter attentivement la plainte du client",
+            "Reformuler pour montrer compréhension",
+            "Noter la plainte dans le PMS",
+            "Analyser la plainte et escalader si nécessaire",
+            "Proposer une solution rapide",
+            "Suivre la résolution",
+            "Informer la direction si plainte grave",
+            "Archiver la plainte et mettre à jour le profil client"
+          ]
+        },
+        {
+          "id": "proc-rec-5",
+          "number": 5,
+          "title": "GESTION DES GROUPES ET CONTRATS CORPORATE",
+          "objective": "Assurer une prise en charge professionnelle et anticipée des réservations de groupe et des clients entreprises.",
+          "scope": "Réceptionnistes, Chef de Réception, Département Commercial",
+          "responsible": "Chef de Réception / Commercial / Directeur",
+          "documents": "Fiche groupe, contrat, pro forma, bon de commande, planning",
+          "frequency": "À chaque demande de groupe ou société",
+          "steps": [
+            "Recevoir la demande (mail, appel, WhatsApp)",
+            "Demander les détails du séjour",
+            "Émettre une pro forma ou une offre de tarif",
+            "Créer une fiche groupe dans le PMS",
+            "Bloquer les chambres",
+            "Préparer les documents à l'avance",
+            "Check-in express ou pré-enregistrement",
+            "Suivre la facturation",
+            "Archiver et mettre à jour le fichier client société"
+          ]
+        },
+        {
+          "id": "proc-rec-6",
+          "number": 6,
+          "title": "RELANCE ET SUIVI DES OPTIONS / NO SHOWS",
+          "objective": "Optimiser le taux de remplissage et éviter les pertes de revenus dues aux réservations non confirmées.",
+          "scope": "Réceptionnistes / Réservations",
+          "responsible": "Chef Réception",
+          "documents": "Planning PMS, e-mails, appels",
+          "frequency": "Quotidienne",
+          "steps": [
+            "Vérifier les options non confirmées",
+            "Contacter les clients pour confirmation",
+            "Noter la suite dans le PMS",
+            "Libérer la chambre si pas de garantie",
+            "Facturer en cas de no show garanti"
+          ]
+        },
+        {
+          "id": "proc-rec-7",
+          "number": 7,
+          "title": "CLÔTURE DE RÉCEPTION / FIN DE SHIFT",
+          "objective": "Assurer une fin de poste structurée avec remise des informations et sécurisation de la caisse.",
+          "scope": "Réceptionnistes",
+          "responsible": "Chef de Réception",
+          "documents": "Clôture PMS, note de passation, caisse, main courante",
+          "frequency": "À chaque fin de shift (matin, après-midi, nuit)",
+          "steps": [
+            "Vérifier toutes les arrivées et départs du jour dans le PMS",
+            "Effectuer le contrôle de caisse (fonds, encaissements, remises)",
+            "S'assurer que les documents physiques sont en ordre (factures, fiches police, etc.)",
+            "Mettre à jour la main courante ou le registre de passation",
+            "Remettre les clefs, fonds de caisse et documents au réceptionniste suivant ou au coffre",
+            "Informer oralement des points importants en cours (plaintes, VIP, pannes, etc.)"
+          ]
+        },
+        {
+          "id": "proc-rec-8",
+          "number": 8,
+          "title": "PASSAGE DE CONSIGNES EN FIN DE SHIFT",
+          "objective": "Transmettre clairement les informations importantes à l'équipe suivante pour assurer la continuité de service.",
+          "scope": "Réceptionnistes",
+          "responsible": "Chef de Réception",
+          "documents": "Main courante / registre de passation",
+          "frequency": "À chaque fin de shift",
+          "steps": [
+            "Remplir le registre de passation (ou l'entrée dans le PMS si numérique)",
+            "Lister les clients attendus, les départs restants, les no-shows possibles",
+            "Indiquer les incidents en cours (techniques, plaintes, demandes particulières)",
+            "Mentionner les comptes en attente de règlement ou les pro forma à valider",
+            "Informer oralement la relève pour compléter la transmission écrite"
+          ]
+        },
+        {
+          "id": "proc-rec-9",
+          "number": 9,
+          "title": "NIGHT AUDIT (VEILLEUR DE NUIT)",
+          "objective": "Vérifier la conformité des opérations du jour, assurer la sécurité et préparer les données pour la comptabilité.",
+          "scope": "Réceptionniste de nuit / Veilleur de nuit",
+          "responsible": "Chef de Réception / Directeur",
+          "documents": "Rapport night audit, PMS, états de caisse, rapport sécurité",
+          "frequency": "Chaque nuit",
+          "steps": [
+            "Vérifier que tous les check-in et check-out du jour sont bien enregistrés",
+            "Clôturer les postes ouverts dans le PMS (bar, restaurant, etc.)",
+            "Imprimer les rapports financiers journaliers (ventes, TVA, modes de paiement)",
+            "Contrôler les écarts éventuels avec la caisse",
+            "Faire un tour de sécurité des zones sensibles (piscine, couloirs, accès extérieurs)",
+            "Rédiger un rapport de nuit (incident, météo, sécurité, remarques clients)",
+            "Transmettre tous les documents au comptable / direction au matin"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dept-cuisine",
+      "name": "CUISINE & RESTAURATION",
+      "order": 2,
+      "procedures": [
+        {
+          "id": "proc-cui-1",
+          "number": 1,
+          "title": "RÉCEPTION DES MARCHANDISES",
+          "objective": "Contrôler la conformité des marchandises livrées (quantité, qualité, température) avant leur acceptation.",
+          "scope": "Chef de cuisine, magasinier, commis",
+          "responsible": "Chef de cuisine / Responsable magasin",
+          "documents": "Bon de commande, bon de livraison, fiche de réception",
+          "frequency": "À chaque livraison",
+          "steps": [
+            "Vérifier l'identité du fournisseur et le numéro de commande",
+            "Vérifier la température des produits frais ou surgelés",
+            "Contrôler la quantité livrée par rapport au bon de commande",
+            "Vérifier la qualité (aspect visuel, date limite, odeur, propreté)",
+            "Noter tout écart sur le bon de livraison et alerter immédiatement le chef",
+            "Signer et tamponner le bon uniquement si tout est conforme",
+            "Archiver une copie du bon de livraison pour le service comptable",
+            "Transférer les produits vers le stockage selon leur catégorie (froid, sec, etc.)"
+          ]
+        },
+        {
+          "id": "proc-cui-2",
+          "number": 2,
+          "title": "STOCKAGE & GESTION FIFO / DLC/DLU",
+          "objective": "Stocker les produits dans le respect des normes sanitaires, avec une rotation stricte des dates.",
+          "scope": "Magasinier, cuisinier, commis",
+          "responsible": "Chef de cuisine",
+          "documents": "Étiquettes, registre FIFO, fiche de stock",
+          "frequency": "Quotidiennement",
+          "steps": [
+            "Étiqueter chaque produit reçu avec la date de réception et la DLC/DLU",
+            "Ranger les produits par catégorie (sec, frais, surgelés)",
+            "Appliquer la méthode FIFO (les produits les plus anciens doivent être utilisés en premier)",
+            "Déplacer les anciens produits vers l'avant à chaque nouvelle livraison",
+            "Contrôler visuellement les stocks chaque jour",
+            "Retirer immédiatement tout produit expiré ou suspect"
+          ]
+        },
+        {
+          "id": "proc-cui-3",
+          "number": 3,
+          "title": "SORTIE DE PRODUITS DES CHAMBRES FROIDES / MAGASIN",
+          "objective": "Encadrer la sortie de produits pour éviter les pertes, les vols et assurer une traçabilité.",
+          "scope": "Cuisiniers, chef de partie, magasinier",
+          "responsible": "Chef de cuisine / Responsable magasin",
+          "documents": "Bon de sortie, tableau de suivi stock",
+          "frequency": "Quotidiennement",
+          "steps": [
+            "Le chef ou chef de partie prépare une demande de sortie selon le menu du jour",
+            "Le magasinier valide et remet les produits",
+            "Remplir le bon de sortie (date, quantité, produit, nom)",
+            "Remettre les produits uniquement au personnel autorisé",
+            "Archiver un double du bon de sortie",
+            "Mettre à jour le stock après chaque sortie"
+          ]
+        },
+        {
+          "id": "proc-cui-4",
+          "number": 4,
+          "title": "FICHES TECHNIQUES & STANDARDISATION DES PLATS",
+          "objective": "Garantir la constance des recettes, le contrôle des coûts et la qualité des plats servis.",
+          "scope": "Chef de cuisine, chefs de partie, commis",
+          "responsible": "Chef de cuisine",
+          "documents": "Fiches techniques, livre de recettes, coût matière",
+          "frequency": "À la création ou révision d'un plat",
+          "steps": [
+            "Rédiger une fiche technique par plat",
+            "Indiquer poids brut/net, coût, mode de cuisson et présentation",
+            "Tester la recette avec l'équipe",
+            "Faire valider la fiche par le Chef et la Direction",
+            "Afficher ou classer la fiche technique au poste concerné",
+            "Réviser la fiche si changement de fournisseur, prix ou technique"
+          ]
+        },
+        {
+          "id": "proc-cui-5",
+          "number": 5,
+          "title": "PRÉPARATION DES PLATS DU JOUR / SERVICE",
+          "objective": "Organiser la production culinaire quotidienne en respectant les quantités, les temps de service et la qualité.",
+          "scope": "Cuisiniers, commis, plongeur",
+          "responsible": "Chef de cuisine / Sous-chef",
+          "documents": "Plan de production, fiche technique, menu du jour",
+          "frequency": "Quotidienne",
+          "steps": [
+            "Déterminer les plats à produire selon le menu du jour",
+            "Répartir les tâches entre les postes",
+            "Préparer les ingrédients selon les fiches techniques",
+            "Dresser les bacs de mise en place",
+            "Démarrer la production 1 à 2h avant le service",
+            "Respecter les températures de cuisson et d'hygiène",
+            "Communiquer avec le personnel de salle",
+            "Dresser un rapport de production en fin de service"
+          ]
+        },
+        {
+          "id": "proc-cui-6",
+          "number": 6,
+          "title": "NETTOYAGE & HYGIÈNE (HACCP)",
+          "objective": "Assurer une propreté irréprochable des locaux, du matériel et du personnel conformément aux normes HACCP.",
+          "scope": "Tout le personnel de cuisine",
+          "responsible": "Chef de cuisine",
+          "documents": "Planning de nettoyage, checklists, registre température",
+          "frequency": "Quotidienne / Hebdomadaire / Mensuelle",
+          "steps": [
+            "Porter une tenue propre et complète",
+            "Se laver les mains à chaque changement de tâche",
+            "Nettoyer les postes avant, pendant et après chaque service",
+            "Respecter le plan de nettoyage par zone",
+            "Enregistrer les températures des chambres froides",
+            "Contrôler les étiquettes et DLC/DLU",
+            "Éliminer tout produit douteux",
+            "Superviser par le chef en fin de service"
+          ]
+        },
+        {
+          "id": "proc-cui-7",
+          "number": 7,
+          "title": "GESTION DU PERSONNEL CUISINE",
+          "objective": "Assurer l'organisation, la ponctualité, la discipline et la présentation de l'équipe cuisine.",
+          "scope": "Cuisiniers, commis, plongeurs",
+          "responsible": "Chef de cuisine / DRH",
+          "documents": "Planning, pointage, fiche de poste",
+          "frequency": "Quotidienne",
+          "steps": [
+            "Afficher le planning hebdomadaire",
+            "Exiger une tenue réglementaire propre",
+            "Noter chaque retard ou absence",
+            "Vérifier la présence à l'ouverture et fermeture",
+            "Faire un briefing quotidien",
+            "Rappeler les règles disciplinaires en cuisine"
+          ]
+        },
+        {
+          "id": "proc-cui-8",
+          "number": 8,
+          "title": "GESTION DES RESTES & GASPILLAGE ALIMENTAIRE",
+          "objective": "Réduire le gaspillage alimentaire et valoriser les restes tout en respectant les normes sanitaires.",
+          "scope": "Cuisiniers, plongeurs",
+          "responsible": "Chef de cuisine / Contrôle de gestion",
+          "documents": "Tableau de pertes, fiche pesée",
+          "frequency": "Quotidienne",
+          "steps": [
+            "Identifier les produits non utilisés ou restes de buffet",
+            "Classer recyclables / non recyclables",
+            "Peser les pertes importantes",
+            "Analyser les pertes hebdomadaires",
+            "Informer la direction en cas de pertes répétées"
+          ]
+        },
+        {
+          "id": "proc-cui-9",
+          "number": 9,
+          "title": "CLÔTURE CUISINE & TRANSMISSION SERVICE",
+          "objective": "Assurer une fin de journée propre, organisée, avec un passage d'information clair vers le lendemain.",
+          "scope": "Tout le personnel de cuisine",
+          "responsible": "Chef de cuisine",
+          "documents": "Rapport de clôture, check-list nettoyage",
+          "frequency": "Chaque soir",
+          "steps": [
+            "Nettoyer les postes, frigos, plonge et sol",
+            "Noter les produits restants",
+            "Éteindre ou sécuriser les machines",
+            "Compléter un rapport de fin de journée",
+            "Informer la relève du lendemain"
+          ]
+        },
+        {
+          "id": "proc-cui-10",
+          "number": 10,
+          "title": "COMMANDE FOURNISSEUR & GESTION DES RUPTURES",
+          "objective": "Assurer un approvisionnement fluide, éviter les ruptures de stock, et garantir la traçabilité des commandes.",
+          "scope": "Chef de cuisine, Responsable achats",
+          "responsible": "Chef de cuisine / Directeur",
+          "documents": "Bon de commande, tableau de stock",
+          "frequency": "Hebdomadaire ou selon seuils",
+          "steps": [
+            "Mettre à jour le stock quotidiennement",
+            "Définir un seuil d'alerte pour chaque produit",
+            "Établir un bon de commande hebdomadaire",
+            "Faire valider par la Direction si nécessaire",
+            "Alerter en cas de rupture et adapter le menu",
+            "Archiver les commandes dans le dossier fournisseur"
+          ]
+        },
+        {
+          "id": "proc-cui-11",
+          "number": 11,
+          "title": "PLAN DE NETTOYAGE DÉTAILLÉ DE LA CUISINE",
+          "objective": "Maintenir des standards d'hygiène rigoureux et réguliers sur l'ensemble des zones de la cuisine.",
+          "scope": "Tout le personnel cuisine",
+          "responsible": "Chef de cuisine",
+          "documents": "Planning de nettoyage, fiches check-list",
+          "frequency": "Quotidienne / Hebdo / Mensuelle",
+          "steps": [
+            "Afficher un planning visible",
+            "Répartir les zones de nettoyage",
+            "Utiliser les produits homologués HACCP",
+            "Remplir une checklist signée",
+            "Effectuer des contrôles surprise"
+          ]
+        },
+        {
+          "id": "proc-cui-12",
+          "number": 12,
+          "title": "RÉACTION EN CAS DE PANNE MATÉRIELLE",
+          "objective": "Réagir immédiatement pour limiter les pertes, garantir la sécurité alimentaire et documenter l'incident.",
+          "scope": "Tout le personnel de cuisine",
+          "responsible": "Chef de cuisine / Responsable maintenance",
+          "documents": "Fiche d'incident, registre maintenance",
+          "frequency": "Dès survenue d'un incident technique",
+          "steps": [
+            "Alerter le Chef immédiatement",
+            "Vérifier la source du problème",
+            "Transférer les produits sensibles",
+            "Noter la température et durée d'interruption",
+            "Remplir une fiche d'incident",
+            "Prévenir la maintenance",
+            "Adapter le menu si nécessaire",
+            "Jeter tout produit douteux"
+          ]
+        },
+        {
+          "id": "proc-cui-13",
+          "number": 13,
+          "title": "PETIT DÉJEUNER BUFFET",
+          "objective": "Assurer un service de petit-déjeuner de qualité avec buffet bien garni et respect des normes d'hygiène.",
+          "scope": "Chef de partie petit-déjeuner, cuisiniers, serveurs, plongeurs",
+          "responsible": "Chef de cuisine / Responsable restauration / Maître d'hôtel",
+          "documents": "Plan de buffet, fiche de production, fiche de nettoyage, relevé de pertes, fiche de contrôle qualité",
+          "frequency": "Quotidienne (généralement de 5h30 à 10h30)",
+          "steps": [
+            "Mise en place & production (5h30 - 6h45) : Vérifier les produits en stock, préparer selon fiche technique, cuire viennoiseries",
+            "Dressage du buffet (6h45 - 7h00) : Tout prêt à 6h55, vérifier propreté et disposition",
+            "Réassort pendant le service (7h00 - 10h00) : Observer les niveaux, réapprovisionner par petites quantités",
+            "Contrôle de la fraîcheur toutes les 30 minutes : retirer produits douteux",
+            "Fin de service & débuffetage (à partir de 10h30) : trier, peser les restes, nettoyer",
+            "Points de contrôle qualité : températures (chauds >63°C, froids <5°C)",
+            "Suivi et réduction des pertes : tableau journalier par catégorie",
+            "Check-list quotidienne ouverture/fermeture signée par le chef de poste"
+          ]
+        },
+        {
+          "id": "proc-cui-14",
+          "number": 14,
+          "title": "ROOM SERVICE",
+          "objective": "Offrir un service en chambre rapide, discret et conforme aux standards 4★ de l'hôtel, tout en assurant la traçabilité, la qualité, et la propreté du matériel.",
+          "scope": "Cuisiniers, serveurs, personnel de nuit",
+          "responsible": "Maître d'hôtel / Chef de cuisine / Réception",
+          "documents": "Bon de commande, fiche de livraison, fiche de nettoyage du chariot",
+          "frequency": "Sur appel client ou commande planifiée",
+          "steps": [
+            "Réception de la commande : noter nom, numéro chambre, heure, détails",
+            "Préparation de la commande : respecter fiche technique, dresser proprement",
+            "Montage et vérification du plateau/chariot : vaisselle propre, désinfecter chariot",
+            "Livraison en chambre : sonner discrètement, proposer de dresser, faire signer",
+            "Récupération du plateau après 1h à 1h30",
+            "Suivi & satisfaction : noter plaintes dans PMS, signaler anomalies"
+          ]
+        },
+        {
+          "id": "proc-cui-15",
+          "number": 15,
+          "title": "BANQUETS / MARIAGES / COCKTAILS",
+          "objective": "Organiser et exécuter les prestations banquets, mariages, cocktails ou événements professionnels avec rigueur, ponctualité et respect des standards.",
+          "scope": "Chef cuisine, brigade, serveurs, barmen, maître d'hôtel, plonge",
+          "responsible": "Chef de cuisine / Responsable banquet / Directeur événementiel",
+          "documents": "Fiche technique événement, fiche de production, fiche pertes, fiche de nettoyage",
+          "frequency": "À chaque événement confirmé",
+          "steps": [
+            "Avant l'événement : réunion de briefing, élaboration menu, répartition des rôles, préparation en amont",
+            "Installation du buffet/service : tables selon plan validé, réchauds, bains-marie, cold zone",
+            "Pendant l'événement : réassort toutes les 10-15 minutes, vérifier températures, nettoyer en continu",
+            "Après l'événement : désinstallation, tri déchets, peser pertes, nettoyer matériel, retour d'expérience"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dept-housekeeping",
+      "name": "HOUSEKEEPING / GOUVERNANTE",
+      "order": 3,
+      "procedures": [
+        {
+          "id": "proc-hk-1",
+          "number": 1,
+          "title": "NETTOYAGE CHAMBRE EN DÉPART",
+          "objective": "Remettre à neuf une chambre après le départ d'un client, en respectant les normes d'hygiène, de présentation et de sécurité.",
+          "scope": "Femmes de chambre, valets, gouvernante",
+          "responsible": "Gouvernante générale",
+          "documents": "Planning d'étage, fiche de contrôle, registre de maintenance",
+          "frequency": "À chaque départ client",
+          "steps": [
+            "Vérifier que le client a bien quitté la chambre et que la fiche est en statut « départ »",
+            "Ouvrir les fenêtres et éteindre tous les équipements (TV, clim, etc.)",
+            "Débarrasser les déchets, linge sale, et vider les poubelles",
+            "Dépoussiérer les surfaces : tables, meubles, placards, tête de lit",
+            "Nettoyer salle de bain : WC, lavabo, douche, miroir (en respectant ordre et produits HACCP)",
+            "Changer tous les draps, taies, serviettes et tapis de bain",
+            "Refaire le lit selon les standards de l'hôtel (plis, centrage, propreté)",
+            "Recharger les consommables : savon, papier WC, bouteille d'eau, verre, etc.",
+            "Aspirer le sol, nettoyer les traces visibles sur murs/sols",
+            "Fermer la chambre et avertir la gouvernante pour contrôle final"
+          ]
+        },
+        {
+          "id": "proc-hk-2",
+          "number": 2,
+          "title": "NETTOYAGE CHAMBRE EN RECOUCHE (SÉJOUR)",
+          "objective": "Rafraîchir la chambre d'un client en séjour sans toucher à ses effets personnels.",
+          "scope": "Femmes de chambre, gouvernante",
+          "responsible": "Gouvernante générale",
+          "documents": "Planning chambre occupée, fiche anomalies",
+          "frequency": "Quotidienne pour chaque chambre en séjour",
+          "steps": [
+            "Frapper à la porte et annoncer \"Service chambre\"",
+            "Entrer uniquement si le client autorise ou absent avec autorisation",
+            "Aérer brièvement la chambre",
+            "Faire le lit sans changer les draps (sauf demande ou jour programmé)",
+            "Nettoyer salle de bain, vider la poubelle",
+            "Ranger les objets du client sans les déplacer excessivement",
+            "Recharger les consommables manquants",
+            "Balayer ou aspirer légèrement",
+            "Signaler toute anomalie ou demande client à la gouvernante"
+          ]
+        },
+        {
+          "id": "proc-hk-3",
+          "number": 3,
+          "title": "CONTRÔLE QUALITÉ & VALIDATION CHAMBRE PRÊTE",
+          "objective": "Vérifier la conformité d'une chambre après nettoyage avant remise à disposition.",
+          "scope": "Gouvernante",
+          "responsible": "Gouvernante générale",
+          "documents": "Fiche de contrôle, rapport PMS",
+          "frequency": "À chaque remise en état d'une chambre",
+          "steps": [
+            "Vérifier état général (lit, surfaces, vitres, sol)",
+            "Vérifier propreté salle de bain, toilettes, serviettes, miroir",
+            "Vérifier bonne odeur, absence de poussière, taches",
+            "Contrôler les consommables (présents, non périmés)",
+            "Vérifier équipements (télécommande, TV, clim, frigo, éclairage)",
+            "Noter toute anomalie technique à la maintenance",
+            "Mettre à jour le statut chambre dans le PMS (chambre prête ou bloquée)"
+          ]
+        },
+        {
+          "id": "proc-hk-4",
+          "number": 4,
+          "title": "TRAITEMENT DES OBJETS TROUVÉS",
+          "objective": "Assurer la traçabilité et la sécurité de tout objet personnel oublié par un client.",
+          "scope": "Housekeeping, gouvernante, réception",
+          "responsible": "Gouvernante",
+          "documents": "Registre objets trouvés, fiche d'enregistrement",
+          "frequency": "À chaque objet découvert",
+          "steps": [
+            "Isoler l'objet et ne pas le manipuler excessivement",
+            "Enregistrer dans le registre objets trouvés : Date, numéro de chambre, description, nom du personnel",
+            "Placer l'objet dans un sachet ou boîte scellée, stockée dans l'armoire sécurisée",
+            "Informer la réception pour contact client (si identifié)",
+            "Après 3 mois sans réclamation, objet remis à la direction pour décision"
+          ]
+        },
+        {
+          "id": "proc-hk-5",
+          "number": 5,
+          "title": "GESTION DU LINGE (HÔTEL & CLIENTS)",
+          "objective": "Gérer efficacement le linge sale, propre et les demandes clients pour le service pressing, en garantissant la traçabilité et l'hygiène.",
+          "scope": "Femmes de chambre, lingère, gouvernante",
+          "responsible": "Gouvernante générale",
+          "documents": "Registre linge sale / propre, bon de pressing client",
+          "frequency": "Quotidienne",
+          "steps": [
+            "Collecter le linge sale dans des sacs fermés (linge blanc et couleur séparés)",
+            "Transférer à la buanderie interne ou prestataire externe (suivi par fiche)",
+            "Réceptionner et vérifier le linge propre (quantité, état, odeur)",
+            "Ranger dans l'armoire centrale ou sur chariot par étage",
+            "Signaler tout linge détérioré ou manquant",
+            "Pour le linge client : réception avec fiche, envoi pressing, remise chambre"
+          ]
+        },
+        {
+          "id": "proc-hk-6",
+          "number": 6,
+          "title": "RÉASSORT DES CONSOMMABLES",
+          "objective": "Assurer que chaque chambre dispose en permanence de ses consommables standards, selon la catégorie de chambre.",
+          "scope": "Femmes de chambre, gouvernante",
+          "responsible": "Gouvernante générale",
+          "documents": "Fiche de dotation par chambre, bon de sortie stock",
+          "frequency": "Quotidienne",
+          "steps": [
+            "Vérifier les consommables en chambre à chaque passage",
+            "Recharger immédiatement si manquant",
+            "Consigner les consommables utilisés dans la fiche de dotation quotidienne",
+            "Redemander au stock central si niveau insuffisant",
+            "Informer la gouvernante si consommation anormale ou rupture"
+          ]
+        },
+        {
+          "id": "proc-hk-7",
+          "number": 7,
+          "title": "COMMUNICATION AVEC LA RÉCEPTION & AUTRES SERVICES",
+          "objective": "Assurer une bonne coordination entre housekeeping, réception, maintenance et sécurité pour garantir une chambre toujours conforme.",
+          "scope": "Gouvernante, femmes de chambre, réception",
+          "responsible": "Gouvernante générale",
+          "documents": "Fiche anomalies, PMS, groupe WhatsApp ou cahier de liaison",
+          "frequency": "Continue",
+          "steps": [
+            "Chaque matin, récupérer la liste des départs / recouches / VIP auprès de la réception",
+            "Noter les consignes particulières",
+            "Informer la réception en temps réel des chambres prêtes (via PMS ou message)",
+            "Alerter la maintenance via fiche ou groupe en cas de problème technique",
+            "Signaler à la direction toute anomalie grave",
+            "Faire le point quotidien de fin de service"
+          ]
+        },
+        {
+          "id": "proc-hk-8",
+          "number": 8,
+          "title": "DÉGRADATION OU DYSFONCTIONNEMENT DE MATÉRIEL EN CHAMBRE",
+          "objective": "Assurer une réaction rapide et structurée en cas de casse, panne ou dégradation de matériel constatée dans une chambre.",
+          "scope": "Femmes de chambre, gouvernante, maintenance, réception",
+          "responsible": "Gouvernante générale",
+          "documents": "Fiche d'anomalie, rapport d'incident, photo, PMS",
+          "frequency": "Dès constatation de l'incident",
+          "steps": [
+            "Dès constatation du problème, prévenir la gouvernante",
+            "Prendre photo(s) et remplir une fiche d'anomalie",
+            "Bloquer la chambre dans le PMS si nécessaire",
+            "Informer la réception et la direction",
+            "Maintenance intervient pour réparation ou remplacement",
+            "Suivi par la gouvernante après remise en état",
+            "Facturation client possible si dégradation volontaire"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dept-maintenance",
+      "name": "MAINTENANCE",
+      "order": 4,
+      "procedures": [
+        {
+          "id": "proc-maint-1",
+          "number": 1,
+          "title": "INTERVENTION SUR PANNE SIGNALÉE EN CHAMBRE",
+          "objective": "Assurer une prise en charge rapide et efficace de toute panne signalée par un client ou le personnel.",
+          "scope": "Techniciens maintenance, réception",
+          "responsible": "Chef maintenance",
+          "documents": "Fiche d'intervention, rapport d'incident, PMS",
+          "frequency": "À chaque signalement",
+          "steps": [
+            "Réception du signalement via la réception ou la gouvernante",
+            "Enregistrement dans le cahier ou le logiciel des demandes d'intervention",
+            "Déplacement rapide du technicien avec les outils nécessaires",
+            "Diagnostic de la panne et réparation immédiate si possible",
+            "Si panne complexe : mise en sécurité, communication au client, planification réparation",
+            "Mise à jour de la fiche d'intervention et du statut dans le PMS",
+            "Rapport en fin de journée au chef maintenance"
+          ]
+        },
+        {
+          "id": "proc-maint-2",
+          "number": 2,
+          "title": "MAINTENANCE PRÉVENTIVE DES ÉQUIPEMENTS",
+          "objective": "Éviter les pannes et prolonger la durée de vie des équipements techniques de l'hôtel.",
+          "scope": "Équipe maintenance",
+          "responsible": "Chef maintenance",
+          "documents": "Planning de maintenance préventive, fiche de suivi",
+          "frequency": "Mensuelle ou hebdomadaire selon équipement",
+          "steps": [
+            "Consulter le planning de maintenance préventive",
+            "Préparer les outils et pièces selon la nature de l'équipement",
+            "Effectuer les vérifications (nettoyage, graissage, test de fonctionnement)",
+            "Remplacer les pièces usées ou limites",
+            "Renseigner la fiche de maintenance avec date, observations et signature",
+            "Informer la direction de tout risque ou anomalie critique"
+          ]
+        },
+        {
+          "id": "proc-maint-3",
+          "number": 3,
+          "title": "ENTRETIEN DES CLIMATISATIONS & FILTRES",
+          "objective": "Garantir le bon fonctionnement et l'hygiène des climatiseurs en chambre et zones communes.",
+          "scope": "Techniciens maintenance",
+          "responsible": "Chef maintenance",
+          "documents": "Fiche d'entretien clim, fiche anomalies",
+          "frequency": "Mensuelle pour les filtres – Trimestrielle pour révision complète",
+          "steps": [
+            "Identifier les chambres/zones à traiter selon le planning",
+            "Éteindre l'appareil, ouvrir le capot, retirer les filtres",
+            "Nettoyer les filtres à l'eau claire ou au produit désinfectant",
+            "Sécher, replacer, vérifier fixation",
+            "Tester le démarrage, écouter le bruit, sentir l'air",
+            "Consigner l'intervention sur la fiche dédiée avec signature"
+          ]
+        },
+        {
+          "id": "proc-maint-4",
+          "number": 4,
+          "title": "CONTRÔLE INSTALLATIONS ÉLECTRIQUES & GROUPE ÉLECTROGÈNE",
+          "objective": "Assurer le bon fonctionnement, la sécurité et la continuité de service des installations électriques de l'hôtel, y compris les groupes électrogènes.",
+          "scope": "Techniciens maintenance, responsable technique",
+          "responsible": "Chef maintenance",
+          "documents": "Fiche de contrôle hebdomadaire, carnet de maintenance groupe, rapport de vérification tableau électrique",
+          "frequency": "Quotidien (groupe) / Hebdomadaire (installations)",
+          "steps": [
+            "Vérifier les tableaux électriques : serrage des câbles, disjoncteurs, température",
+            "Tester les prises de courant dans les zones publiques et chambres (échantillonnage)",
+            "Vérifier le bon fonctionnement de l'éclairage (intérieur et extérieur)",
+            "Identifier et signaler toute anomalie ou risque (fils nus, surchauffe)",
+            "Mettre à jour la fiche de contrôle avec date, technicien, anomalies",
+            "Vérifier niveau carburant, huile, liquide de refroidissement du groupe",
+            "Démarrer le groupe à vide pour test hebdomadaire (15-30 min)",
+            "Observer voyants, température, fumée",
+            "Vérifier passage automatique de source si applicable",
+            "Remplir le carnet de maintenance (heures, remarques)",
+            "Effectuer une vidange complète du groupe tous les 250 heures ou tous les 3 mois"
+          ]
+        },
+        {
+          "id": "proc-maint-5",
+          "number": 5,
+          "title": "CONTRÔLE DES INSTALLATIONS SANITAIRES",
+          "objective": "Maintenir en bon état de fonctionnement les installations sanitaires dans les chambres et parties communes.",
+          "scope": "Techniciens maintenance",
+          "responsible": "Chef maintenance",
+          "documents": "Fiche d'inspection sanitaire, fiche d'intervention",
+          "frequency": "Hebdomadaire en routine / À la demande",
+          "steps": [
+            "Inspecter les équipements sanitaires (robinets, douches, WC, chasse d'eau)",
+            "Vérifier l'absence de fuites, dysfonctionnements ou traces de moisissures",
+            "Remplacer les joints usés ou pièces défectueuses si besoin",
+            "Déboucher les évacuations si nécessaire",
+            "Nettoyer les grilles de vidange et aérateurs",
+            "Consigner les interventions réalisées"
+          ]
+        },
+        {
+          "id": "proc-maint-6",
+          "number": 6,
+          "title": "GESTION DU STOCK DE PIÈCES & OUTILS",
+          "objective": "S'assurer de la disponibilité des pièces détachées, outillage et consommables pour les interventions de maintenance.",
+          "scope": "Chef maintenance, magasinier",
+          "responsible": "Chef maintenance",
+          "documents": "Fiche de stock, bon de sortie, inventaire mensuel",
+          "frequency": "Hebdomadaire (contrôle rapide) / Mensuel (inventaire complet)",
+          "steps": [
+            "Tenir à jour un registre de stock (entrée et sortie de pièces)",
+            "Ranger les outils et pièces de façon sécurisée et ordonnée",
+            "Éviter les ruptures en anticipant les réapprovisionnements",
+            "Remplir un bon de sortie pour chaque outil/pièce utilisée",
+            "Effectuer un inventaire mensuel signé par deux personnes",
+            "Éliminer les pièces inutilisables ou obsolètes selon procédure"
+          ]
+        },
+        {
+          "id": "proc-maint-7",
+          "number": 7,
+          "title": "TRAITEMENT DES DEMANDES URGENTES",
+          "objective": "Réagir rapidement aux pannes critiques pouvant affecter la sécurité ou l'expérience client.",
+          "scope": "Toute l'équipe maintenance",
+          "responsible": "Chef maintenance",
+          "documents": "Fiche d'appel urgent, cahier d'astreinte",
+          "frequency": "À chaque urgence signalée",
+          "steps": [
+            "Être joignable immédiatement en cas d'appel (poste, mobile ou canal prioritaire)",
+            "Se rendre sur les lieux dans les 10 minutes maximum",
+            "Diagnostiquer et sécuriser la zone si danger (eau, électricité, feu)",
+            "Effectuer une réparation temporaire ou complète selon le cas",
+            "Informer la direction et réception de l'évolution",
+            "Renseigner la fiche d'intervention urgente"
+          ]
+        },
+        {
+          "id": "proc-maint-8",
+          "number": 8,
+          "title": "PASSAGE DE CONSIGNES ENTRE TECHNICIENS",
+          "objective": "Assurer une continuité fluide de l'information entre les équipes de maintenance sortantes et entrantes.",
+          "scope": "Tous les techniciens",
+          "responsible": "Chef maintenance",
+          "documents": "Cahier de transmission, application interne (si existante)",
+          "frequency": "À chaque changement de shift",
+          "steps": [
+            "Rédiger les consignes non terminées en fin de service dans le cahier prévu à cet effet",
+            "Inclure les chambres bloquées, les réparations à finaliser, les commandes à suivre",
+            "Lire et signer les consignes avant prise de poste",
+            "Le chef maintenance valide la bonne transmission",
+            "En cas d'urgence non transmise, en référer immédiatement au chef"
+          ]
+        },
+        {
+          "id": "proc-maint-9",
+          "number": 9,
+          "title": "VÉRIFICATION DES DISPOSITIFS DE SÉCURITÉ INCENDIE",
+          "objective": "Assurer le bon état de fonctionnement de tous les équipements liés à la sécurité incendie de l'hôtel.",
+          "scope": "Techniciens maintenance, sécurité",
+          "responsible": "Chef maintenance",
+          "documents": "Fiche de contrôle sécurité incendie, registre des équipements",
+          "frequency": "Mensuelle (extincteurs), Trimestrielle (alarmes, issues)",
+          "steps": [
+            "Vérifier la présence et l'accessibilité de chaque extincteur",
+            "Contrôler les dates de validité et la pression",
+            "Tester le fonctionnement des alarmes incendie",
+            "Inspecter les blocs de secours (éclairage de sécurité)",
+            "S'assurer de la non-obstruction des issues de secours",
+            "Compléter la fiche de contrôle et signaler les anomalies"
+          ]
+        },
+        {
+          "id": "proc-maint-10",
+          "number": 10,
+          "title": "GESTION DES PANNES EN ZONES TECHNIQUES & COMMUNES",
+          "objective": "Gérer efficacement les dysfonctionnements dans les espaces techniques ou publics de l'hôtel.",
+          "scope": "Techniciens maintenance",
+          "responsible": "Chef maintenance",
+          "documents": "Fiche d'intervention, rapport d'incident",
+          "frequency": "À chaque incident",
+          "steps": [
+            "Recevoir le signalement (réception, sécurité ou chef de service)",
+            "Identifier la localisation et le type d'équipement",
+            "Effectuer un diagnostic rapide",
+            "Mettre hors service si danger ou dysfonctionnement important",
+            "Procéder à la réparation immédiate ou planifier selon priorité",
+            "Renseigner la fiche d'intervention et informer la direction"
+          ]
+        },
+        {
+          "id": "proc-maint-11",
+          "number": 11,
+          "title": "ARCHIVAGE DES FICHES D'INTERVENTION TECHNIQUE",
+          "objective": "Assurer la traçabilité de toutes les actions techniques réalisées par l'équipe de maintenance.",
+          "scope": "Chef maintenance",
+          "responsible": "Chef maintenance",
+          "documents": "Fiches papier ou numérique, registre annuel",
+          "frequency": "Continue",
+          "steps": [
+            "Collecter chaque fin de journée les fiches d'intervention complétées",
+            "Vérifier que toutes les informations sont remplies et signées",
+            "Classer par date et nature d'intervention (chambre, commune, urgente)",
+            "Archiver en format papier (classeur sécurisé) ou numérique (cloud, serveur interne)",
+            "Conserver les documents minimum 2 ans",
+            "Remonter chaque mois les interventions majeures à la direction"
+          ]
+        },
+        {
+          "id": "proc-maint-12",
+          "number": 12,
+          "title": "COUPURE ÉLECTRIQUE SENELEC – BASCULEMENT D'URGENCE",
+          "objective": "Garantir la continuité de l'alimentation électrique de l'hôtel en cas de coupure prolongée du fournisseur principal.",
+          "scope": "Techniciens maintenance, sécurité",
+          "responsible": "Chef maintenance",
+          "documents": "Fiche de log groupe, fiche événement PMS",
+          "frequency": "À chaque coupure significative",
+          "steps": [
+            "Surveiller le signalement automatique ou appel réception",
+            "Vérifier si le groupe a pris le relais automatiquement",
+            "Si échec automatique : basculer manuellement depuis le local technique",
+            "Surveiller les équipements critiques (ascenseur, cuisine, clim principale)",
+            "Informer la direction et mettre à jour la fiche événement",
+            "Remettre le courant SENELEC dès retour stable et arrêt progressif du groupe"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dept-commercial",
+      "name": "DÉPARTEMENT COMMERCIAL, VENTES & RÉSEAUX",
+      "order": 5,
+      "procedures": [
+        {
+          "id": "proc-com-1",
+          "number": 1,
+          "title": "TRAITEMENT DES DEMANDES DE RÉSERVATION DE GROUPES",
+          "objective": "Assurer un traitement rapide et professionnel des demandes de réservation de groupes.",
+          "scope": "Équipe commerciale, chef de réception",
+          "responsible": "Responsable commercial",
+          "documents": "Formulaire de demande, devis standard, contrat groupe",
+          "frequency": "À chaque demande reçue",
+          "steps": [
+            "Recevoir la demande par email, téléphone ou formulaire",
+            "Enregistrer la demande dans le registre commercial ou le CRM",
+            "Analyser les besoins",
+            "Vérifier la disponibilité avec la réception ou dans le PMS",
+            "Préparer et envoyer une proposition",
+            "Faire le suivi dans les 24 à 48h",
+            "Confirmer par écrit la réservation",
+            "Transmettre les informations à la réception et restauration"
+          ]
+        },
+        {
+          "id": "proc-com-2",
+          "number": 2,
+          "title": "ÉLABORATION ET VALIDATION D'UNE PROPOSITION COMMERCIALE",
+          "objective": "Proposer une offre claire, professionnelle et personnalisée à chaque prospect ou client B2B.",
+          "scope": "Responsable commercial, assistante commerciale",
+          "responsible": "Responsable commercial",
+          "documents": "Modèle d'offre tarifaire, catalogue services, CGV",
+          "frequency": "À chaque demande ou prospection",
+          "steps": [
+            "Utiliser le modèle standard",
+            "Insérer les tarifs négociés",
+            "Ajouter les services proposés",
+            "Appliquer les remises éventuelles",
+            "Vérifier cohérence des données",
+            "Soumettre pour validation",
+            "Envoyer au client"
+          ]
+        },
+        {
+          "id": "proc-com-3",
+          "number": 3,
+          "title": "NÉGOCIATION & CONTRACTUALISATION AVEC LES ENTREPRISES",
+          "objective": "Mettre en place des accords commerciaux fiables avec les entreprises ou organisations partenaires.",
+          "scope": "Responsable commercial, direction",
+          "responsible": "Responsable commercial",
+          "documents": "Contrat corporate, fiches clients, grille tarifaire B2B",
+          "frequency": "Ponctuel / Annuel",
+          "steps": [
+            "Identifier les besoins",
+            "Proposer un contrat cadre",
+            "Négocier les conditions",
+            "Rédiger le contrat",
+            "Faire signer",
+            "Archiver une copie",
+            "Mettre à jour dans le PMS/CRM"
+          ]
+        },
+        {
+          "id": "proc-com-4",
+          "number": 4,
+          "title": "SUIVI ET FIDÉLISATION DES CLIENTS B2B & AGENCES",
+          "objective": "Renforcer la relation commerciale et encourager la récurrence des réservations professionnelles.",
+          "scope": "Responsable commercial, assistante commerciale",
+          "responsible": "Responsable commercial",
+          "documents": "Historique client, CRM",
+          "frequency": "Mensuel / Après chaque prestation",
+          "steps": [
+            "Tenir à jour la base de clients",
+            "Analyser la fréquence de réservation",
+            "Contacter régulièrement les clients",
+            "Envoyer des offres ciblées",
+            "Recueillir le feedback",
+            "Proposer un renouvellement"
+          ]
+        },
+        {
+          "id": "proc-com-5",
+          "number": 5,
+          "title": "GESTION DES PLATEFORMES EN LIGNE (OTA, BOOKING, EXPEDIA...)",
+          "objective": "Assurer une gestion optimale de la visibilité et des ventes sur les plateformes en ligne.",
+          "scope": "Responsable commercial, réception",
+          "responsible": "Responsable commercial",
+          "documents": "Identifiants OTA, grille tarifaire",
+          "frequency": "Quotidien / Hebdo / Mensuel",
+          "steps": [
+            "Mettre à jour les tarifs",
+            "Vérifier la cohérence visuelle et textuelle",
+            "Promouvoir des offres",
+            "Analyser les performances",
+            "Répondre aux commentaires",
+            "Faire le point mensuel"
+          ]
+        },
+        {
+          "id": "proc-com-6",
+          "number": 6,
+          "title": "RÉPONSE AUX AVIS CLIENTS (TRIPADVISOR, GOOGLE, ETC.)",
+          "objective": "Protéger l'image de l'établissement et valoriser la relation client post-séjour.",
+          "scope": "Responsable commercial, direction",
+          "responsible": "Responsable commercial",
+          "documents": "Fiche avis client, réponses types",
+          "frequency": "Quotidien / Hebdomadaire",
+          "steps": [
+            "Consulter les nouveaux avis",
+            "Transmettre les critiques",
+            "Répondre sous 72h",
+            "Utiliser un ton personnalisé",
+            "Mettre en avant les points positifs",
+            "Valider les cas sensibles",
+            "Archiver les réponses"
+          ]
+        },
+        {
+          "id": "proc-com-7",
+          "number": 7,
+          "title": "REPORTING COMMERCIAL HEBDOMADAIRE / MENSUEL",
+          "objective": "Suivre les performances commerciales pour ajuster la stratégie de vente.",
+          "scope": "Responsable commercial",
+          "responsible": "Responsable commercial",
+          "documents": "Tableau de bord commercial, CRM",
+          "frequency": "Hebdomadaire / Mensuel",
+          "steps": [
+            "Compiler les données",
+            "Mesurer les taux de conversion",
+            "Comparer les canaux",
+            "Identifier les leads principaux",
+            "Proposer des actions",
+            "Envoyer le rapport",
+            "Archiver le rapport"
+          ]
+        },
+        {
+          "id": "proc-com-8",
+          "number": 8,
+          "title": "PARTICIPATION AUX SALONS & ÉVÉNEMENTS PROFESSIONNELS",
+          "objective": "Accroître la visibilité de l'hôtel et développer les relations B2B.",
+          "scope": "Direction commerciale",
+          "responsible": "Responsable commercial",
+          "documents": "Planning salons, plaquettes",
+          "frequency": "Ponctuel",
+          "steps": [
+            "Identifier les salons",
+            "Inscrire l'établissement",
+            "Préparer les supports",
+            "Briefer les représentants",
+            "Collecter les leads",
+            "Débriefer",
+            "Faire le suivi"
+          ]
+        },
+        {
+          "id": "proc-com-9",
+          "number": 9,
+          "title": "PROSPECTION COMMERCIALE ACTIVE",
+          "objective": "Développer la clientèle professionnelle en identifiant de nouveaux prospects.",
+          "scope": "Responsable commercial, assistant commercial",
+          "responsible": "Responsable commercial",
+          "documents": "Fichier prospection, script d'appel",
+          "frequency": "Hebdomadaire / Mensuel",
+          "steps": [
+            "Cibler des entreprises/ONG",
+            "Constituer une base de données",
+            "Envoyer un email",
+            "Faire un suivi téléphonique",
+            "Proposer un RDV",
+            "Documenter le suivi",
+            "Analyser les résultats"
+          ]
+        },
+        {
+          "id": "proc-com-10",
+          "number": 10,
+          "title": "CRÉATION D'OFFRES SPÉCIALES ET PACKAGES",
+          "objective": "Créer des offres attractives selon les périodes ou segments ciblés.",
+          "scope": "Direction commerciale",
+          "responsible": "Responsable commercial",
+          "documents": "Fiche d'offre, visuel promotionnel",
+          "frequency": "Trimestriel / Ponctuel",
+          "steps": [
+            "Identifier un besoin",
+            "Définir les conditions",
+            "Valider avec la direction",
+            "Créer le visuel",
+            "Diffuser",
+            "Informer la réception",
+            "Mesurer les résultats"
+          ]
+        },
+        {
+          "id": "proc-com-11",
+          "number": 11,
+          "title": "DÉVELOPPEMENT DE PARTENARIATS LOCAUX",
+          "objective": "Créer des synergies commerciales avec des partenaires locaux.",
+          "scope": "Direction commerciale",
+          "responsible": "Responsable commercial",
+          "documents": "Accords de partenariat",
+          "frequency": "Semestriel / Opportunité",
+          "steps": [
+            "Identifier les partenaires",
+            "Analyser la pertinence",
+            "Proposer un partenariat",
+            "Valider les conditions",
+            "Mettre en œuvre",
+            "Intégrer l'offre partenaire",
+            "Faire un bilan"
+          ]
+        },
+        {
+          "id": "proc-com-12",
+          "number": 12,
+          "title": "ANALYSE CONCURRENTIELLE TRIMESTRIELLE",
+          "objective": "Surveiller la concurrence pour ajuster la stratégie commerciale.",
+          "scope": "Responsable commercial, direction",
+          "responsible": "Responsable commercial",
+          "documents": "Tableau comparatif concurrence",
+          "frequency": "Trimestriel",
+          "steps": [
+            "Sélectionner les concurrents",
+            "Analyser leurs offres",
+            "Comparer leur visibilité",
+            "Repérer les nouveautés",
+            "Faire un rapport",
+            "Proposer des ajustements",
+            "Soumettre à la direction"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dept-achats",
+      "name": "DÉPARTEMENT ACHATS, ÉCONOMAT & APPROVISIONNEMENT",
+      "order": 6,
+      "procedures": [
+        {
+          "id": "proc-ach-1",
+          "number": 1,
+          "title": "DEMANDE D'ACHAT (BESOINS EXPRIMÉS PAR LES SERVICES)",
+          "objective": "Formaliser les besoins exprimés par les services utilisateurs.",
+          "scope": "Tous les chefs de service",
+          "responsible": "Responsable des achats",
+          "documents": "Formulaire de demande d'achat, registre de suivi",
+          "frequency": "Ponctuel",
+          "steps": [
+            "Remplir le formulaire de demande d'achat",
+            "Vérification par le responsable des achats",
+            "Validation budgétaire si nécessaire",
+            "Enregistrement dans le registre des achats"
+          ]
+        },
+        {
+          "id": "proc-ach-2",
+          "number": 2,
+          "title": "PASSATION DE COMMANDE FOURNISSEURS",
+          "objective": "Assurer une commande rigoureuse et conforme aux besoins.",
+          "scope": "Responsable achats, direction",
+          "responsible": "Responsable des achats",
+          "documents": "Devis, bon de commande",
+          "frequency": "Ponctuel",
+          "steps": [
+            "Collecte et comparaison de devis",
+            "Validation interne de la commande",
+            "Émission et envoi du bon de commande"
+          ]
+        },
+        {
+          "id": "proc-ach-3",
+          "number": 3,
+          "title": "RÉCEPTION ET CONTRÔLE DES LIVRAISONS",
+          "objective": "Vérifier la conformité des livraisons avec les commandes.",
+          "scope": "Magasinier, économat",
+          "responsible": "Magasinier",
+          "documents": "Bon de livraison, fiche de réception",
+          "frequency": "À chaque livraison",
+          "steps": [
+            "Réception des produits",
+            "Contrôle qualité et quantité",
+            "Mention des écarts et signature"
+          ]
+        },
+        {
+          "id": "proc-ach-4",
+          "number": 4,
+          "title": "MISE EN STOCK DES MARCHANDISES REÇUES",
+          "objective": "Assurer un rangement et un suivi rigoureux des produits.",
+          "scope": "Économe",
+          "responsible": "Économe",
+          "documents": "Registre ou logiciel de stock",
+          "frequency": "À chaque livraison",
+          "steps": [
+            "Rangement des produits",
+            "Étiquetage et mise à jour du stock",
+            "Application du principe FIFO"
+          ]
+        },
+        {
+          "id": "proc-ach-5",
+          "number": 5,
+          "title": "CRÉATION ET MISE À JOUR DE LA BASE FOURNISSEURS",
+          "objective": "Maintenir une base de fournisseurs fiable, complète et à jour.",
+          "scope": "Responsable des achats",
+          "responsible": "Responsable des achats",
+          "documents": "Fiche fournisseur, base de données Excel",
+          "frequency": "Ponctuel / Lors de tout nouveau fournisseur",
+          "steps": [
+            "Récolter les informations administratives du fournisseur : RC, NINEA, IFU, etc.",
+            "Créer une fiche fournisseur avec coordonnées et conditions commerciales",
+            "Valider le fournisseur après vérification avec la direction",
+            "Mettre à jour la base dès qu'un changement est signalé (adresse, contact, etc.)"
+          ]
+        },
+        {
+          "id": "proc-ach-6",
+          "number": 6,
+          "title": "REPORTING MENSUEL DES ACHATS ET CONSOMMATIONS",
+          "objective": "Suivre et analyser les volumes et coûts d'achats pour améliorer la gestion.",
+          "scope": "Responsable achats, économat",
+          "responsible": "Responsable des achats",
+          "documents": "Tableau Excel des achats et sorties",
+          "frequency": "Mensuel",
+          "steps": [
+            "Compiler les données d'achat et de consommation par service",
+            "Analyser les quantités achetées vs consommées",
+            "Repérer les hausses anormales, ruptures fréquentes ou doublons",
+            "Produire un rapport avec synthèse, graphiques et recommandations",
+            "Présenter à la direction lors de la réunion mensuelle"
+          ]
+        },
+        {
+          "id": "proc-ach-7",
+          "number": 7,
+          "title": "PROCÉDURE D'ACCÈS ET DE SÉCURITÉ À L'ÉCONOMAT",
+          "objective": "Limiter les accès et sécuriser les zones de stockage pour prévenir les pertes.",
+          "scope": "Tous les services",
+          "responsible": "Économe",
+          "documents": "Clé de l'économat, registre d'accès",
+          "frequency": "Quotidien",
+          "steps": [
+            "Limiter l'accès à l'économat aux personnes autorisées uniquement",
+            "Tenir un registre de passage en cas d'accès hors du personnel économe",
+            "Fermer à clé à chaque fin de journée",
+            "Signaler toute anomalie ou suspicion à la direction immédiatement"
+          ]
+        },
+        {
+          "id": "proc-ach-8",
+          "number": 8,
+          "title": "PROCÉDURE DE RETOUR FOURNISSEUR (PRODUITS NON CONFORMES)",
+          "objective": "Gérer efficacement les produits livrés défectueux ou erronés.",
+          "scope": "Magasinier, responsable achats",
+          "responsible": "Responsable des achats",
+          "documents": "Fiche retour, bon de livraison",
+          "frequency": "Ponctuel",
+          "steps": [
+            "Identifier le produit non conforme dès la livraison",
+            "Notifier immédiatement le fournisseur avec preuves (photo, BL)",
+            "Remplir une fiche de retour et obtenir accusé réception",
+            "Réintégrer la quantité au stock après échange ou mise à jour des pertes",
+            "Archiver le dossier de retour"
+          ]
+        },
+        {
+          "id": "proc-ach-9",
+          "number": 9,
+          "title": "PROCÉDURE DE GESTION DES RUPTURES DE STOCK",
+          "objective": "Assurer la disponibilité continue des produits essentiels.",
+          "scope": "Économe, responsable achats",
+          "responsible": "Économe",
+          "documents": "Liste des produits critiques, seuils de réapprovisionnement",
+          "frequency": "Ponctuel",
+          "steps": [
+            "Définir un seuil minimum de stock pour chaque produit stratégique",
+            "Mettre en place des alertes dès que le seuil est atteint",
+            "Lancer une commande prioritaire auprès du fournisseur",
+            "Informer le chef de service de la rupture et de la date estimée de retour",
+            "Consigner les ruptures dans un registre"
+          ]
+        },
+        {
+          "id": "proc-ach-10",
+          "number": 10,
+          "title": "DEMANDE D'APPROVISIONNEMENT ENTRE SERVICES (TRANSFERT INTERNE)",
+          "objective": "Organiser les transferts internes de produits entre services ou réserves.",
+          "scope": "Économe, chefs de service",
+          "responsible": "Économe",
+          "documents": "Fiche de transfert interne",
+          "frequency": "Ponctuel",
+          "steps": [
+            "Le service demandeur remplit une fiche de transfert",
+            "L'économe vérifie la disponibilité et prépare les articles",
+            "Le service bénéficiaire signe à la réception",
+            "Le transfert est enregistré dans le stock",
+            "Analyse mensuelle des transferts pour ajustement des dotations"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dept-it",
+      "name": "DÉPARTEMENT INFORMATIQUE / DIGITAL / PMS & APPLICATION",
+      "order": 7,
+      "procedures": [
+        {
+          "id": "proc-it-1",
+          "number": 1,
+          "title": "CRÉATION ET GESTION DES COMPTES UTILISATEURS",
+          "objective": "Assurer un accès sécurisé et adapté aux logiciels utilisés dans l'hôtel.",
+          "scope": "Tout nouvel employé ou collaborateur",
+          "responsible": "Responsable IT",
+          "documents": "Formulaire de création de compte, registre des accès",
+          "frequency": "Ponctuel",
+          "steps": [
+            "Réception de la demande de création ou modification de compte",
+            "Création du compte avec les droits associés au poste",
+            "Transmission des identifiants au supérieur hiérarchique",
+            "Mise à jour du registre des comptes",
+            "Désactivation du compte en cas de départ du salarié"
+          ]
+        },
+        {
+          "id": "proc-it-2",
+          "number": 2,
+          "title": "MAINTENANCE PRÉVENTIVE ET CURATIVE DU MATÉRIEL INFORMATIQUE",
+          "objective": "Garantir le bon fonctionnement des équipements IT.",
+          "scope": "Tous les équipements informatiques de l'hôtel",
+          "responsible": "Responsable IT",
+          "documents": "Registre de maintenance, fiche d'intervention",
+          "frequency": "Hebdomadaire / Ponctuel",
+          "steps": [
+            "Planification mensuelle de vérification des équipements",
+            "Nettoyage, mises à jour, contrôle des performances",
+            "Réparation ou remplacement en cas de panne",
+            "Tenue d'un registre de toutes les interventions techniques"
+          ]
+        },
+        {
+          "id": "proc-it-3",
+          "number": 3,
+          "title": "PROCÉDURE DE SAUVEGARDE DES DONNÉES SENSIBLES",
+          "objective": "Protéger les données critiques de l'hôtel contre toute perte.",
+          "scope": "Serveurs, fichiers partagés, bases PMS",
+          "responsible": "Responsable IT",
+          "documents": "Script de sauvegarde, disque dur externe ou cloud",
+          "frequency": "Hebdomadaire",
+          "steps": [
+            "Identifier les répertoires à sauvegarder",
+            "Automatiser les sauvegardes selon un calendrier fixe",
+            "Vérifier la réussite des sauvegardes",
+            "Stocker les sauvegardes hors site ou dans un emplacement sécurisé"
+          ]
+        },
+        {
+          "id": "proc-it-4",
+          "number": 4,
+          "title": "GESTION DES ACCÈS ET SÉCURITÉ INFORMATIQUE",
+          "objective": "Sécuriser les postes de travail et accès aux logiciels.",
+          "scope": "Tous les employés utilisant un poste informatique",
+          "responsible": "Responsable IT",
+          "documents": "Politique de mot de passe, registre des accès",
+          "frequency": "Ponctuel / À l'arrivée",
+          "steps": [
+            "Définir les droits d'accès par poste (lecture, écriture, administration)",
+            "Forcer le changement de mot de passe tous les 3 mois",
+            "Interdire le partage d'identifiants",
+            "Surveiller les connexions suspectes et bloquer si besoin"
+          ]
+        },
+        {
+          "id": "proc-it-5",
+          "number": 5,
+          "title": "SUIVI DES INCIDENTS INFORMATIQUES",
+          "objective": "Centraliser, prioriser et traiter efficacement les incidents.",
+          "scope": "Tous les services",
+          "responsible": "Responsable IT",
+          "documents": "Registre ou ticketing Excel",
+          "frequency": "Dès qu'un incident est signalé",
+          "steps": [
+            "Recueillir la demande via formulaire ou mail",
+            "Classer selon le niveau de priorité (bloquant, gênant, mineur)",
+            "Assigner un délai de résolution",
+            "Clôturer avec retour au demandeur",
+            "Analyser les incidents récurrents pour plan d'action"
+          ]
+        },
+        {
+          "id": "proc-it-6",
+          "number": 6,
+          "title": "PLAN DE CONTINUITÉ EN CAS DE PANNE DU PMS / RÉSEAU / ÉLECTRICITÉ",
+          "objective": "Assurer la continuité minimale des opérations en cas de panne majeure.",
+          "scope": "Réception, comptabilité, direction",
+          "responsible": "Responsable IT / Chef de Réception",
+          "documents": "Formulaire de check-in papier, générateur, onduleurs",
+          "frequency": "En cas de panne",
+          "steps": [
+            "Basculer sur les outils papier (fiche check-in manuelle, ticket de caisse)",
+            "Allumer les groupes électrogènes / onduleurs si nécessaires",
+            "Informer la direction immédiatement",
+            "Tenir à jour manuellement les ventes ou entrées pendant la panne",
+            "Réintégrer les données manuelles dans le PMS dès le retour à la normale"
+          ]
+        },
+        {
+          "id": "proc-it-7",
+          "number": 7,
+          "title": "CONTRÔLE RÉGULIER DE LA QUALITÉ DU RÉSEAU WI-FI",
+          "objective": "Assurer un Wi-Fi stable et performant pour les clients et le staff.",
+          "scope": "Infrastructure réseau",
+          "responsible": "Responsable IT",
+          "documents": "Application de test de débit, plan de couverture Wi-Fi",
+          "frequency": "Mensuel",
+          "steps": [
+            "Effectuer des tests de débit dans chaque zone (réception, chambres, restaurant…)",
+            "Identifier les zones mortes ou trop lentes",
+            "Repositionner ou ajouter des bornes Wi-Fi si nécessaire",
+            "Créer un ticket auprès de l'opérateur si la ligne est en cause"
+          ]
+        },
+        {
+          "id": "proc-it-8",
+          "number": 8,
+          "title": "DÉPLOIEMENT OU RETRAIT DE MATÉRIEL IT",
+          "objective": "Gérer l'installation, affectation et retrait des matériels digitaux.",
+          "scope": "PC, imprimantes, caisses, téléphones, TV connectées…",
+          "responsible": "Responsable IT",
+          "documents": "Fiche d'affectation ou sortie, registre d'inventaire",
+          "frequency": "Ponctuel",
+          "steps": [
+            "Réception du nouveau matériel",
+            "Configuration et test avant mise en service",
+            "Affectation à un utilisateur ou à un poste fixe",
+            "Mise à jour du registre de parc informatique",
+            "Récupération, effacement des données et réaffectation ou mise au rebut à la sortie"
+          ]
+        },
+        {
+          "id": "proc-it-9",
+          "number": 9,
+          "title": "SUIVI DES DROITS D'ACCÈS AU PMS SELON LES POSTES",
+          "objective": "Limiter les accès PMS en fonction du niveau hiérarchique.",
+          "scope": "Tout le personnel utilisant le PMS",
+          "responsible": "Responsable IT / Chef de réception",
+          "documents": "Grille des accès PMS",
+          "frequency": "À chaque création ou départ de salarié",
+          "steps": [
+            "Définir les rôles PMS : Réceptionniste, Chef de réception, Directeur, Comptabilité, etc.",
+            "Attribuer les droits en fonction de la fonction (lecture seule, modification, export…)",
+            "Mettre à jour les droits en cas de changement de poste",
+            "Supprimer immédiatement les accès lors du départ d'un salarié"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dept-compta",
+      "name": "DÉPARTEMENT COMPTABILITÉ",
+      "order": 8,
+      "procedures": [
+        {
+          "id": "proc-cpt-1",
+          "number": 1,
+          "title": "SAISIE DES PIÈCES COMPTABLES",
+          "objective": "Assurer l'enregistrement fiable des écritures comptables.",
+          "scope": "Comptable",
+          "responsible": "Chef comptable",
+          "documents": "Factures, reçus, notes de frais",
+          "frequency": "Quotidien",
+          "steps": [
+            "Collecte des pièces justificatives",
+            "Codification et saisie dans le logiciel comptable",
+            "Classement numérique et physique",
+            "Contrôle de cohérence avant validation"
+          ]
+        },
+        {
+          "id": "proc-cpt-2",
+          "number": 2,
+          "title": "RAPPROCHEMENT CAISSE ET JOURNAL",
+          "objective": "Vérifier la concordance entre la caisse physique et les écritures.",
+          "scope": "Comptable",
+          "responsible": "Chef comptable",
+          "documents": "Journal de caisse, bordereaux de remise",
+          "frequency": "Quotidien",
+          "steps": [
+            "Vérification du solde en caisse",
+            "Contrôle des justificatifs par rapport aux entrées/sorties",
+            "Correction des écarts si nécessaire",
+            "Signature et validation du journal"
+          ]
+        },
+        {
+          "id": "proc-cpt-3",
+          "number": 3,
+          "title": "SUIVI DES ENCAISSEMENTS CLIENTS",
+          "objective": "Assurer la bonne réception des paiements et relancer les impayés.",
+          "scope": "Comptable",
+          "responsible": "Chef comptable",
+          "documents": "Factures clients, relevés, relances",
+          "frequency": "Hebdomadaire",
+          "steps": [
+            "Contrôle des paiements reçus (virement, espèce, mobile money)",
+            "Lettrage des factures dans le logiciel",
+            "Relance des clients débiteurs",
+            "Archivage des échanges"
+          ]
+        },
+        {
+          "id": "proc-cpt-4",
+          "number": 4,
+          "title": "PAIEMENT FOURNISSEURS",
+          "objective": "Effectuer les règlements fournisseurs dans les délais contractuels.",
+          "scope": "Comptable",
+          "responsible": "Chef comptable",
+          "documents": "Factures, bons de commande, état de règlement",
+          "frequency": "Hebdomadaire",
+          "steps": [
+            "Réception et vérification des factures",
+            "Approbation par les services concernés",
+            "Émission de l'ordre de paiement",
+            "Archivage du justificatif"
+          ]
+        },
+        {
+          "id": "proc-cpt-5",
+          "number": 5,
+          "title": "RAPPROCHEMENT BANCAIRE",
+          "objective": "Assurer la concordance entre le relevé bancaire et les écritures comptables.",
+          "scope": "Comptable",
+          "responsible": "Chef comptable",
+          "documents": "Relevé bancaire, journal banque",
+          "frequency": "Mensuel",
+          "steps": [
+            "Téléchargement du relevé",
+            "Comparaison ligne par ligne avec le journal",
+            "Justification des écarts",
+            "Archivage des pièces correspondantes"
+          ]
+        },
+        {
+          "id": "proc-cpt-6",
+          "number": 6,
+          "title": "CLÔTURE MENSUELLE ET BILAN PROVISOIRE",
+          "objective": "Établir un état financier provisoire fiable.",
+          "scope": "Comptable",
+          "responsible": "Chef comptable",
+          "documents": "Balance, état charges/produits",
+          "frequency": "Mensuel",
+          "steps": [
+            "Lettrage des comptes",
+            "Analyse des variations",
+            "Préparation des états (résultat, charges, dettes)",
+            "Révision avec la direction"
+          ]
+        },
+        {
+          "id": "proc-cpt-7",
+          "number": 7,
+          "title": "DÉCLARATION FISCALE ET SOCIALE",
+          "objective": "Remplir les obligations légales de déclaration.",
+          "scope": "Comptable",
+          "responsible": "Chef comptable",
+          "documents": "TVA, CSS, IPRES, DGID",
+          "frequency": "Mensuel / Trimestriel",
+          "steps": [
+            "Préparation des déclarations (IPM, CSS, Impôt)",
+            "Vérification et signature",
+            "Paiement et dépôt selon échéance",
+            "Archivage des accusés réception"
+          ]
+        },
+        {
+          "id": "proc-cpt-8",
+          "number": 8,
+          "title": "GESTION DES AVANCES ET REMBOURSEMENTS",
+          "objective": "Suivre et rembourser les frais avancés par les salariés.",
+          "scope": "Comptable",
+          "responsible": "Chef comptable",
+          "documents": "Note de frais, fiche remboursement",
+          "frequency": "Hebdomadaire",
+          "steps": [
+            "Réception des notes de frais",
+            "Vérification des justificatifs",
+            "Validation par la hiérarchie",
+            "Paiement et archivage"
+          ]
+        },
+        {
+          "id": "proc-cpt-9",
+          "number": 9,
+          "title": "SUIVI DES IMMOBILISATIONS",
+          "objective": "Contrôler l'état et la valeur des biens de l'établissement.",
+          "scope": "Comptable",
+          "responsible": "Chef comptable",
+          "documents": "Tableau d'amortissement, inventaire",
+          "frequency": "Trimestriel / Annuel",
+          "steps": [
+            "Recenser toutes les immobilisations achetées avec pièces justificatives",
+            "Attribuer un numéro d'inventaire unique à chaque bien",
+            "Tenir un tableau d'amortissement actualisé",
+            "Organiser un contrôle physique annuel avec l'économat ou technique",
+            "Sortir du patrimoine les biens cédés ou mis au rebut"
+          ]
+        },
+        {
+          "id": "proc-cpt-10",
+          "number": 10,
+          "title": "TRAITEMENT DES ÉCARTS DE CAISSE",
+          "objective": "Justifier toute différence entre caisse réelle et théorique.",
+          "scope": "Comptable",
+          "responsible": "Chef comptable",
+          "documents": "Fiche d'écart, rapport incident",
+          "frequency": "Ponctuel",
+          "steps": [
+            "Constater l'écart entre les ventes et la caisse physique",
+            "Remplir une fiche d'écart avec explication du caissier",
+            "Faire signer la fiche par le chef de service",
+            "Analyser la récurrence et déclencher sanction si nécessaire",
+            "Transmettre à la direction et archiver dans le dossier mensuel"
+          ]
+        },
+        {
+          "id": "proc-cpt-11",
+          "number": 11,
+          "title": "RÉVISION COMPTABLE PÉRIODIQUE",
+          "objective": "Assurer la fiabilité des comptes avant chaque clôture mensuelle.",
+          "scope": "Comptabilité",
+          "responsible": "Chef comptable",
+          "documents": "Balance des comptes, relevés bancaires, journaux",
+          "frequency": "Mensuel",
+          "steps": [
+            "Analyser les soldes anormaux ou inactifs",
+            "Lettrer les comptes clients et fournisseurs",
+            "Vérifier les écritures en attente ou non affectées",
+            "Produire une note de révision avec anomalies relevées",
+            "Corriger les erreurs avant la clôture définitive"
+          ]
+        },
+        {
+          "id": "proc-cpt-12",
+          "number": 12,
+          "title": "ANALYSE DE LA RENTABILITÉ MENSUELLE",
+          "objective": "Mesurer les performances de l'hôtel et optimiser les décisions.",
+          "scope": "Comptabilité, direction générale",
+          "responsible": "Chef comptable",
+          "documents": "Tableau comparatif CA / charges, outil Excel ou logiciel comptable",
+          "frequency": "Mensuel",
+          "steps": [
+            "Rassembler les chiffres d'affaires et charges du mois par département",
+            "Calculer le Résultat Brut d'Exploitation (RBE)",
+            "Comparer avec le mois précédent et l'année antérieure",
+            "Identifier les écarts et proposer des recommandations",
+            "Présenter le rapport au directeur général"
+          ]
+        },
+        {
+          "id": "proc-cpt-13",
+          "number": 13,
+          "title": "GESTION COMPTABLE DES ACOMPTES CLIENTS ET GROUPES",
+          "objective": "Assurer la traçabilité et la bonne imputation des acomptes reçus.",
+          "scope": "Réception, comptabilité",
+          "responsible": "Comptable clients",
+          "documents": "Journal des acomptes, extrait de compte client",
+          "frequency": "À chaque réception d'acompte",
+          "steps": [
+            "Enregistrer l'acompte dans le compte client concerné",
+            "Générer un reçu d'acompte signé par le client",
+            "Ventiler l'acompte sur les factures finales à l'issue du séjour",
+            "Faire figurer l'acompte sur les états de créances",
+            "Régulariser les écarts si le séjour est annulé ou modifié"
+          ]
+        },
+        {
+          "id": "proc-cpt-14",
+          "number": 14,
+          "title": "CONTRÔLE ET JUSTIFICATION DES COMPTES TIERS",
+          "objective": "S'assurer que tous les comptes clients, fournisseurs et salariés sont justifiés.",
+          "scope": "Comptabilité",
+          "responsible": "Chef comptable",
+          "documents": "Balance âgée, fiches de lettrage",
+          "frequency": "Mensuel / Trimestriel",
+          "steps": [
+            "Éditer la balance âgée des tiers",
+            "Lettrer tous les comptes avec justificatifs à l'appui",
+            "Relancer les clients débiteurs ou clarifier les avances fournisseurs",
+            "Préparer les états justificatifs pour audit éventuel",
+            "Corriger ou réaffecter les soldes litigieux"
+          ]
+        },
+        {
+          "id": "proc-cpt-15",
+          "number": 15,
+          "title": "CLÔTURE ANNUELLE DES COMPTES",
+          "objective": "Préparer la situation comptable pour l'exercice annuel.",
+          "scope": "Comptabilité, direction",
+          "responsible": "Chef comptable et expert-comptable",
+          "documents": "Balance générale, fichier amortissements, état des dettes",
+          "frequency": "Annuel",
+          "steps": [
+            "Finaliser les écritures de régularisation et d'inventaire",
+            "Produire une balance générale arrêtée au 31/12",
+            "Faire le point sur toutes les immobilisations et provisions",
+            "Transmettre le dossier complet à l'expert-comptable",
+            "Effectuer la déclaration fiscale annuelle et valider les états financiers"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dept-rh",
+      "name": "DÉPARTEMENT RESSOURCES HUMAINES",
+      "order": 9,
+      "procedures": [
+        {
+          "id": "proc-rh-1",
+          "number": 1,
+          "title": "RECRUTEMENT",
+          "objective": "Organiser un processus de recrutement transparent et structuré.",
+          "scope": "Tous les départements",
+          "responsible": "DRH",
+          "documents": "Fiche de poste, grille d'entretien, contrat",
+          "frequency": "Ponctuel",
+          "steps": [
+            "Identification du besoin par le chef de service",
+            "Validation par la direction",
+            "Diffusion de l'offre d'emploi",
+            "Organisation des entretiens",
+            "Choix et contractualisation avec le candidat retenu"
+          ]
+        },
+        {
+          "id": "proc-rh-2",
+          "number": 2,
+          "title": "INTÉGRATION / ACCUEIL DU NOUVEAU SALARIÉ",
+          "objective": "Faciliter l'arrivée du salarié dans l'entreprise.",
+          "scope": "Tout nouveau salarié",
+          "responsible": "DRH",
+          "documents": "Check-list d'accueil, livret d'accueil",
+          "frequency": "Ponctuel",
+          "steps": [
+            "Préparer les documents RH et matériel nécessaire",
+            "Faire une visite des locaux",
+            "Présentation aux équipes et signature des documents RH",
+            "Formation aux outils et procédures de base",
+            "Affectation du tuteur ou référent d'intégration"
+          ]
+        },
+        {
+          "id": "proc-rh-3",
+          "number": 3,
+          "title": "GESTION DES CONTRATS ET AVENANTS",
+          "objective": "Formaliser et mettre à jour les relations de travail.",
+          "scope": "Salariés",
+          "responsible": "DRH",
+          "documents": "Contrat de travail, avenant signé",
+          "frequency": "À chaque modification",
+          "steps": [
+            "Rédiger le contrat ou avenant",
+            "Faire signer les deux parties",
+            "Archiver dans le dossier du salarié",
+            "Mettre à jour le système RH / PMS"
+          ]
+        },
+        {
+          "id": "proc-rh-4",
+          "number": 4,
+          "title": "SUIVI DES ABSENCES, RETARDS ET CONGÉS",
+          "objective": "Assurer un suivi fiable des temps de présence.",
+          "scope": "Tout le personnel",
+          "responsible": "DRH",
+          "documents": "Fiches de congés, planning, feuille d'émargement",
+          "frequency": "Quotidien",
+          "steps": [
+            "Collecter les demandes d'absence/congé",
+            "Faire valider par le chef de service et la DRH",
+            "Mettre à jour le planning",
+            "Notifier le personnel en retour",
+            "Archiver la demande signée"
+          ]
+        },
+        {
+          "id": "proc-rh-5",
+          "number": 5,
+          "title": "SORTIE DE PERSONNEL",
+          "objective": "Encadrer le départ d'un salarié dans les règles.",
+          "scope": "Tout salarié en fin de contrat ou partant",
+          "responsible": "DRH",
+          "documents": "Lettre de départ, solde de tout compte",
+          "frequency": "Ponctuel",
+          "steps": [
+            "Réception de la lettre ou décision",
+            "Organisation de l'entretien de sortie",
+            "Remise du solde de tout compte et documents légaux",
+            "Désactivation des accès et retrait du matériel",
+            "Archivage du dossier"
+          ]
+        },
+        {
+          "id": "proc-rh-6",
+          "number": 6,
+          "title": "GESTION DES DOSSIERS DU PERSONNEL",
+          "objective": "Centraliser et sécuriser les documents RH.",
+          "scope": "Tous les salariés",
+          "responsible": "DRH",
+          "documents": "Dossier papier et numérique",
+          "frequency": "À l'embauche / MAJ régulière",
+          "steps": [
+            "Créer un dossier individuel pour chaque salarié",
+            "Y insérer contrats, pièces d'identité, fiches de paie, formations, etc.",
+            "Assurer une double sauvegarde (papier + digital)",
+            "Limiter l'accès aux personnes autorisées",
+            "Purger selon la politique de conservation"
+          ]
+        },
+        {
+          "id": "proc-rh-7",
+          "number": 7,
+          "title": "GESTION DES CONFLITS INTERNES",
+          "objective": "Canaliser les tensions par une médiation encadrée.",
+          "scope": "Tout le personnel",
+          "responsible": "DRH",
+          "documents": "Fiche d'incident, rapport RH",
+          "frequency": "Ponctuel",
+          "steps": [
+            "Recevoir la plainte ou l'alerte",
+            "Organiser une médiation avec les parties concernées",
+            "Rédiger un compte-rendu de l'entretien",
+            "Proposer une solution ou mesure corrective",
+            "Faire un suivi dans le temps si nécessaire"
+          ]
+        },
+        {
+          "id": "proc-rh-8",
+          "number": 8,
+          "title": "SUIVI DES VISITES MÉDICALES",
+          "objective": "Assurer le respect des obligations médicales légales.",
+          "scope": "Tout le personnel",
+          "responsible": "DRH",
+          "documents": "Convocations, certificats, registre médecine",
+          "frequency": "À l'embauche / Périodique",
+          "steps": [
+            "Planifier les visites (embauche, périodique, reprise)",
+            "Envoyer les convocations",
+            "Recevoir et archiver les certificats",
+            "Relancer les absents",
+            "Mettre à jour le registre"
+          ]
+        },
+        {
+          "id": "proc-rh-9",
+          "number": 9,
+          "title": "GESTION DES HEURES SUPPLÉMENTAIRES",
+          "objective": "Encadrer la réalisation et le paiement des heures sup.",
+          "scope": "Personnel éligible",
+          "responsible": "Chef de service + DRH",
+          "documents": "Planning, fiche d'heures sup",
+          "frequency": "Hebdomadaire / Mensuel",
+          "steps": [
+            "Demande préalable du chef de service",
+            "Validation écrite par la DRH ou direction",
+            "Enregistrement des heures réalisées",
+            "Paiement ou récupération selon la politique RH",
+            "Contrôle en fin de mois"
+          ]
+        },
+        {
+          "id": "proc-rh-10",
+          "number": 10,
+          "title": "ÉVALUATION DE LA PÉRIODE D'ESSAI",
+          "objective": "Décider du maintien ou non à l'issue de la période d'essai.",
+          "scope": "Nouveaux salariés",
+          "responsible": "Chef de service + DRH",
+          "documents": "Fiche d'évaluation",
+          "frequency": "À la fin de la période d'essai",
+          "steps": [
+            "Préparer la grille d'évaluation",
+            "Faire une évaluation croisée entre le chef et la DRH",
+            "Décider du maintien, prolongation ou rupture",
+            "Formaliser par courrier",
+            "Archiver avec signature des parties"
+          ]
+        },
+        {
+          "id": "proc-rh-11",
+          "number": 11,
+          "title": "ACCUEIL ET GESTION DES STAGIAIRES",
+          "objective": "Encadrer la venue, le suivi et la sortie des stagiaires.",
+          "scope": "Stagiaires conventionnés",
+          "responsible": "DRH",
+          "documents": "Convention, fiche de présence, évaluation",
+          "frequency": "Ponctuel",
+          "steps": [
+            "Signature de la convention",
+            "Désignation d'un tuteur",
+            "Suivi régulier (planning, assiduité, missions)",
+            "Évaluation finale par le tuteur",
+            "Remise d'attestation"
+          ]
+        }
+      ]
+    }
+  ]
+}
