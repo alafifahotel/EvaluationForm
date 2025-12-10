@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastModified": "2025-12-10T16:32:09.152Z",
+  "lastModified": "2025-12-10T16:53:24.130Z",
   "structure": {
     "id": "direction",
     "title": "Direction Générale",
@@ -12,7 +12,7 @@
       {
         "id": "hebergement",
         "title": "Département Hébergement",
-        "position": "Responsable Hébergement",
+        "position": "Responsable Hébergementttt",
         "employees": [
           "Youmna Jaber"
         ],
