@@ -1,11 +1,12 @@
 import { useState } from 'react'
-import { ChevronDown, Plus, Trash2, X, Check, UserPlus, Users } from 'lucide-react'
+import { ChevronDown, Plus, Trash2, X, Check, UserPlus, Users, Pencil } from 'lucide-react'
 import { useOrgChart } from '../../contexts/OrgChartContext'
 import AddPositionModal from './AddPositionModal'
+import EditPositionModal from './EditPositionModal'
 import { getDepartmentColor, findDepartmentId, getAllDepartmentIds } from '../../data/departmentColors'
 
 function OrgNode({ node, isEditMode, isRoot = false, level = 0, departmentId = null }) {
-  const { addEmployee, removeEmployee, updateEmployee, addPosition, removePosition, structure } = useOrgChart()
+  const { addEmployee, removeEmployee, updateEmployee, addPosition, removePosition, updateNode, structure } = useOrgChart()
 
   const [isExpanded, setIsExpanded] = useState(true)
   const [editingEmployeeIndex, setEditingEmployeeIndex] = useState(null)
@@ -13,6 +14,7 @@ function OrgNode({ node, isEditMode, isRoot = false, level = 0, departmentId = n
   const [isAddingEmployee, setIsAddingEmployee] = useState(false)
   const [newEmployeeName, setNewEmployeeName] = useState('')
   const [showAddPositionModal, setShowAddPositionModal] = useState(false)
+  const [showEditPositionModal, setShowEditPositionModal] = useState(false)
 
   const hasChildren = node.children && node.children.length > 0
 
@@ -156,6 +158,11 @@ function OrgNode({ node, isEditMode, isRoot = false, level = 0, departmentId = n
     }
   }
 
+  const handleEditPosition = (position, title) => {
+    updateNode(node.id, { position, title: title || undefined })
+    setShowEditPositionModal(false)
+  }
+
   return (
     <div className={`${level > 0 ? 'ml-4 sm:ml-6' : ''}`}>
       {/* Node Card */}
@@ -216,15 +223,24 @@ function OrgNode({ node, isEditMode, isRoot = false, level = 0, departmentId = n
             </div>
           )}
 
-          {/* Delete Position Button (not for root) */}
+          {/* Edit & Delete Position Buttons (not for root) */}
           {isEditMode && !isRoot && (
-            <button
-              onClick={handleRemovePosition}
-              className="flex-shrink-0 w-6 h-6 flex items-center justify-center text-red-500 hover:bg-red-50 rounded transition-colors"
-              title="Supprimer ce poste"
-            >
-              <Trash2 className="w-4 h-4" />
-            </button>
+            <>
+              <button
+                onClick={() => setShowEditPositionModal(true)}
+                className="flex-shrink-0 w-6 h-6 flex items-center justify-center text-blue-500 hover:bg-blue-50 rounded transition-colors"
+                title="Modifier ce poste"
+              >
+                <Pencil className="w-4 h-4" />
+              </button>
+              <button
+                onClick={handleRemovePosition}
+                className="flex-shrink-0 w-6 h-6 flex items-center justify-center text-red-500 hover:bg-red-50 rounded transition-colors"
+                title="Supprimer ce poste"
+              >
+                <Trash2 className="w-4 h-4" />
+              </button>
+            </>
           )}
         </div>
 
@@ -369,6 +385,15 @@ function OrgNode({ node, isEditMode, isRoot = false, level = 0, departmentId = n
         onClose={() => setShowAddPositionModal(false)}
         onAdd={handleAddPosition}
         parentPosition={node.position}
+      />
+
+      {/* Edit Position Modal */}
+      <EditPositionModal
+        isOpen={showEditPositionModal}
+        onClose={() => setShowEditPositionModal(false)}
+        onSave={handleEditPosition}
+        currentPosition={node.position}
+        currentTitle={node.title}
       />
     </div>
   )
