@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastModified": "2025-12-10T17:04:03.588Z",
+  "lastModified": "2025-12-10T17:04:14.420Z",
   "structure": {
     "id": "direction",
     "title": "Direction Générale",
@@ -19,7 +19,7 @@
         "children": [
           {
             "id": "reception",
-            "title": "Réception",
+            "title": "Service Réception",
             "position": "Chef de Réception",
             "employees": [
               "Abdoulaye Samb"
