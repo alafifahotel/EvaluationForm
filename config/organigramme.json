@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastModified": "2025-12-10T17:05:05.511Z",
+  "lastModified": "2025-12-10T17:05:18.242Z",
   "structure": {
     "id": "direction",
     "title": "Direction Générale",
@@ -113,7 +113,7 @@
       },
       {
         "id": "restauration",
-        "title": "Service Restauration & Bar",
+        "title": "Département Restauration & Bar",
         "position": "Responsable Restauration",
         "employees": [
           "Yoba Mballo"
