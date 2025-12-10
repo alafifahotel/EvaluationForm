@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastModified": "2025-12-10T17:04:57.085Z",
+  "lastModified": "2025-12-10T17:05:05.511Z",
   "structure": {
     "id": "direction",
     "title": "Direction Générale",
@@ -121,7 +121,7 @@
         "children": [
           {
             "id": "rang",
-            "title": "Service de Salle",
+            "title": "Service Salle",
             "position": "Chef de rang",
             "employees": [
               "Frederic Tendeng",
