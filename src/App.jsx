@@ -4,12 +4,14 @@ import PreviewA4 from './components/PreviewA4'
 import HistoryTab from './components/HistoryTab'
 import ParametresTab from './components/ParametresTab'
 import OrganigrammeTab from './components/OrganigrammeTab'
+import ProceduresTab from './components/ProceduresTab'
 import TokenModal from './components/TokenModal'
 import CustomDropdown from './components/CustomDropdown'
-import { FileEdit, History, Edit, Users, UserCheck, Briefcase, Settings, Network } from 'lucide-react'
+import { FileEdit, History, Edit, Users, UserCheck, Briefcase, Settings, Network, Book } from 'lucide-react'
 import { ToastProvider, useToast } from './contexts/ToastContext'
 import { CriteriaProvider, useCriteria } from './contexts/CriteriaContext'
 import { OrgChartProvider } from './contexts/OrgChartContext'
+import { ProceduresProvider } from './contexts/ProceduresContext'
 
 function AppContent({ githubToken, onTokenChange }) {
   const toast = useToast()
@@ -22,6 +24,7 @@ function AppContent({ githubToken, onTokenChange }) {
     if (hash === 'history') return 'history'
     if (hash === 'parametres') return 'parametres'
     if (hash === 'organigramme') return 'organigramme'
+    if (hash === 'procedures') return 'procedures'
     return 'evaluation'
   }
 
@@ -45,6 +48,7 @@ function AppContent({ githubToken, onTokenChange }) {
       if (hash === 'history') setActiveTab('history')
       else if (hash === 'parametres') setActiveTab('parametres')
       else if (hash === 'organigramme') setActiveTab('organigramme')
+      else if (hash === 'procedures') setActiveTab('procedures')
       else setActiveTab('evaluation')
     }
 
@@ -169,9 +173,10 @@ function AppContent({ githubToken, onTokenChange }) {
               { value: 'evaluation', label: 'Nouvelle Évaluation' },
               { value: 'history', label: 'Historique' },
               { value: 'organigramme', label: 'Organigramme' },
+              { value: 'procedures', label: 'Procédures' },
               { value: 'parametres', label: 'Paramètres' }
             ]}
-            icon={activeTab === 'evaluation' ? FileEdit : activeTab === 'history' ? History : activeTab === 'organigramme' ? Network : Settings}
+            icon={activeTab === 'evaluation' ? FileEdit : activeTab === 'history' ? History : activeTab === 'organigramme' ? Network : activeTab === 'procedures' ? Book : Settings}
           />
         </div>
 
@@ -209,6 +214,17 @@ function AppContent({ githubToken, onTokenChange }) {
           >
             <Network className="mr-2 h-4 w-4" />
             Organigramme
+          </button>
+          <button
+            onClick={() => setActiveTab('procedures')}
+            className={`flex items-center px-6 py-3 font-medium transition-all duration-200 rounded-t-lg ${
+              activeTab === 'procedures'
+                ? 'bg-white text-hotel-gold shadow-[0_-2px_6px_rgba(0,0,0,0.1)]'
+                : 'bg-gray-200 text-gray-600 hover:text-gray-800 hover:bg-gray-300'
+            }`}
+          >
+            <Book className="mr-2 h-4 w-4" />
+            Procédures
           </button>
           <button
             onClick={() => setActiveTab('parametres')}
@@ -336,6 +352,8 @@ function AppContent({ githubToken, onTokenChange }) {
           />
         ) : activeTab === 'organigramme' ? (
           <OrganigrammeTab githubToken={githubToken} />
+        ) : activeTab === 'procedures' ? (
+          <ProceduresTab githubToken={githubToken} />
         ) : (
           <ParametresTab githubToken={githubToken} />
         )}
@@ -353,7 +371,9 @@ function App() {
     <ToastProvider>
       <CriteriaProvider githubToken={githubToken}>
         <OrgChartProvider githubToken={githubToken}>
-          <AppContent githubToken={githubToken} onTokenChange={setGithubToken} />
+          <ProceduresProvider githubToken={githubToken}>
+            <AppContent githubToken={githubToken} onTokenChange={setGithubToken} />
+          </ProceduresProvider>
         </OrgChartProvider>
       </CriteriaProvider>
     </ToastProvider>
