@@ -27,8 +27,8 @@ function OrgNode({ node, isEditMode, isRoot = false, level = 0, departmentId = n
   // Drag and drop setup
   // Nodes can be dragged if they're not root and we're in edit mode
   const canDrag = isEditMode && !isRoot
-  // Nodes can be drop targets if they're departments (level 1) or nodes with children potential
-  const canDrop = isEditMode && !isRoot
+  // Nodes can be drop targets - including root (to create new departments)
+  const canDrop = isEditMode
 
   // useDraggable hook for making nodes draggable
   const {

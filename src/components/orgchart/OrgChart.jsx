@@ -73,9 +73,6 @@ function OrgChart({ node, isEditMode }) {
     // Don't move if dropping on the same parent
     if (currentParentId === newParentId) return
 
-    // Don't allow dropping on the root node
-    if (newParentId === node.id) return
-
     // Move the node to the new parent
     moveService(active.id, newParentId)
   }
