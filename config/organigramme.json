@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastModified": "2025-12-15T09:21:22.266Z",
+  "lastModified": "2025-12-15T09:21:35.120Z",
   "structure": {
     "id": "direction",
     "title": "Direction Générale",
@@ -238,7 +238,7 @@
       },
       {
         "id": "maintenance",
-        "title": "Maintenance / Technique",
+        "title": "Service Maintenance / Technique",
         "position": "Service Technique",
         "employees": [],
         "children": [
