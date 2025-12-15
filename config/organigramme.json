@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastModified": "2025-12-15T09:20:47.296Z",
+  "lastModified": "2025-12-15T09:21:06.877Z",
   "structure": {
     "id": "direction",
     "title": "Direction Générale",
@@ -176,7 +176,7 @@
       },
       {
         "id": "admin-rh",
-        "title": "Administration & RH",
+        "title": "Service Administratif & RH",
         "position": "Responsable Administration & RH",
         "employees": [
           "Abdoulaye Cissé"
