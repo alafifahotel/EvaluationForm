@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastModified": "2025-12-10T17:48:46.700Z",
+  "lastModified": "2025-12-15T09:19:55.810Z",
   "structure": {
     "id": "direction",
     "title": "Direction Générale",
@@ -9,6 +9,28 @@
       "Ali Bachir"
     ],
     "children": [
+      {
+        "id": "espaces-publics",
+        "title": "Service Espaces Publics & Jardins",
+        "position": "Responsable Espaces Publics",
+        "employees": [
+          "Rahmé Kassem"
+        ],
+        "children": [
+          {
+            "id": "esp-1",
+            "position": "Équipiers",
+            "employees": []
+          },
+          {
+            "id": "esp-2",
+            "position": "Jardinier",
+            "employees": [
+              "Cheikh Kabe"
+            ]
+          }
+        ]
+      },
       {
         "id": "hebergement",
         "title": "Département Hébergement",
@@ -69,28 +91,6 @@
                 "position": "Lingères",
                 "employees": []
               }
-            ]
-          }
-        ]
-      },
-      {
-        "id": "espaces-publics",
-        "title": "Service Espaces Publics & Jardins",
-        "position": "Responsable Espaces Publics",
-        "employees": [
-          "Rahmé Kassem"
-        ],
-        "children": [
-          {
-            "id": "esp-1",
-            "position": "Équipiers",
-            "employees": []
-          },
-          {
-            "id": "esp-2",
-            "position": "Jardinier",
-            "employees": [
-              "Cheikh Kabe"
             ]
           }
         ]
