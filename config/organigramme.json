@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastModified": "2025-12-15T09:22:57.090Z",
+  "lastModified": "2025-12-15T09:23:00.938Z",
   "structure": {
     "id": "direction",
     "title": "Direction Générale",
@@ -177,28 +177,6 @@
         ]
       },
       {
-        "id": "espaces-publics",
-        "title": "Service Espaces Publics & Jardins",
-        "position": "Responsable Espaces Publics",
-        "employees": [
-          "Rahmé Kassem"
-        ],
-        "children": [
-          {
-            "id": "esp-1",
-            "position": "Équipiers",
-            "employees": []
-          },
-          {
-            "id": "esp-2",
-            "position": "Jardinier",
-            "employees": [
-              "Cheikh Kabe"
-            ]
-          }
-        ]
-      },
-      {
         "id": "comptabilite",
         "title": "Service Financier & Économat",
         "position": "Responsable Comptabilité",
@@ -232,6 +210,28 @@
             "position": "Achats/Econome",
             "employees": [
               "Catherine Diedhiou"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "espaces-publics",
+        "title": "Service Espaces Publics & Jardins",
+        "position": "Responsable Espaces Publics",
+        "employees": [
+          "Rahmé Kassem"
+        ],
+        "children": [
+          {
+            "id": "esp-1",
+            "position": "Équipiers",
+            "employees": []
+          },
+          {
+            "id": "esp-2",
+            "position": "Jardinier",
+            "employees": [
+              "Cheikh Kabe"
             ]
           }
         ]
