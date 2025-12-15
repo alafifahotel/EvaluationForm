@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastModified": "2025-12-15T09:21:06.877Z",
+  "lastModified": "2025-12-15T09:21:22.266Z",
   "structure": {
     "id": "direction",
     "title": "Direction Générale",
@@ -200,7 +200,7 @@
       },
       {
         "id": "comptabilite",
-        "title": "Comptabilité & Économat",
+        "title": "Service Financier & Économat",
         "position": "Responsable Comptabilité",
         "employees": [
           "Pape Mamadou Seck"
