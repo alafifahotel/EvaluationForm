@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastModified": "2025-12-15T09:22:50.193Z",
+  "lastModified": "2025-12-15T09:22:54.080Z",
   "structure": {
     "id": "direction",
     "title": "Direction Générale",
@@ -112,28 +112,6 @@
         ]
       },
       {
-        "id": "espaces-publics",
-        "title": "Service Espaces Publics & Jardins",
-        "position": "Responsable Espaces Publics",
-        "employees": [
-          "Rahmé Kassem"
-        ],
-        "children": [
-          {
-            "id": "esp-1",
-            "position": "Équipiers",
-            "employees": []
-          },
-          {
-            "id": "esp-2",
-            "position": "Jardinier",
-            "employees": [
-              "Cheikh Kabe"
-            ]
-          }
-        ]
-      },
-      {
         "id": "restauration",
         "title": "Service Restauration & Bar",
         "position": "Responsable Restauration",
@@ -170,6 +148,28 @@
                 "position": "Commis de bar",
                 "employees": []
               }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "espaces-publics",
+        "title": "Service Espaces Publics & Jardins",
+        "position": "Responsable Espaces Publics",
+        "employees": [
+          "Rahmé Kassem"
+        ],
+        "children": [
+          {
+            "id": "esp-1",
+            "position": "Équipiers",
+            "employees": []
+          },
+          {
+            "id": "esp-2",
+            "position": "Jardinier",
+            "employees": [
+              "Cheikh Kabe"
             ]
           }
         ]
