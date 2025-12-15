@@ -248,8 +248,95 @@
       padding: 3px 8px !important;
       margin-bottom: 2px !important;
     }
+
+    /* Procedures Print Styles */
+    #procedures-print-container,
+    #procedures-print-container * {
+      visibility: visible !important;
+    }
+
+    #procedures-print-container {
+      position: absolute !important;
+      left: 0 !important;
+      top: 0 !important;
+      width: 100% !important;
+    }
+
+    .procedures-page {
+      width: 210mm !important;
+      height: 297mm !important;
+      padding: 15mm !important;
+      margin: 0 !important;
+      page-break-after: always !important;
+      page-break-inside: avoid !important;
+      box-sizing: border-box !important;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    .procedures-page:last-child {
+      page-break-after: auto !important;
+    }
+
+    .procedure-card {
+      break-inside: avoid-page !important;
+      page-break-inside: avoid !important;
+    }
+
+    .procedure-step {
+      break-inside: avoid !important;
+      page-break-inside: avoid !important;
+    }
+
+    .procedures-page-header,
+    .procedures-page-footer {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    .bg-indigo-600 {
+      background-color: #4f46e5 !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    .bg-indigo-100 {
+      background-color: #e0e7ff !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    .bg-indigo-50 {
+      background-color: #eef2ff !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
   }
-  
+
+  /* Procedures page classes (screen) */
+  .procedures-page {
+    width: 210mm;
+    min-height: 297mm;
+    padding: 15mm;
+    box-sizing: border-box;
+    background: white;
+    position: relative;
+  }
+
+  .procedures-page-content {
+    min-height: calc(297mm - 30mm - 30px - 24px);
+  }
+
+  .procedure-card {
+    break-inside: avoid-page;
+    page-break-inside: avoid;
+  }
+
+  .procedure-step {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
   .form-input {
     @apply mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-hotel-gold focus:ring focus:ring-hotel-gold focus:ring-opacity-50;
   }
