@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastModified": "2025-12-15T10:55:34.491Z",
+  "lastModified": "2025-12-15T10:55:45.156Z",
   "structure": {
     "id": "direction",
     "title": "Direction Générale",
@@ -68,6 +68,28 @@
                 "id": "gouv-4",
                 "position": "Lingères",
                 "employees": []
+              },
+              {
+                "id": "espaces-publics",
+                "title": "Service Espaces Publics & Jardins",
+                "position": "Responsable Espaces Publics",
+                "employees": [
+                  "Rahmé Kassem"
+                ],
+                "children": [
+                  {
+                    "id": "esp-1",
+                    "position": "Équipiers",
+                    "employees": []
+                  },
+                  {
+                    "id": "esp-2",
+                    "position": "Jardinier",
+                    "employees": [
+                      "Cheikh Kabe"
+                    ]
+                  }
+                ]
               }
             ]
           }
@@ -232,28 +254,6 @@
             "position": "Ouvrier spécialisé",
             "employees": [
               "Bacary Badji"
-            ]
-          },
-          {
-            "id": "espaces-publics",
-            "title": "Service Espaces Publics & Jardins",
-            "position": "Responsable Espaces Publics",
-            "employees": [
-              "Rahmé Kassem"
-            ],
-            "children": [
-              {
-                "id": "esp-1",
-                "position": "Équipiers",
-                "employees": []
-              },
-              {
-                "id": "esp-2",
-                "position": "Jardinier",
-                "employees": [
-                  "Cheikh Kabe"
-                ]
-              }
             ]
           }
         ]
