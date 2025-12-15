@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastModified": "2025-12-15T11:47:20.430Z",
+  "lastModified": "2025-12-15T11:47:50.301Z",
   "structure": {
     "id": "direction",
     "title": "Direction Générale",
@@ -136,7 +136,7 @@
       {
         "id": "restauration",
         "title": "Service Restauration & Bar",
-        "position": "Responsable Restauration",
+        "position": "Maître d'hôtel",
         "employees": [
           "Yoba Mballo"
         ],
