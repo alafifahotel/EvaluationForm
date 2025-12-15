@@ -1,11 +1,12 @@
 import { useState } from 'react'
-import { ChevronDown, ChevronUp, Plus, Trash2, X, Check, UserPlus, Users, Pencil } from 'lucide-react'
+import { ChevronDown, ChevronUp, Plus, Trash2, X, Check, UserPlus, Users, Pencil, GripVertical } from 'lucide-react'
+import { useDraggable, useDroppable } from '@dnd-kit/core'
 import { useOrgChart } from '../../contexts/OrgChartContext'
 import AddPositionModal from './AddPositionModal'
 import EditPositionModal from './EditPositionModal'
 import { getDepartmentColor, findDepartmentId, getAllDepartmentIds } from '../../data/departmentColors'
 
-function OrgNode({ node, isEditMode, isRoot = false, level = 0, departmentId = null, parentId = null, siblingIndex = 0, totalSiblings = 1 }) {
+function OrgNode({ node, isEditMode, isRoot = false, level = 0, departmentId = null, parentId = null, siblingIndex = 0, totalSiblings = 1, activeId = null }) {
   const { addEmployee, removeEmployee, updateEmployee, addPosition, removePosition, updateNode, reorderChildren, structure } = useOrgChart()
 
   const [isExpanded, setIsExpanded] = useState(true)
@@ -22,6 +23,41 @@ function OrgNode({ node, isEditMode, isRoot = false, level = 0, departmentId = n
   // Sub-sections (level 2+ with titles like "Réception", "Service de Salle") inherit parent department
   const isActualDepartment = level === 1 && node.title
   const currentDepartmentId = isActualDepartment ? node.id : departmentId
+
+  // Drag and drop setup
+  // Nodes can be dragged if they're not root and we're in edit mode
+  const canDrag = isEditMode && !isRoot
+  // Nodes can be drop targets if they're departments (level 1) or nodes with children potential
+  const canDrop = isEditMode && !isRoot
+
+  // useDraggable hook for making nodes draggable
+  const {
+    attributes: dragAttributes,
+    listeners: dragListeners,
+    setNodeRef: setDragRef,
+    isDragging,
+  } = useDraggable({
+    id: node.id,
+    disabled: !canDrag,
+  })
+
+  // useDroppable hook for making nodes droppable targets
+  const {
+    setNodeRef: setDropRef,
+    isOver,
+  } = useDroppable({
+    id: node.id,
+    disabled: !canDrop,
+  })
+
+  // Combine refs for nodes that are both draggable and droppable
+  const setNodeRef = (element) => {
+    setDragRef(element)
+    setDropRef(element)
+  }
+
+  // Check if this node is being dragged
+  const isBeingDragged = activeId === node.id
 
   // Get all department IDs for color assignment (only level 1 departments)
   const allDepartments = structure ? getAllDepartmentIds(structure) : []
@@ -167,11 +203,30 @@ function OrgNode({ node, isEditMode, isRoot = false, level = 0, departmentId = n
     <div className={`${level > 0 ? 'ml-4 sm:ml-6' : ''}`}>
       {/* Node Card */}
       <div
-        className="rounded-lg shadow-sm mb-2 overflow-hidden"
-        style={styles.container}
+        ref={setNodeRef}
+        className={`rounded-lg shadow-sm mb-2 overflow-hidden transition-all duration-200 ${
+          isBeingDragged ? 'opacity-50 scale-95' : ''
+        } ${
+          isOver && !isBeingDragged ? 'ring-2 ring-hotel-gold ring-offset-2 scale-[1.02]' : ''
+        }`}
+        style={{
+          ...styles.container,
+          ...(isOver && !isBeingDragged ? { boxShadow: '0 0 20px rgba(212, 175, 55, 0.3)' } : {})
+        }}
       >
         {/* Header Row */}
         <div className="flex items-center gap-2 p-3">
+          {/* Drag Handle - only shown in edit mode for non-root nodes */}
+          {isEditMode && !isRoot && (
+            <div
+              className="flex-shrink-0 text-gray-300 hover:text-gray-500 cursor-grab active:cursor-grabbing touch-none"
+              {...dragAttributes}
+              {...dragListeners}
+            >
+              <GripVertical className="w-4 h-4" />
+            </div>
+          )}
+
           {/* Expand/Collapse Toggle */}
           {hasChildren ? (
             <button
@@ -417,6 +472,7 @@ function OrgNode({ node, isEditMode, isRoot = false, level = 0, departmentId = n
               parentId={node.id}
               siblingIndex={index}
               totalSiblings={node.children.length}
+              activeId={activeId}
             />
           ))}
         </div>

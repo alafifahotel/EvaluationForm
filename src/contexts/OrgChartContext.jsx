@@ -6,6 +6,7 @@ import {
   addChildToNode,
   removeNodeFromTree,
   reorderChildrenInTree,
+  moveNodeBetweenParents,
   generateNodeId,
   countTotalEmployees,
   countTotalPositions
@@ -181,6 +182,15 @@ export function OrgChartProvider({ children, githubToken }) {
     setHasUnsavedChanges(true)
   }, [])
 
+  // Move a service/node from one parent to another
+  const moveService = useCallback((nodeId, newParentId) => {
+    setData(prevData => ({
+      ...prevData,
+      structure: moveNodeBetweenParents(prevData.structure, nodeId, newParentId)
+    }))
+    setHasUnsavedChanges(true)
+  }, [])
+
   // Load data when token changes
   useEffect(() => {
     if (hasLoadedData.current && !githubToken) return
@@ -268,7 +278,8 @@ export function OrgChartProvider({ children, githubToken }) {
     updateEmployee,
     addPosition,
     removePosition,
-    reorderChildren
+    reorderChildren,
+    moveService
   }
 
   return (

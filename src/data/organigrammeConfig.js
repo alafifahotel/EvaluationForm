@@ -200,6 +200,86 @@ export const countTotalPositions = (node) => {
   return count
 }
 
+// Helper function to move a node from one parent to another
+export const moveNodeBetweenParents = (rootNode, nodeId, newParentId) => {
+  // Don't allow moving root node or moving node to itself
+  if (rootNode.id === nodeId || nodeId === newParentId) return rootNode
+
+  // First, find and extract the node to move
+  let nodeToMove = null
+
+  const findAndRemoveNode = (node, targetId) => {
+    if (!node.children) return node
+
+    const targetIndex = node.children.findIndex(child => child.id === targetId)
+    if (targetIndex !== -1) {
+      // Found the node, extract it
+      nodeToMove = node.children[targetIndex]
+      return {
+        ...node,
+        children: node.children.filter((_, idx) => idx !== targetIndex)
+      }
+    }
+
+    // Recursively search children
+    return {
+      ...node,
+      children: node.children.map(child => findAndRemoveNode(child, targetId))
+    }
+  }
+
+  // Helper to check if newParentId is a descendant of nodeId (to prevent circular references)
+  const isDescendant = (node, ancestorId, targetId) => {
+    if (node.id === ancestorId) {
+      const checkChildren = (n, target) => {
+        if (n.id === target) return true
+        if (n.children) {
+          return n.children.some(child => checkChildren(child, target))
+        }
+        return false
+      }
+      return checkChildren(node, targetId)
+    }
+    if (node.children) {
+      return node.children.some(child => isDescendant(child, ancestorId, targetId))
+    }
+    return false
+  }
+
+  // Prevent moving a node into one of its own descendants
+  if (isDescendant(rootNode, nodeId, newParentId)) {
+    console.warn('Cannot move a node into its own descendant')
+    return rootNode
+  }
+
+  // Remove the node from its current position
+  const treeWithoutNode = findAndRemoveNode(rootNode, nodeId)
+
+  if (!nodeToMove) {
+    console.warn('Node to move not found:', nodeId)
+    return rootNode
+  }
+
+  // Now add the node to its new parent
+  const addToNewParent = (node, parentId, childNode) => {
+    if (node.id === parentId) {
+      return {
+        ...node,
+        children: [...(node.children || []), childNode]
+      }
+    }
+    if (node.children) {
+      return {
+        ...node,
+        children: node.children.map(child => addToNewParent(child, parentId, childNode))
+      }
+    }
+    return node
+  }
+
+  return addToNewParent(treeWithoutNode, newParentId, nodeToMove)
+}
+
 // Helper function to reorder children within a parent node
 export const reorderChildrenInTree = (node, parentId, childId, direction) => {
   if (!node) return node
