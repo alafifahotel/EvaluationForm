@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastModified": "2026-01-05T13:01:39.162Z",
+  "lastModified": "2026-01-05T13:02:17.245Z",
   "structure": {
     "id": "direction",
     "title": "Direction Générale",
@@ -183,7 +183,9 @@
               {
                 "id": "rest-1",
                 "position": "Commis de salle",
-                "employees": []
+                "employees": [
+                  "Magatte DIOP"
+                ]
               }
             ]
           },
