@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastModified": "2026-01-05T13:00:49.876Z",
+  "lastModified": "2026-01-05T13:00:58.406Z",
   "structure": {
     "id": "direction",
     "title": "Direction Générale",
@@ -146,7 +146,8 @@
                 "position": "Commis de cuisine",
                 "employees": [
                   "Amadou Napo BADJI",
-                  "Khane LOUM"
+                  "Khane LOUM",
+                  "Mouhamed Makhtar NDOUR"
                 ]
               }
             ]
