@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastModified": "2026-01-05T13:00:03.033Z",
+  "lastModified": "2026-01-05T13:00:09.669Z",
   "structure": {
     "id": "direction",
     "title": "Direction Générale",
@@ -98,7 +98,8 @@
                 "id": "esp-1",
                 "position": "Équipiers",
                 "employees": [
-                  "Abdoulaye SECK"
+                  "Abdoulaye SECK",
+                  "Aly DIAGNE"
                 ]
               },
               {
