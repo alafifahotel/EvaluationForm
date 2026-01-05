@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastModified": "2026-01-05T12:59:41.540Z",
+  "lastModified": "2026-01-05T12:59:45.312Z",
   "structure": {
     "id": "direction",
     "title": "Direction Générale",
@@ -80,7 +80,8 @@
                 "id": "gouv-4",
                 "position": "Lingères",
                 "employees": [
-                  "Adama COLY"
+                  "Adama COLY",
+                  "Madjiguène NIANG"
                 ]
               }
             ]
