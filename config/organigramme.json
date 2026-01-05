@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastModified": "2026-01-05T12:57:08.776Z",
+  "lastModified": "2026-01-05T12:57:18.333Z",
   "structure": {
     "id": "direction",
     "title": "Direction Générale",
@@ -30,7 +30,8 @@
                 "position": "Réceptionniste",
                 "employees": [
                   "Aïssatou NIANG",
-                  "Mathias Waly NDIAYE"
+                  "Mathias Waly NDIAYE",
+                  "Aminata Badiane"
                 ]
               },
               {
