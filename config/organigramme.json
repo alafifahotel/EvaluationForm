@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastModified": "2026-01-05T12:59:02.649Z",
+  "lastModified": "2026-01-05T12:59:05.903Z",
   "structure": {
     "id": "direction",
     "title": "Direction Générale",
@@ -67,7 +67,8 @@
                 "id": "gouv-3",
                 "position": "Femme / Valet de chambre",
                 "employees": [
-                  "Amadou Lindor SEYE"
+                  "Amadou Lindor SEYE",
+                  "Amath GUINDO"
                 ]
               },
               {
