@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastModified": "2026-01-05T13:00:09.669Z",
+  "lastModified": "2026-01-05T13:00:13.333Z",
   "structure": {
     "id": "direction",
     "title": "Direction Générale",
@@ -99,7 +99,8 @@
                 "position": "Équipiers",
                 "employees": [
                   "Abdoulaye SECK",
-                  "Aly DIAGNE"
+                  "Aly DIAGNE",
+                  "Ansoumane SYLLA"
                 ]
               },
               {
