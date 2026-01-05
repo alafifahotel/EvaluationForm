@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastModified": "2026-01-05T13:00:58.406Z",
+  "lastModified": "2026-01-05T13:01:19.852Z",
   "structure": {
     "id": "direction",
     "title": "Direction Générale",
@@ -155,7 +155,9 @@
           {
             "id": "cuis-3",
             "position": "Plongeurs",
-            "employees": []
+            "employees": [
+              "Youssoupha MBAYE"
+            ]
           }
         ]
       },
