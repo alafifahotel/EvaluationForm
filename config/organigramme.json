@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastModified": "2026-01-05T12:58:40.040Z",
+  "lastModified": "2026-01-05T12:58:46.693Z",
   "structure": {
     "id": "direction",
     "title": "Direction Générale",
@@ -59,7 +59,8 @@
                 "id": "gouv-1",
                 "position": "Aide gouvernant",
                 "employees": [
-                  "Abdou Seydi Seck"
+                  "Abdou Seydi Seck",
+                  "René Lagahuzere"
                 ]
               },
               {
