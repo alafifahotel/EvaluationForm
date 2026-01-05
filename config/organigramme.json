@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastModified": "2026-01-05T13:02:29.918Z",
+  "lastModified": "2026-01-05T13:02:42.058Z",
   "structure": {
     "id": "direction",
     "title": "Direction Générale",
@@ -203,7 +203,9 @@
               {
                 "id": "bar-1",
                 "position": "Commis de bar",
-                "employees": []
+                "employees": [
+                  "Bineta WADE"
+                ]
               }
             ]
           }
