@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastModified": "2026-01-05T13:02:26.341Z",
+  "lastModified": "2026-01-05T13:02:29.918Z",
   "structure": {
     "id": "direction",
     "title": "Direction Générale",
@@ -186,7 +186,8 @@
                 "employees": [
                   "Magatte DIOP",
                   "Mohamed GUEYE",
-                  "Ndeye Coumba POUYE"
+                  "Ndeye Coumba POUYE",
+                  "Oumou MBAYE"
                 ]
               }
             ]
