@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastModified": "2026-01-05T13:02:22.646Z",
+  "lastModified": "2026-01-05T13:02:26.341Z",
   "structure": {
     "id": "direction",
     "title": "Direction Générale",
@@ -185,7 +185,8 @@
                 "position": "Commis de salle",
                 "employees": [
                   "Magatte DIOP",
-                  "Mohamed GUEYE"
+                  "Mohamed GUEYE",
+                  "Ndeye Coumba POUYE"
                 ]
               }
             ]
