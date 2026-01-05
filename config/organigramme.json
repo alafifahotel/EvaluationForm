@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastModified": "2026-01-05T12:59:45.312Z",
+  "lastModified": "2026-01-05T13:00:03.033Z",
   "structure": {
     "id": "direction",
     "title": "Direction Générale",
@@ -97,7 +97,9 @@
               {
                 "id": "esp-1",
                 "position": "Équipiers",
-                "employees": []
+                "employees": [
+                  "Abdoulaye SECK"
+                ]
               },
               {
                 "id": "esp-2",
