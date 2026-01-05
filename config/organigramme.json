@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastModified": "2026-01-05T12:58:03.609Z",
+  "lastModified": "2026-01-05T12:58:07.437Z",
   "structure": {
     "id": "direction",
     "title": "Direction Générale",
@@ -41,7 +41,8 @@
                 "position": "Portier",
                 "employees": [
                   "Maïssa NGOM",
-                  "Moustapha DIOP"
+                  "Moustapha DIOP",
+                  "Ndiaga SOUR"
                 ]
               }
             ]
