@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastModified": "2026-01-05T12:59:05.903Z",
+  "lastModified": "2026-01-05T12:59:10.474Z",
   "structure": {
     "id": "direction",
     "title": "Direction Générale",
@@ -68,7 +68,8 @@
                 "position": "Femme / Valet de chambre",
                 "employees": [
                   "Amadou Lindor SEYE",
-                  "Amath GUINDO"
+                  "Amath GUINDO",
+                  "Babacar MBAYE"
                 ]
               },
               {
