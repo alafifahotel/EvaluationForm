@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastModified": "2026-01-05T12:57:31.679Z",
+  "lastModified": "2026-01-05T12:58:00.238Z",
   "structure": {
     "id": "direction",
     "title": "Direction Générale",
@@ -39,7 +39,9 @@
               {
                 "id": "rec-2",
                 "position": "Portier",
-                "employees": []
+                "employees": [
+                  "Maïssa NGOM"
+                ]
               }
             ]
           },
