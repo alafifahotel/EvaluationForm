@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastModified": "2026-01-05T12:59:10.474Z",
+  "lastModified": "2026-01-05T12:59:15.712Z",
   "structure": {
     "id": "direction",
     "title": "Direction Générale",
@@ -69,7 +69,8 @@
                 "employees": [
                   "Amadou Lindor SEYE",
                   "Amath GUINDO",
-                  "Babacar MBAYE"
+                  "Babacar MBAYE",
+                  "Cheikhou Oumar SENE"
                 ]
               },
               {
