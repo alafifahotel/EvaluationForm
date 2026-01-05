@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastModified": "2026-01-05T12:57:18.333Z",
+  "lastModified": "2026-01-05T12:57:27.100Z",
   "structure": {
     "id": "direction",
     "title": "Direction Générale",
@@ -31,7 +31,8 @@
                 "employees": [
                   "Aïssatou NIANG",
                   "Mathias Waly NDIAYE",
-                  "Aminata Badiane"
+                  "Aminata Badiane",
+                  "Salif SOW"
                 ]
               },
               {
