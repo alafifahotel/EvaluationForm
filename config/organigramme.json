@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastModified": "2026-01-05T13:00:25.050Z",
+  "lastModified": "2026-01-05T13:00:41.863Z",
   "structure": {
     "id": "direction",
     "title": "Direction Générale",
@@ -144,7 +144,9 @@
               {
                 "id": "cuis-2",
                 "position": "Commis de cuisine",
-                "employees": []
+                "employees": [
+                  "Amadou Napo BADJI"
+                ]
               }
             ]
           },
